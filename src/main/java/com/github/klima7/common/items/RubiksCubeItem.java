@@ -64,7 +64,7 @@ public class RubiksCubeItem extends BlockItem implements IAnimatable, ISyncable 
 
         if (controller.getAnimationState() == AnimationState.Stopped) {
             controller.markNeedsReload();
-            controller.setAnimation(new AnimationBuilder().addAnimation("animation.rubiks_cube.U", false));
+            controller.setAnimation(new AnimationBuilder().addAnimation("animation.rubiks_cube.clockwise", false));
         }
     }
 

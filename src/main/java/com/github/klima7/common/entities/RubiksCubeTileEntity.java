@@ -32,7 +32,7 @@ public class RubiksCubeTileEntity extends BlockEntity implements IAnimatable {
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.rubiks_cube.U", true));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.rubiks_cube.clockwise", true));
         return PlayState.CONTINUE;
     }
 }
