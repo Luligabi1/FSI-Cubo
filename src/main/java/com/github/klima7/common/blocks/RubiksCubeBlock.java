@@ -9,17 +9,15 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import org.jetbrains.annotations.Nullable;
 
 public class RubiksCubeBlock extends DirectionalBlock implements EntityBlock {
 
     public static final Properties PROPERTIES = BlockBehaviour.Properties
-            .of(Material.WOOD, MaterialColor.COLOR_BLACK)
+            .of(Material.WOOD)
             .strength(8)
             .explosionResistance(30f)
-            .friction(0)
-            .sound(SoundType.WOOD);
+            .noOcclusion();
 
     public RubiksCubeBlock() {
         super(PROPERTIES);
