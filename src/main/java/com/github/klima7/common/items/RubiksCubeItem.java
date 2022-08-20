@@ -1,7 +1,9 @@
 package com.github.klima7.common.items;
 
 import com.github.klima7.client.renderer.items.RubiksCubeItemRenderer;
+import com.github.klima7.registry.BlockRegistry;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
@@ -19,14 +21,14 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
 
-public class RubiksCubeItem extends Item implements IAnimatable, ISyncable {
+public class RubiksCubeItem extends BlockItem implements IAnimatable, ISyncable {
     private static final String CONTROLLER_NAME = "rubiks_cube_item_controller";
     private static final Properties PROPERTIES = new Item.Properties().tab(CreativeModeTab.TAB_MISC);
 
     private AnimationFactory factory = new AnimationFactory(this);
 
     public RubiksCubeItem() {
-        super(PROPERTIES);
+        super(BlockRegistry.RUBIKS_CUBE.get(), PROPERTIES);
         GeckoLibNetwork.registerSyncable(this);
     }
 
