@@ -13,6 +13,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class RubiksCubeTileEntity extends BlockEntity implements IAnimatable {
+    private static final String CONTROLLER_NAME = "rubiks_cube_block_controller";
 
     private AnimationFactory factory = new AnimationFactory(this);
 
@@ -22,7 +23,7 @@ public class RubiksCubeTileEntity extends BlockEntity implements IAnimatable {
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+        data.addAnimationController(new AnimationController(this, CONTROLLER_NAME, 0, this::predicate));
     }
 
     @Override

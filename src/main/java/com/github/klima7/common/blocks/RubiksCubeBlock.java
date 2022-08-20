@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class RubiksCubeBlock extends DirectionalBlock implements EntityBlock {
 
-    private static final Properties PROPERTIES = BlockBehaviour.Properties
+    public static final Properties PROPERTIES = BlockBehaviour.Properties
             .of(Material.WOOD, MaterialColor.COLOR_BLACK)
             .strength(8)
             .explosionResistance(30f)
