@@ -31,21 +31,12 @@ public class FaceState {
         return builder.toString();
     }
 
-    public StickerColor getStickerColor(int x, int y) {
-        int linearIndex = getLinearIndex(x, y);
-        return stickerColors[linearIndex];
+    public StickerColor getSticker(StickerOnFacePos stickerOnFacePos) {
+        return stickerColors[stickerOnFacePos.getLinearIndex()];
     }
 
-    public void setStickerColor(int x, int y, StickerColor stickerColor) {
-        int linearIndex = getLinearIndex(x, y);
-        stickerColors[linearIndex] = stickerColor;
-    }
-
-    private int getLinearIndex(int x, int y) {
-        if(x < 0 || x > 3 || y < 0 || y > 3) {
-            throw new IllegalArgumentException("x and y parameters for getStickerColor must be between 0 and 3");
-        }
-        return y * 3 + x;
+    public void setSticker(StickerOnFacePos stickerOnFacePos, StickerColor stickerColor) {
+        stickerColors[stickerOnFacePos.getLinearIndex()] = stickerColor;
     }
 
     @Override

@@ -51,6 +51,18 @@ public class CubeState {
         return builder.toString();
     }
 
+    public void setSticker(StickerOnCubePos stickerOnCubePos, StickerColor stickerColor) {
+        getFaceState(stickerOnCubePos.getFace()).setSticker(stickerOnCubePos, stickerColor);
+    }
+
+    public StickerColor getSticker(StickerOnCubePos stickerOnCubePos) {
+        return getFaceState(stickerOnCubePos.getFace()).getSticker(stickerOnCubePos);
+    }
+
+    public FaceState getFaceState(StickerColor face) {
+        return faceStates.get(face);
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
