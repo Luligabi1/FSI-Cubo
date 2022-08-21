@@ -19,7 +19,6 @@ public class RubiksCubeModel extends AnimatedGeoModel<RubiksCubeTileEntity> {
 
     @Override
     public ResourceLocation getTextureResource(RubiksCubeTileEntity object) {
-        return new ResourceLocation(RubiksCubeMod.MODID+":textures/block/rubiks_cube.png");
+        return null;    // texture handled in renderer
     }
-
 }
