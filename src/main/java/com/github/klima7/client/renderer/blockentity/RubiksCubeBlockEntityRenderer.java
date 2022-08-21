@@ -20,4 +20,5 @@ public class RubiksCubeBlockEntityRenderer extends GeoBlockRenderer<RubiksCubeBl
         texture.update();
         return texture.getResourceLocation();
     }
+
 }

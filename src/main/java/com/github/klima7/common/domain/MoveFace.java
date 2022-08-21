@@ -1,6 +1,7 @@
 package com.github.klima7.common.domain;
 
 public enum MoveFace {
+
     U(
             Sticker.YELLOW,
             new FaceThreeStickers(Sticker.BLUE, 0, 1, 2),
@@ -16,4 +17,5 @@ public enum MoveFace {
              FaceThreeStickers faceStickers3, FaceThreeStickers faceStickers4) {
 
     }
+
 }

@@ -17,6 +17,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
+
     private static final String CONTROLLER_NAME = "rubiks_cube_block_controller";
 
     private final AnimationFactory factory = new AnimationFactory(this);
@@ -62,4 +63,5 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.rubiks_cube.clockwise", true));
         return PlayState.CONTINUE;
     }
+
 }

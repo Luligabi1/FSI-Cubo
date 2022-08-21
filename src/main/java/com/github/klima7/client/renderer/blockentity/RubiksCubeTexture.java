@@ -31,4 +31,5 @@ public class RubiksCubeTexture extends DynamicTexture {
     public ResourceLocation getResourceLocation() {
         return this.resourceLocation;
     }
+
 }

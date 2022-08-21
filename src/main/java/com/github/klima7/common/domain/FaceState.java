@@ -3,6 +3,7 @@ package com.github.klima7.common.domain;
 import java.util.Arrays;
 
 public class FaceState {
+
     private final Sticker[] stickers = new Sticker[9];
 
     public FaceState(Sticker sticker) {
@@ -43,4 +44,5 @@ public class FaceState {
     public String toString() {
         return this.getClass().getSimpleName() + "(" + this.getLetters() + ")";
     }
+
 }

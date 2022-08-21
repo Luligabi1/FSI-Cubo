@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.EnumMap;
 
 public class CubeState {
+
     private static final Sticker[] FACES_ORDER = {
             Sticker.WHITE,
             Sticker.YELLOW,
@@ -77,4 +78,5 @@ public class CubeState {
         builder.append(")");
         return builder.toString();
     }
+
 }

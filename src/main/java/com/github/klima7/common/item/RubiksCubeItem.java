@@ -22,6 +22,7 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 import java.util.function.Consumer;
 
 public class RubiksCubeItem extends BlockItem implements IAnimatable, ISyncable {
+
     private static final String CONTROLLER_NAME = "rubiks_cube_item_controller";
     private static final Properties PROPERTIES = new Item.Properties()
             .tab(CreativeModeTab.TAB_MISC)
@@ -71,4 +72,5 @@ public class RubiksCubeItem extends BlockItem implements IAnimatable, ISyncable 
     private <P extends Item & IAnimatable> PlayState predicate(AnimationEvent<P> event) {
         return PlayState.CONTINUE;
     }
+
 }

@@ -1,6 +1,7 @@
 package com.github.klima7.common.domain;
 
 public class StickerOnCubePos extends StickerOnFacePos {
+
     private final Sticker face;
 
     public StickerOnCubePos(Sticker face, StickerOnFacePos stickerOnFacePos) {
@@ -19,4 +20,5 @@ public class StickerOnCubePos extends StickerOnFacePos {
     public Sticker getFace() {
         return this.face;
     }
+
 }

@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class RubiksCubeBlock extends Block implements EntityBlock {
+
     public static final Properties PROPERTIES = BlockBehaviour.Properties
             .of(Material.WOOD)
             .strength(8)
@@ -38,4 +39,5 @@ public class RubiksCubeBlock extends Block implements EntityBlock {
     public BlockState getStateForPlacement(@NotNull BlockPlaceContext context) {
         return this.defaultBlockState();
     }
+
 }

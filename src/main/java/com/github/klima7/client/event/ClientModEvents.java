@@ -18,4 +18,5 @@ public final class ClientModEvents {
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(BlockEntityRegistry.RUBIKS_CUBE.get(), RubiksCubeBlockEntityRenderer::new);
     }
+
 }

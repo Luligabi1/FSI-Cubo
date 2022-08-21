@@ -8,15 +8,15 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(RubiksCubeMod.MODID)
-public class RubiksCubeMod
-{
+public class RubiksCubeMod {
+
     public static final String MODID = "rubiks_cube";
 
-    public RubiksCubeMod()
-    {
+    public RubiksCubeMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         BlockRegistry.register(modEventBus);
         BlockEntityRegistry.register(modEventBus);
         ItemRegistry.register(modEventBus);
     }
+
 }

@@ -1,6 +1,7 @@
 package com.github.klima7.common.domain;
 
 public class StickerOnFacePos {
+
     private final int x;
     private final int y;
 

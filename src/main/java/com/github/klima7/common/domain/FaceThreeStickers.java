@@ -1,6 +1,7 @@
 package com.github.klima7.common.domain;
 
 public class FaceThreeStickers {
+
     private final Sticker faceColor;
     private final int sticker1;
     private final int sticker2;
@@ -28,4 +29,5 @@ public class FaceThreeStickers {
     public int getThirdStickerLinearIndex() {
         return sticker3;
     }
+
 }

@@ -1,6 +1,7 @@
 package com.github.klima7.common.domain;
 
 enum Sticker {
+
     WHITE('w', 0xffffffff),
     YELLOW('y', 0xffffff00),
     RED('r', 0xffff0000),
@@ -32,4 +33,5 @@ enum Sticker {
     public int getColor() {
         return color;
     }
+
 }

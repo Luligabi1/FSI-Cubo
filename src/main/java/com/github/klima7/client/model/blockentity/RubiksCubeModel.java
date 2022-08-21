@@ -21,4 +21,5 @@ public class RubiksCubeModel extends AnimatedGeoModel<RubiksCubeBlockEntity> {
     public ResourceLocation getTextureResource(RubiksCubeBlockEntity object) {
         return null;    // texture handled in renderer
     }
+
 }

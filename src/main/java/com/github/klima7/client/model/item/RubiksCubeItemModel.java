@@ -21,4 +21,5 @@ public class RubiksCubeItemModel extends AnimatedGeoModel<RubiksCubeItem> {
     public ResourceLocation getTextureResource(RubiksCubeItem object) {
         return new ResourceLocation(RubiksCubeMod.MODID+":textures/block/rubiks_cube.png");
     }
+
 }
