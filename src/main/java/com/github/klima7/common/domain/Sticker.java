@@ -1,17 +1,17 @@
 package com.github.klima7.common.domain;
 
 enum Sticker {
-    WHITE('w', new Color(255, 255, 255)),
-    YELLOW('y', new Color(255, 255, 0)),
-    RED('r', new Color(255, 0, 0)),
-    ORANGE('o', new Color(255, 128, 0)),
-    BLUE('b', new Color(0, 0, 255)),
-    GREEN('g', new Color(0, 255, 0));
+    WHITE('w', 0xffffffff),
+    YELLOW('y', 0xffffff00),
+    RED('r', 0xffff0000),
+    ORANGE('o', 0xffff8000),
+    BLUE('b', 0xff0000ff),
+    GREEN('g', 0xff00ff00);
 
-    private final Color color;
     private final char letter;
+    private final int color;
 
-    Sticker(char letter, Color color) {
+    Sticker(char letter, int color) {
         this.letter = letter;
         this.color = color;
     }
@@ -29,7 +29,7 @@ enum Sticker {
         return letter;
     }
 
-    public Color getColor() {
+    public int getColor() {
         return color;
     }
 }
