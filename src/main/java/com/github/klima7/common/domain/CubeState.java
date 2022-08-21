@@ -4,31 +4,31 @@ import java.util.Arrays;
 import java.util.EnumMap;
 
 public class CubeState {
-    private static final StickerColor[] FACES_ORDER = {
-            StickerColor.WHITE,
-            StickerColor.YELLOW,
-            StickerColor.BLUE,
-            StickerColor.GREEN,
-            StickerColor.RED,
-            StickerColor.ORANGE
+    private static final Sticker[] FACES_ORDER = {
+            Sticker.WHITE,
+            Sticker.YELLOW,
+            Sticker.BLUE,
+            Sticker.GREEN,
+            Sticker.RED,
+            Sticker.ORANGE
     };
 
-    private final EnumMap<StickerColor, FaceState> faceStates = new EnumMap<>(StickerColor.class);
+    private final EnumMap<Sticker, FaceState> faceStates = new EnumMap<>(Sticker.class);
 
     public CubeState() {
-        for(StickerColor faceColor : StickerColor.values()) {
+        for(Sticker faceColor : Sticker.values()) {
             faceStates.put(faceColor, new FaceState(faceColor));
         }
     }
 
-    public CubeState(StickerColor[] stickerColors) {
-        if(stickerColors.length != 54) {
+    public CubeState(Sticker[] stickers) {
+        if(stickers.length != 54) {
             throw new IllegalArgumentException("stickerColors length must be 54 for cube");
         }
 
         int faceNo = 0;
-        for(StickerColor faceColor: FACES_ORDER) {
-            StickerColor[] stickerColorsForFace = Arrays.copyOfRange(stickerColors, faceNo * 9, (faceNo + 1) * 9);
+        for(Sticker faceColor: FACES_ORDER) {
+            Sticker[] stickerColorsForFace = Arrays.copyOfRange(stickers, faceNo * 9, (faceNo + 1) * 9);
             FaceState faceState = new FaceState(stickerColorsForFace);
             faceStates.put(faceColor, faceState);
             faceNo ++;
@@ -36,30 +36,30 @@ public class CubeState {
     }
 
     public static CubeState fromLetters(String stickerColorLetters) {
-        StickerColor[] stickerColors = (StickerColor[]) stickerColorLetters.chars()
-                .mapToObj(c -> StickerColor.fromLetter((char) c))
+        Sticker[] stickers = (Sticker[]) stickerColorLetters.chars()
+                .mapToObj(c -> Sticker.fromLetter((char) c))
                 .toArray();
-        return new CubeState(stickerColors);
+        return new CubeState(stickers);
     }
 
     public String getLetters() {
         StringBuilder builder = new StringBuilder();
-        for(StickerColor faceColor : FACES_ORDER) {
+        for(Sticker faceColor : FACES_ORDER) {
             String faceLetters = faceStates.get(faceColor).toString();
             builder.append(faceLetters);
         }
         return builder.toString();
     }
 
-    public void setSticker(StickerOnCubePos stickerOnCubePos, StickerColor stickerColor) {
-        getFaceState(stickerOnCubePos.getFace()).setSticker(stickerOnCubePos, stickerColor);
+    public void setSticker(StickerOnCubePos stickerOnCubePos, Sticker sticker) {
+        getFaceState(stickerOnCubePos.getFace()).setSticker(stickerOnCubePos, sticker);
     }
 
-    public StickerColor getSticker(StickerOnCubePos stickerOnCubePos) {
+    public Sticker getSticker(StickerOnCubePos stickerOnCubePos) {
         return getFaceState(stickerOnCubePos.getFace()).getSticker(stickerOnCubePos);
     }
 
-    public FaceState getFaceState(StickerColor face) {
+    public FaceState getFaceState(Sticker face) {
         return faceStates.get(face);
     }
 
@@ -67,7 +67,7 @@ public class CubeState {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append(this.getClass().getSimpleName()).append("(\n");
-        for(StickerColor faceColor : FACES_ORDER) {
+        for(Sticker faceColor : FACES_ORDER) {
             FaceState faceState = faceStates.get(faceColor);
             builder.append(faceColor)
                     .append(": ")

@@ -3,40 +3,40 @@ package com.github.klima7.common.domain;
 import java.util.Arrays;
 
 public class FaceState {
-    private final StickerColor[] stickerColors = new StickerColor[9];
+    private final Sticker[] stickers = new Sticker[9];
 
-    public FaceState(StickerColor stickerColor) {
-        Arrays.fill(stickerColors, stickerColor);
+    public FaceState(Sticker sticker) {
+        Arrays.fill(stickers, sticker);
     }
 
-    public FaceState(StickerColor[] stickerColors) {
-        if(stickerColors.length != 9) {
-            throw new IllegalArgumentException("stickerColors length must be 9 for face");
+    public FaceState(Sticker[] stickers) {
+        if(stickers.length != 9) {
+            throw new IllegalArgumentException("Length of stickers array must be 9");
         }
-        System.arraycopy(stickerColors, 0, this.stickerColors, 0, 9);
+        System.arraycopy(stickers, 0, this.stickers, 0, 9);
     }
 
     public static FaceState fromLetters(String stickerColorLetters) {
-        StickerColor[] stickerColors = (StickerColor[]) stickerColorLetters.chars()
-                .mapToObj(c -> StickerColor.fromLetter((char) c))
+        Sticker[] stickers = (Sticker[]) stickerColorLetters.chars()
+                .mapToObj(c -> Sticker.fromLetter((char) c))
                 .toArray();
-        return new FaceState(stickerColors);
+        return new FaceState(stickers);
     }
 
     public String getLetters() {
         StringBuilder builder = new StringBuilder();
-        for(StickerColor stickerColor : stickerColors) {
-            builder.append(stickerColor.getLetter());
+        for(Sticker sticker : stickers) {
+            builder.append(sticker.getLetter());
         }
         return builder.toString();
     }
 
-    public StickerColor getSticker(StickerOnFacePos stickerOnFacePos) {
-        return stickerColors[stickerOnFacePos.getLinearIndex()];
+    public Sticker getSticker(StickerOnFacePos stickerOnFacePos) {
+        return stickers[stickerOnFacePos.getLinearIndex()];
     }
 
-    public void setSticker(StickerOnFacePos stickerOnFacePos, StickerColor stickerColor) {
-        stickerColors[stickerOnFacePos.getLinearIndex()] = stickerColor;
+    public void setSticker(StickerOnFacePos stickerOnFacePos, Sticker sticker) {
+        stickers[stickerOnFacePos.getLinearIndex()] = sticker;
     }
 
     @Override

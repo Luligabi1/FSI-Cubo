@@ -2,17 +2,17 @@ package com.github.klima7.common.domain;
 
 public enum MoveFace {
     U(
-            StickerColor.YELLOW,
-            new FaceThreeStickers(StickerColor.BLUE, 0, 1, 2),
-            new FaceThreeStickers(StickerColor.RED, 0, 1, 2),
-            new FaceThreeStickers(StickerColor.GREEN, 0, 1, 2),
-            new FaceThreeStickers(StickerColor.ORANGE, 0, 1, 2)
+            Sticker.YELLOW,
+            new FaceThreeStickers(Sticker.BLUE, 0, 1, 2),
+            new FaceThreeStickers(Sticker.RED, 0, 1, 2),
+            new FaceThreeStickers(Sticker.GREEN, 0, 1, 2),
+            new FaceThreeStickers(Sticker.ORANGE, 0, 1, 2)
     );
 
-    private StickerColor MainFace;
+    private Sticker MainFace;
 
 
-    MoveFace(StickerColor faceColor, FaceThreeStickers faceStickers1, FaceThreeStickers faceStickers2,
+    MoveFace(Sticker faceColor, FaceThreeStickers faceStickers1, FaceThreeStickers faceStickers2,
              FaceThreeStickers faceStickers3, FaceThreeStickers faceStickers4) {
 
     }

@@ -1,22 +1,22 @@
 package com.github.klima7.common.domain;
 
 public class StickerOnCubePos extends StickerOnFacePos {
-    private final StickerColor face;
+    private final Sticker face;
 
-    public StickerOnCubePos(StickerColor face, StickerOnFacePos stickerOnFacePos) {
+    public StickerOnCubePos(Sticker face, StickerOnFacePos stickerOnFacePos) {
         super(stickerOnFacePos.getLinearIndex());
         this.face = face;
     }
 
-    public StickerOnCubePos(StickerColor face, int linearIndex) {
+    public StickerOnCubePos(Sticker face, int linearIndex) {
         this(face, new StickerOnFacePos(linearIndex));
     }
 
-    public StickerOnCubePos(StickerColor face, int x, int y) {
+    public StickerOnCubePos(Sticker face, int x, int y) {
         this(face, new StickerOnFacePos(x, y));
     }
 
-    public StickerColor getFace() {
+    public Sticker getFace() {
         return this.face;
     }
 }

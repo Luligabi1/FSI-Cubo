@@ -1,6 +1,6 @@
 package com.github.klima7.common.domain;
 
-enum StickerColor {
+enum Sticker {
     WHITE('w', new Color(255, 255, 255)),
     YELLOW('y', new Color(255, 255, 0)),
     RED('r', new Color(255, 0, 0)),
@@ -11,18 +11,18 @@ enum StickerColor {
     private final Color color;
     private final char letter;
 
-    StickerColor(char letter, Color color) {
+    Sticker(char letter, Color color) {
         this.letter = letter;
         this.color = color;
     }
 
-    public static StickerColor fromLetter(char letter) {
-        for(StickerColor stickerColor : StickerColor.values()) {
-            if(stickerColor.letter == letter) {
-                return stickerColor;
+    public static Sticker fromLetter(char letter) {
+        for(Sticker sticker : Sticker.values()) {
+            if(sticker.letter == letter) {
+                return sticker;
             }
         }
-        throw new IllegalArgumentException("Unable to find FaceColor with letter '" + letter + "'");
+        throw new IllegalArgumentException("Unable to find Sticker with letter '" + letter + "'");
     }
 
     public char getLetter() {

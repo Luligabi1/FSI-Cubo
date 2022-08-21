@@ -1,19 +1,19 @@
 package com.github.klima7.common.domain;
 
 public class FaceThreeStickers {
-    private final StickerColor faceColor;
+    private final Sticker faceColor;
     private final int sticker1;
     private final int sticker2;
     private final int sticker3;
 
-    public FaceThreeStickers(StickerColor faceColor, int sticker1, int sticker2, int sticker3) {
+    public FaceThreeStickers(Sticker faceColor, int sticker1, int sticker2, int sticker3) {
         this.faceColor = faceColor;
         this.sticker1 = sticker1;
         this.sticker2 = sticker2;
         this.sticker3 = sticker3;
     }
 
-    public StickerColor getFaceColor() {
+    public Sticker getFaceColor() {
         return faceColor;
     }
 
