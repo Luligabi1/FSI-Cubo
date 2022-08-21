@@ -1,6 +1,6 @@
 package com.github.klima7.common.entities;
 
-import com.github.klima7.registry.TileRegistry;
+import com.github.klima7.registry.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -16,18 +16,18 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class RubiksCubeTileEntity extends BlockEntity implements IAnimatable {
+public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
     private static final String CONTROLLER_NAME = "rubiks_cube_block_controller";
 
-    private AnimationFactory factory = new AnimationFactory(this);
+    private final AnimationFactory factory = new AnimationFactory(this);
 
-    public RubiksCubeTileEntity(BlockPos pos, BlockState state) {
-        super(TileRegistry.RUBIKS_CUBE.get(), pos, state);
+    public RubiksCubeBlockEntity(BlockPos pos, BlockState state) {
+        super(BlockEntityRegistry.RUBIKS_CUBE.get(), pos, state);
     }
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, CONTROLLER_NAME, 0, this::predicate));
+        data.addAnimationController(new AnimationController<>(this, CONTROLLER_NAME, 0, this::predicate));
     }
 
     @Override

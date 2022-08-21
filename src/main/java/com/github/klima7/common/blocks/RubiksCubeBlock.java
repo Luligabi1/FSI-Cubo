@@ -1,6 +1,6 @@
 package com.github.klima7.common.blocks;
 
-import com.github.klima7.registry.TileRegistry;
+import com.github.klima7.registry.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.*;
@@ -25,7 +25,7 @@ public class RubiksCubeBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
-        return TileRegistry.RUBIKS_CUBE.get().create(blockPos, blockState);
+        return BlockEntityRegistry.RUBIKS_CUBE.get().create(blockPos, blockState);
     }
 
     @Override

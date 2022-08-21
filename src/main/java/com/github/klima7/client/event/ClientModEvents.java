@@ -1,8 +1,8 @@
 package com.github.klima7.client.event;
 
 import com.github.klima7.RubiksCubeMod;
-import com.github.klima7.client.renderer.blocks.RubiksCubeTileRenderer;
-import com.github.klima7.registry.TileRegistry;
+import com.github.klima7.client.renderer.blocks.RubiksCubeBlockEntityRenderer;
+import com.github.klima7.registry.BlockEntityRegistry;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -16,6 +16,6 @@ public final class ClientModEvents {
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(TileRegistry.RUBIKS_CUBE.get(), RubiksCubeTileRenderer::new);
+        event.registerBlockEntityRenderer(BlockEntityRegistry.RUBIKS_CUBE.get(), RubiksCubeBlockEntityRenderer::new);
     }
 }
