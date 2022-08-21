@@ -1,7 +1,7 @@
 package com.github.klima7.client.model.item;
 
 import com.github.klima7.RubiksCubeMod;
-import com.github.klima7.common.items.RubiksCubeItem;
+import com.github.klima7.common.item.RubiksCubeItem;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 

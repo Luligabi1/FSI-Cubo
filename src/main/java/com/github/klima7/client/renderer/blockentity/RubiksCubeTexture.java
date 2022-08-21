@@ -1,4 +1,4 @@
-package com.github.klima7.client.renderer.blocks;
+package com.github.klima7.client.renderer.blockentity;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;

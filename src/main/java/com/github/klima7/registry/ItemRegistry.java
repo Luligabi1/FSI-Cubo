@@ -1,7 +1,7 @@
 package com.github.klima7.registry;
 
 import com.github.klima7.RubiksCubeMod;
-import com.github.klima7.common.items.RubiksCubeItem;
+import com.github.klima7.common.item.RubiksCubeItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;

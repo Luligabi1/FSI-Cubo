@@ -1,4 +1,4 @@
-package com.github.klima7.common.entities;
+package com.github.klima7.common.entity;
 
 import com.github.klima7.registry.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;

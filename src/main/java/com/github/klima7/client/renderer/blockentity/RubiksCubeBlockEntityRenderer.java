@@ -1,7 +1,7 @@
-package com.github.klima7.client.renderer.blocks;
+package com.github.klima7.client.renderer.blockentity;
 
 import com.github.klima7.client.model.blockentity.RubiksCubeModel;
-import com.github.klima7.common.entities.RubiksCubeBlockEntity;
+import com.github.klima7.common.entity.RubiksCubeBlockEntity;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.renderers.geo.GeoBlockRenderer;

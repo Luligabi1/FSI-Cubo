@@ -1,7 +1,7 @@
 package com.github.klima7.registry;
 
 import com.github.klima7.RubiksCubeMod;
-import com.github.klima7.common.entities.RubiksCubeBlockEntity;
+import com.github.klima7.common.entity.RubiksCubeBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
