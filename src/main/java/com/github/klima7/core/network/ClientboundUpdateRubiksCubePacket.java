@@ -26,7 +26,6 @@ public class ClientboundUpdateRubiksCubePacket {
         final var success = new AtomicBoolean(false);
         context.get().enqueueWork(() -> {
             DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> {
-                System.out.println("Handle");
                 success.set(true);
                 return null;
             });

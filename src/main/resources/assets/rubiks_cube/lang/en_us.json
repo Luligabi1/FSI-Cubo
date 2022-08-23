@@ -1,4 +1,5 @@
 {
   "block.rubiks_cube.rubiks_cube": "Rubik's Cube",
-  "item.rubiks_cube.rubiks_cube": "Rubik's Cube"
+  "item.rubiks_cube.rubiks_cube": "Rubik's Cube",
+  "key.rubiks_cube.reverse": "Rubik's Cube Reverse Move"
 }

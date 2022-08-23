@@ -1,8 +1,12 @@
 package com.github.klima7.common.block;
 
+import com.github.klima7.client.KeyInit;
 import com.github.klima7.common.entity.RubiksCubeBlockEntity;
 import com.github.klima7.core.init.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -12,6 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,4 +56,11 @@ public class RubiksCubeBlock extends Block implements EntityBlock {
         return level.isClientSide() ? null :(_level, _pos, _state, blockEntity) ->
                 ((RubiksCubeBlockEntity) blockEntity).tick();
     }
+
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        System.out.println("Moving face " + hitResult.getDirection() + " reverse " + KeyInit.REVERSE.isDown());
+        return InteractionResult.SUCCESS;
+    }
+
 }
