@@ -64,4 +64,7 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
         return PlayState.CONTINUE;
     }
 
+    public void tick() {
+        System.out.println("RubiksCubeBlockEntity tick");
+    }
 }

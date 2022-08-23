@@ -1,5 +1,6 @@
 package com.github.klima7.client.renderer.blockentity;
 
+import com.github.klima7.RubiksCubeMod;
 import com.github.klima7.client.model.blockentity.RubiksCubeModel;
 import com.github.klima7.client.renderer.texture.RubiksCubeTextureManager;
 import com.github.klima7.common.entity.RubiksCubeBlockEntity;
@@ -19,7 +20,8 @@ public class RubiksCubeBlockEntityRenderer extends GeoBlockRenderer<RubiksCubeBl
 
     @Override
     public ResourceLocation getTextureLocation(RubiksCubeBlockEntity instance) {
-        return textureManager.getTexture(0);    // TODO
+        return new ResourceLocation(RubiksCubeMod.MODID+":textures/block/rubiks_cube.png");
+//        return textureManager.getTexture(0);    // TODO
     }
 
 }
