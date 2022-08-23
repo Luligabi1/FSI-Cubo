@@ -1,7 +1,7 @@
 package com.github.klima7.common.item;
 
 import com.github.klima7.client.renderer.item.RubiksCubeItemRenderer;
-import com.github.klima7.registry.BlockRegistry;
+import com.github.klima7.core.init.BlockRegistry;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;

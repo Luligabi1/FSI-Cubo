@@ -1,6 +1,6 @@
 package com.github.klima7.common.block;
 
-import com.github.klima7.registry.BlockEntityRegistry;
+import com.github.klima7.core.init.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.*;

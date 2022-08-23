@@ -1,4 +1,4 @@
-package com.github.klima7.registry;
+package com.github.klima7.core.init;
 
 import com.github.klima7.RubiksCubeMod;
 import com.github.klima7.common.block.RubiksCubeBlock;

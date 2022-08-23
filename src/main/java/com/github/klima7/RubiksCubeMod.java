@@ -1,8 +1,8 @@
 package com.github.klima7;
 
-import com.github.klima7.registry.BlockRegistry;
-import com.github.klima7.registry.ItemRegistry;
-import com.github.klima7.registry.BlockEntityRegistry;
+import com.github.klima7.core.init.BlockRegistry;
+import com.github.klima7.core.init.ItemRegistry;
+import com.github.klima7.core.init.BlockEntityRegistry;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
