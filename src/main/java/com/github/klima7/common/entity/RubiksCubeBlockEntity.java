@@ -1,12 +1,15 @@
 package com.github.klima7.common.entity;
 
 import com.github.klima7.core.init.BlockEntityRegistry;
+import com.github.klima7.core.init.PacketHandler;
+import com.github.klima7.core.network.ClientboundUpdateRubiksCubePacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -65,6 +68,9 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
     }
 
     public void tick() {
-        System.out.println("RubiksCubeBlockEntity tick");
+        PacketHandler.CHANNEL.send(
+            PacketDistributor.TRACKING_CHUNK.with(() -> this.level.getChunkAt(this.worldPosition)),
+            new ClientboundUpdateRubiksCubePacket(1)
+        );
     }
 }
