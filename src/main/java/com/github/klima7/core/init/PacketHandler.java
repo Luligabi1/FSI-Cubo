@@ -1,7 +1,6 @@
 package com.github.klima7.core.init;
 
 import com.github.klima7.RubiksCubeMod;
-import com.github.klima7.core.network.ClientboundUpdateRubiksCubePacket;
 import com.github.klima7.core.network.ServerboundUpdateRubiksCubePacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkDirection;
@@ -20,10 +19,6 @@ public class PacketHandler {
 
     public static void init() {
         int index = 0;
-
-        CHANNEL.messageBuilder(ClientboundUpdateRubiksCubePacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
-                .encoder(ClientboundUpdateRubiksCubePacket::encode).decoder(ClientboundUpdateRubiksCubePacket::new)
-                .consumerMainThread(ClientboundUpdateRubiksCubePacket::handle).add();
 
         CHANNEL.messageBuilder(ServerboundUpdateRubiksCubePacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
                 .encoder(ServerboundUpdateRubiksCubePacket::encode).decoder(ServerboundUpdateRubiksCubePacket::new)
