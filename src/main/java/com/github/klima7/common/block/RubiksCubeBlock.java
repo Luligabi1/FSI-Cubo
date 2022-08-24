@@ -3,7 +3,10 @@ package com.github.klima7.common.block;
 import com.github.klima7.client.KeyInit;
 import com.github.klima7.common.entity.RubiksCubeBlockEntity;
 import com.github.klima7.core.init.BlockEntityRegistry;
+import com.github.klima7.core.init.PacketHandler;
+import com.github.klima7.core.network.ServerboundUpdateRubiksCubePacket;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -65,13 +68,18 @@ public class RubiksCubeBlock extends DirectionalBlock implements EntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if(!level.isClientSide()) {
-            RubiksCubeBlockEntity entity = (RubiksCubeBlockEntity) level.getBlockEntity(pos);
-            entity.move();
-            level.sendBlockUpdated(pos, state, state, 3);
             return InteractionResult.SUCCESS;
         }
 
-        System.out.println("Moving face " + hitResult.getDirection() + " reverse " + KeyInit.REVERSE.isDown());
+        Direction direction = hitResult.getDirection();
+        boolean reverse = KeyInit.REVERSE.isDown();
+
+        System.out.println("Moving face " + direction + " reverse " + reverse);
+
+        PacketHandler.CHANNEL.sendToServer(
+                new ServerboundUpdateRubiksCubePacket(direction, reverse)
+        );
+
         return InteractionResult.SUCCESS;
     }
 
