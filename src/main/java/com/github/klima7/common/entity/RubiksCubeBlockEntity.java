@@ -25,6 +25,8 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
     private final AnimationFactory factory = new AnimationFactory(this);
 
+    private boolean isMoving = false;
+
     public RubiksCubeBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.RUBIKS_CUBE.get(), pos, state);
     }
@@ -42,35 +44,66 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
     @Override
     protected void saveAdditional(@NotNull CompoundTag tag) {
         super.saveAdditional(tag);
+        tag.putBoolean("isMoving", isMoving);
+        System.out.println("saveAdditional");
     }
 
     @Override
     public void load(@NotNull CompoundTag tag) {
         super.load(tag);
+        this.isMoving = tag.getBoolean("isMoving");
+        System.out.println("load");
+    }
+
+    @NotNull
+    @Override
+    public CompoundTag getUpdateTag() {
+        System.out.println("getUpdateTag");
+        CompoundTag tag = super.getUpdateTag();
+        saveAdditional(tag);
+        return tag;
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag) {
+        System.out.println("handleUpdateTag");
+        if (tag != null) {
+            load(tag);
+        }
     }
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        System.out.println("getUpdatePacket");
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
     public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
+        System.out.println("onDataPacket");
         CompoundTag tag = packet.getTag();
         if(tag != null) {
             load(tag);
         }
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.rubiks_cube.clockwise", true));
-        return PlayState.STOP;
+    public void serverTick() {
+        PacketHandler.CHANNEL.send(
+                PacketDistributor.TRACKING_CHUNK.with(() -> this.level.getChunkAt(this.worldPosition)),
+                new ClientboundUpdateRubiksCubePacket(1)
+        );
     }
 
-    public void tick() {
-        PacketHandler.CHANNEL.send(
-            PacketDistributor.TRACKING_CHUNK.with(() -> this.level.getChunkAt(this.worldPosition)),
-            new ClientboundUpdateRubiksCubePacket(1)
-        );
+    public void move() {
+        this.isMoving = true;
+        setChanged();
+    }
+
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.rubiks_cube.clockwise", true));
+        if(isMoving)
+            return PlayState.CONTINUE;
+        else
+            return PlayState.STOP;
     }
 }

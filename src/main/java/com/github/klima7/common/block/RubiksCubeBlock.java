@@ -59,13 +59,17 @@ public class RubiksCubeBlock extends DirectionalBlock implements EntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
                                                                   BlockEntityType<T> type) {
         return level.isClientSide() ? null :(_level, _pos, _state, blockEntity) ->
-                ((RubiksCubeBlockEntity) blockEntity).tick();
+                ((RubiksCubeBlockEntity) blockEntity).serverTick();
     }
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if(!level.isClientSide())
+        if(!level.isClientSide()) {
+            RubiksCubeBlockEntity entity = (RubiksCubeBlockEntity) level.getBlockEntity(pos);
+            entity.move();
+            level.sendBlockUpdated(pos, state, state, 3);
             return InteractionResult.SUCCESS;
+        }
 
         System.out.println("Moving face " + hitResult.getDirection() + " reverse " + KeyInit.REVERSE.isDown());
         return InteractionResult.SUCCESS;
