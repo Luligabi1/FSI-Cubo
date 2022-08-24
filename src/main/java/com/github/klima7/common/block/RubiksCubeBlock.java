@@ -64,6 +64,9 @@ public class RubiksCubeBlock extends DirectionalBlock implements EntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if(!level.isClientSide())
+            return InteractionResult.SUCCESS;
+
         System.out.println("Moving face " + hitResult.getDirection() + " reverse " + KeyInit.REVERSE.isDown());
         return InteractionResult.SUCCESS;
     }
