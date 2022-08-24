@@ -77,7 +77,7 @@ public class RubiksCubeBlock extends DirectionalBlock implements EntityBlock {
         System.out.println("Moving face " + direction + " reverse " + reverse);
 
         PacketHandler.CHANNEL.sendToServer(
-                new ServerboundUpdateRubiksCubePacket(direction, reverse)
+                new ServerboundUpdateRubiksCubePacket(pos, direction, reverse)
         );
 
         return InteractionResult.SUCCESS;

@@ -1,46 +1,57 @@
 package com.github.klima7.core.network;
 
+import com.github.klima7.common.entity.RubiksCubeBlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkEvent;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
 public class ServerboundUpdateRubiksCubePacket {
 
-    private Direction direction;
-    private boolean reverse;
+    private final BlockPos pos;
+    private final Direction direction;
+    private final boolean reverse;
 
-    public ServerboundUpdateRubiksCubePacket(Direction direction, boolean reverse) {
+    public ServerboundUpdateRubiksCubePacket(BlockPos pos, Direction direction, boolean reverse) {
+        this.pos = pos;
         this.direction = direction;
         this.reverse = reverse;
     }
 
     public ServerboundUpdateRubiksCubePacket(FriendlyByteBuf buffer) {
-        this(buffer.readEnum(Direction.class), buffer.readBoolean());
+        this(
+                buffer.readBlockPos(),
+                buffer.readEnum(Direction.class),
+                buffer.readBoolean()
+        );
     }
 
     public void encode(FriendlyByteBuf buffer) {
+        buffer.writeBlockPos(this.pos);
         buffer.writeEnum(this.direction);
         buffer.writeBoolean(this.reverse);
     }
 
     public boolean handle(Supplier<NetworkEvent.Context> context) {
-        final var success = new AtomicBoolean(false);
-        context.get().enqueueWork(() -> {
-            System.out.println("Received update packet");
-        });
+        context.get().enqueueWork(() -> handleLater(context.get()));
         context.get().setPacketHandled(true);
-        return success.get();
+        return true;
     }
 
-    public Direction getDirection() {
-        return direction;
-    }
-
-    public boolean isReverse() {
-        return reverse;
+    private void handleLater(NetworkEvent.Context context) {
+        System.out.println("Received update packet");
+        Level level = context.getSender().level;
+        BlockEntity entity = level.getBlockEntity(this.pos);
+        if(entity instanceof final RubiksCubeBlockEntity rcEntity) {
+            rcEntity.move();
+            BlockState state = entity.getBlockState();
+            level.sendBlockUpdated(pos, state, state, 3);
+        }
     }
 
 }
