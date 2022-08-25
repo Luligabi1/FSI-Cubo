@@ -44,13 +44,10 @@ public class ServerboundUpdateRubiksCubePacket {
     }
 
     private void handleLater(NetworkEvent.Context context) {
-        System.out.println("Received update packet");
         Level level = context.getSender().level;
         BlockEntity entity = level.getBlockEntity(this.pos);
         if(entity instanceof final RubiksCubeBlockEntity rcEntity) {
-            rcEntity.move();
-            BlockState state = entity.getBlockState();
-            level.sendBlockUpdated(pos, state, state, 3);
+            rcEntity.moveFace(direction, reverse);
         }
     }
 

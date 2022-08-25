@@ -2,6 +2,7 @@ package com.github.klima7.common.entity;
 
 import com.github.klima7.core.init.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -19,10 +20,12 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
     private static final String CONTROLLER_NAME = "rubiks_cube_block_controller";
+    private static final int MOVE_DURATION = 20;
 
     private final AnimationFactory factory = new AnimationFactory(this);
 
     private boolean isMoving = false;
+    private long startTime;
 
     public RubiksCubeBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.RUBIKS_CUBE.get(), pos, state);
@@ -42,20 +45,19 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
     protected void saveAdditional(@NotNull CompoundTag tag) {
         super.saveAdditional(tag);
         tag.putBoolean("isMoving", isMoving);
-        System.out.println("saveAdditional");
+        tag.putLong("startTime", startTime);
     }
 
     @Override
     public void load(@NotNull CompoundTag tag) {
         super.load(tag);
         this.isMoving = tag.getBoolean("isMoving");
-        System.out.println("load");
+        this.startTime = tag.getLong("startTime");
     }
 
     @NotNull
     @Override
     public CompoundTag getUpdateTag() {
-        System.out.println("getUpdateTag");
         CompoundTag tag = super.getUpdateTag();
         saveAdditional(tag);
         return tag;
@@ -63,7 +65,6 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
     @Override
     public void handleUpdateTag(CompoundTag tag) {
-        System.out.println("handleUpdateTag");
         if (tag != null) {
             load(tag);
         }
@@ -71,13 +72,11 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        System.out.println("getUpdatePacket");
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
     public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
-        System.out.println("onDataPacket");
         CompoundTag tag = packet.getTag();
         if(tag != null) {
             load(tag);
@@ -85,19 +84,44 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
     }
 
     public void serverTick() {
-
+        long currentTime = level.getGameTime();
+        if(this.isMoving && currentTime - this.startTime >= MOVE_DURATION) {
+            System.out.println("Time elapsed");
+            this.startTime = 0;
+            this.isMoving = false;
+        }
+        sync();
     }
 
-    public void move() {
+    public void moveFace(Direction direction, boolean reverse) {
+        if(this.isMoving) {
+            return;
+        }
+
         this.isMoving = true;
-        setChanged();
+        this.startTime = level.getGameTime();
+        sync();
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.rubiks_cube.clockwise", false));
-        if(isMoving)
+        if(this.isMoving) {
+            System.out.println("Moving");
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.rubiks_cube.clockwise", false));
             return PlayState.CONTINUE;
-        else
+        }
+        else {
+            System.out.println("Not moving");
+            event.getController().setAnimation(null);
+            event.getController().markNeedsReload();
             return PlayState.STOP;
+        }
+    }
+
+    private void sync() {
+        if(!level.isClientSide()) {
+            setChanged();
+            BlockState state = getBlockState();
+            level.sendBlockUpdated(getBlockPos(), state, state, 3);
+        }
     }
 }
