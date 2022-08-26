@@ -2,6 +2,9 @@ package com.github.klima7.client.renderer.texture;
 
 import com.github.klima7.RubiksCubeMod;
 import com.github.klima7.common.domain.CubeState;
+import com.github.klima7.common.domain.FaceState;
+import com.github.klima7.common.domain.Sticker;
+import com.github.klima7.common.domain.StickerOnFacePos;
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -38,14 +41,6 @@ public class RubiksCubeTexture {
         lastCubeState = CubeState.fromCubeState(cubeState);
     }
 
-    private boolean isUpdateNeeded(CubeState cubeState) {
-        return lastCubeState == null || !lastCubeState.equals(cubeState);
-    }
-
-    private void update(CubeState cubeState) {
-        this.texture.upload();
-    }
-
     private void drawTemplate(ResourceManager resourceManager) {
         try {
             NativeImage template = NativeImage.read(resourceManager.open(TEMPLATE_LOCATION));
@@ -53,6 +48,33 @@ public class RubiksCubeTexture {
         } catch(IOException e) {
             e.printStackTrace();
             System.exit(1);
+        }
+    }
+
+    private boolean isUpdateNeeded(CubeState cubeState) {
+        return lastCubeState == null || !lastCubeState.equals(cubeState);
+    }
+
+    private void update(CubeState cubeState) {
+        updateFace(cubeState, Sticker.WHITE, 16, 16);
+        updateFace(cubeState, Sticker.YELLOW, 48, 16);
+        updateFace(cubeState, Sticker.BLUE, 16, 0);
+        updateFace(cubeState, Sticker.GREEN, 16, 32);
+        updateFace(cubeState, Sticker.RED, 32, 16);
+        updateFace(cubeState, Sticker.ORANGE, 0, 16);
+        this.texture.upload();
+    }
+
+    private void updateFace(CubeState cubeState, Sticker face, int shift_x, int shift_y) {
+        FaceState faceState = cubeState.getFaceState(face);
+        for(int sticker_x=0; sticker_x<3; sticker_x++) {
+            for(int sticker_y=0; sticker_y<3; sticker_y++) {
+                Sticker sticker = faceState.getSticker(new StickerOnFacePos(sticker_x, sticker_y));
+                int color = sticker.getColor();
+                int pos_x = shift_x + 1 + sticker_x * 5;
+                int pos_y = shift_y + 1 + sticker_y * 5;
+                this.texture.getPixels().fillRect(pos_x, pos_y, 4, 4, color);
+            }
         }
     }
 }

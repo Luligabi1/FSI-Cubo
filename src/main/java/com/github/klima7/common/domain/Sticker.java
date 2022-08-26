@@ -1,12 +1,12 @@
 package com.github.klima7.common.domain;
 
-enum Sticker {
+public enum Sticker {
 
     WHITE('w', 0xffffffff),
-    YELLOW('y', 0xffffff00),
-    RED('r', 0xffff0000),
-    ORANGE('o', 0xffff8000),
-    BLUE('b', 0xff0000ff),
+    YELLOW('y', 0xff00ffff),
+    RED('r', 0xff0000ff),
+    ORANGE('o', 0xff0080ff),
+    BLUE('b', 0xffff0000),
     GREEN('g', 0xff00ff00);
 
     private final char letter;
