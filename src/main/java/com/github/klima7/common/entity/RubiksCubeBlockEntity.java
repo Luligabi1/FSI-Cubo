@@ -2,11 +2,13 @@ package com.github.klima7.common.entity;
 
 import com.github.klima7.common.domain.CubeState;
 import com.github.klima7.core.init.BlockEntityRegistry;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -25,6 +27,7 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
     private final AnimationFactory factory = new AnimationFactory(this);
 
+    private int id;
     private boolean isMoving = false;
     private long startTime;
     private CubeState cubeState;
@@ -32,6 +35,12 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
     public RubiksCubeBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.RUBIKS_CUBE.get(), pos, state);
         this.cubeState = new CubeState();
+    }
+
+    @Override
+    public void setLevel(Level level) {
+        super.setLevel(level);
+        this.id = level.getFreeMapId();
     }
 
     @Override
@@ -47,6 +56,7 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
     @Override
     protected void saveAdditional(@NotNull CompoundTag tag) {
         super.saveAdditional(tag);
+        tag.putInt("id", id);
         tag.putBoolean("isMoving", isMoving);
         tag.putLong("startTime", startTime);
         tag.putString("cubeState", cubeState.getLetters());
@@ -55,6 +65,7 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
     @Override
     public void load(@NotNull CompoundTag tag) {
         super.load(tag);
+        this.id = tag.getInt("id");
         this.isMoving = tag.getBoolean("isMoving");
         this.startTime = tag.getLong("startTime");
         this.cubeState = CubeState.fromLetters(tag.getString("cubeState"));
@@ -108,6 +119,14 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
         sync();
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public CubeState getCubeState() {
+        return this.cubeState;
+    }
+
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if(this.isMoving) {
             System.out.println("Moving");
@@ -129,4 +148,5 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
             level.sendBlockUpdated(getBlockPos(), state, state, 3);
         }
     }
+
 }

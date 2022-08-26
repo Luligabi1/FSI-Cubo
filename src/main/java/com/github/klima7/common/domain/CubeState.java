@@ -2,6 +2,7 @@ package com.github.klima7.common.domain;
 
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.Objects;
 
 public class CubeState {
 
@@ -43,6 +44,10 @@ public class CubeState {
         return new CubeState(stickers);
     }
 
+    public static CubeState fromCubeState(CubeState cubeState) {
+        return CubeState.fromLetters(cubeState.getLetters());
+    }
+
     public String getLetters() {
         StringBuilder builder = new StringBuilder();
         for(Sticker faceColor : FACES_ORDER) {
@@ -77,6 +82,19 @@ public class CubeState {
         }
         builder.append(")");
         return builder.toString();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
+        CubeState cubeState = (CubeState) other;
+        return cubeState.getLetters().equals(cubeState.getLetters());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(faceStates);
     }
 
 }
