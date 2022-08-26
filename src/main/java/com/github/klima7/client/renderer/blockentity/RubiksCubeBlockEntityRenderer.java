@@ -6,7 +6,6 @@ import com.github.klima7.client.renderer.texture.RubiksCubeTextureManager;
 import com.github.klima7.common.entity.RubiksCubeBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -18,7 +17,7 @@ public class RubiksCubeBlockEntityRenderer extends GeoBlockRenderer<RubiksCubeBl
 
     public RubiksCubeBlockEntityRenderer(BlockEntityRendererProvider.Context rendererDispatcherIn) {
         super(rendererDispatcherIn, new RubiksCubeModel());
-        this.rubiksCubeTextureManager = new RubiksCubeTextureManager(Minecraft.getInstance().getTextureManager());
+        this.rubiksCubeTextureManager = new RubiksCubeTextureManager();
     }
 
     @Override
