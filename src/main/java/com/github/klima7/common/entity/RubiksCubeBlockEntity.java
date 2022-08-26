@@ -1,5 +1,6 @@
 package com.github.klima7.common.entity;
 
+import com.github.klima7.common.domain.CubeState;
 import com.github.klima7.core.init.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -26,9 +27,11 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
     private boolean isMoving = false;
     private long startTime;
+    private CubeState cubeState;
 
     public RubiksCubeBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.RUBIKS_CUBE.get(), pos, state);
+        this.cubeState = new CubeState();
     }
 
     @Override
@@ -46,6 +49,7 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
         super.saveAdditional(tag);
         tag.putBoolean("isMoving", isMoving);
         tag.putLong("startTime", startTime);
+        tag.putString("cubeState", cubeState.getLetters());
     }
 
     @Override
@@ -53,6 +57,7 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
         super.load(tag);
         this.isMoving = tag.getBoolean("isMoving");
         this.startTime = tag.getLong("startTime");
+        this.cubeState = CubeState.fromLetters(tag.getString("cubeState"));
     }
 
     @NotNull

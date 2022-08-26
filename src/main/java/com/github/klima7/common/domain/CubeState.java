@@ -37,16 +37,16 @@ public class CubeState {
     }
 
     public static CubeState fromLetters(String stickerColorLetters) {
-        Sticker[] stickers = (Sticker[]) stickerColorLetters.chars()
+        Sticker[] stickers = stickerColorLetters.chars()
                 .mapToObj(c -> Sticker.fromLetter((char) c))
-                .toArray();
+                .toArray(Sticker[]::new);
         return new CubeState(stickers);
     }
 
     public String getLetters() {
         StringBuilder builder = new StringBuilder();
         for(Sticker faceColor : FACES_ORDER) {
-            String faceLetters = faceStates.get(faceColor).toString();
+            String faceLetters = faceStates.get(faceColor).getLetters();
             builder.append(faceLetters);
         }
         return builder.toString();
