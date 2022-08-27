@@ -89,7 +89,7 @@ public class CubeState {
         if (this == other) return true;
         if (other == null || getClass() != other.getClass()) return false;
         CubeState cubeState = (CubeState) other;
-        return cubeState.getLetters().equals(cubeState.getLetters());
+        return this.getLetters().equals(cubeState.getLetters());
     }
 
     @Override

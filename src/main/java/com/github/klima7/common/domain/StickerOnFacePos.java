@@ -26,6 +26,6 @@ public class StickerOnFacePos {
     }
 
     public int getLinearIndex() {
-        return this.y * 3 + this.y;
+        return this.y * 3 + this.x;
     }
 }

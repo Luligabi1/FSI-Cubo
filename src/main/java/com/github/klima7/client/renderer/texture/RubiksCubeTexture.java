@@ -36,6 +36,7 @@ public class RubiksCubeTexture {
     }
 
     public void updateIfNeeded(CubeState cubeState) {
+//        System.out.println(cubeState);
         if(isUpdateNeeded(cubeState))
             update(cubeState);
         lastCubeState = CubeState.fromCubeState(cubeState);
@@ -56,21 +57,21 @@ public class RubiksCubeTexture {
     }
 
     private void update(CubeState cubeState) {
-        updateFace(cubeState, Sticker.WHITE, 16, 16);
-        updateFace(cubeState, Sticker.YELLOW, 48, 16);
-        updateFace(cubeState, Sticker.BLUE, 16, 0);
-        updateFace(cubeState, Sticker.GREEN, 16, 32);
-        updateFace(cubeState, Sticker.RED, 32, 16);
-        updateFace(cubeState, Sticker.ORANGE, 0, 16);
+        updateFace(cubeState.getFaceState(Sticker.WHITE), 16, 16);
+        updateFace(cubeState.getFaceState(Sticker.YELLOW), 48, 16);
+        updateFace(cubeState.getFaceState(Sticker.BLUE), 16, 0);
+        updateFace(cubeState.getFaceState(Sticker.GREEN), 16, 32);
+        updateFace(cubeState.getFaceState(Sticker.RED), 32, 16);
+        updateFace(cubeState.getFaceState(Sticker.ORANGE), 0, 16);
         this.texture.upload();
     }
 
-    private void updateFace(CubeState cubeState, Sticker face, int shift_x, int shift_y) {
-        FaceState faceState = cubeState.getFaceState(face);
+    private void updateFace(FaceState faceState, int shift_x, int shift_y) {
         for(int sticker_x=0; sticker_x<3; sticker_x++) {
             for(int sticker_y=0; sticker_y<3; sticker_y++) {
                 Sticker sticker = faceState.getSticker(new StickerOnFacePos(sticker_x, sticker_y));
                 int color = sticker.getColor();
+                System.out.println(color);
                 int pos_x = shift_x + 1 + sticker_x * 5;
                 int pos_y = shift_y + 1 + sticker_y * 5;
                 this.texture.getPixels().fillRect(pos_x, pos_y, 4, 4, color);

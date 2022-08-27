@@ -1,6 +1,9 @@
 package com.github.klima7.common.entity;
 
 import com.github.klima7.common.domain.CubeState;
+import com.github.klima7.common.domain.MoveDirection;
+import com.github.klima7.common.domain.MoveExecutor;
+import com.github.klima7.common.domain.MoveFace;
 import com.github.klima7.core.init.BlockEntityRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -102,9 +105,10 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
     public void serverTick() {
         long currentTime = level.getGameTime();
         if(this.isMoving && currentTime - this.startTime >= MOVE_DURATION) {
-            System.out.println("Time elapsed");
             this.startTime = 0;
             this.isMoving = false;
+            System.out.println(this.cubeState);
+            MoveExecutor.move(this.cubeState, MoveFace.F, MoveDirection.CLOCKWISE);
         }
         sync();
     }
@@ -129,12 +133,10 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if(this.isMoving) {
-            System.out.println("Moving");
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.rubiks_cube.clockwise", false));
             return PlayState.CONTINUE;
         }
         else {
-            System.out.println("Not moving");
             event.getController().setAnimation(null);
             event.getController().markNeedsReload();
             return PlayState.STOP;

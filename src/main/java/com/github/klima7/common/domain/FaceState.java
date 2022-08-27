@@ -18,10 +18,14 @@ public class FaceState {
     }
 
     public static FaceState fromLetters(String stickerColorLetters) {
-        Sticker[] stickers = (Sticker[]) stickerColorLetters.chars()
+        Sticker[] stickers = stickerColorLetters.chars()
                 .mapToObj(c -> Sticker.fromLetter((char) c))
-                .toArray();
+                .toArray(Sticker[]::new);
         return new FaceState(stickers);
+    }
+
+    public static FaceState fromFaceState(FaceState faceState) {
+        return FaceState.fromLetters(faceState.getLetters());
     }
 
     public String getLetters() {
