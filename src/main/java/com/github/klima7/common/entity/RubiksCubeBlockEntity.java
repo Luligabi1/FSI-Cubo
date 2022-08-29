@@ -49,6 +49,7 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<>(this, CONTROLLER_NAME, 0, this::predicate));
+        data.setResetSpeedInTicks(0);
     }
 
     @Override
@@ -107,7 +108,6 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
         if(this.isMoving && currentTime - this.startTime >= MOVE_DURATION) {
             this.startTime = 0;
             this.isMoving = false;
-            System.out.println(this.cubeState);
             MoveExecutor.move(this.cubeState, MoveFace.F, MoveDirection.CLOCKWISE);
         }
         sync();
@@ -133,14 +133,12 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if(this.isMoving) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.rubiks_cube.clockwise", false));
-            return PlayState.CONTINUE;
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.rubiks_cube.clockwise"));
         }
         else {
-            event.getController().setAnimation(null);
-            event.getController().markNeedsReload();
-            return PlayState.STOP;
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.rubiks_cube.nothing"));
         }
+        return PlayState.CONTINUE;
     }
 
     private void sync() {
@@ -150,5 +148,4 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
             level.sendBlockUpdated(getBlockPos(), state, state, 3);
         }
     }
-
 }

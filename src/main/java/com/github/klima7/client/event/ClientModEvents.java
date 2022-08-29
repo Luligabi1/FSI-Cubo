@@ -24,10 +24,7 @@ public final class ClientModEvents {
 
     @SubscribeEvent
     public static void onKeyRegister(RegisterKeyMappingsEvent event) {
-        System.out.println("Here");
         for(KeyMapping keyMapping : KeyInit.KEY_MAPPINGS) {
-            System.out.println("Registering");
-            System.out.println(keyMapping);
             event.register(keyMapping);
         }
     }

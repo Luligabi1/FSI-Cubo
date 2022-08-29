@@ -36,7 +36,6 @@ public class RubiksCubeTexture {
     }
 
     public void updateIfNeeded(CubeState cubeState) {
-//        System.out.println(cubeState);
         if(isUpdateNeeded(cubeState))
             update(cubeState);
         lastCubeState = CubeState.fromCubeState(cubeState);
@@ -71,7 +70,6 @@ public class RubiksCubeTexture {
             for(int sticker_y=0; sticker_y<3; sticker_y++) {
                 Sticker sticker = faceState.getSticker(new StickerOnFacePos(sticker_x, sticker_y));
                 int color = sticker.getColor();
-                System.out.println(color);
                 int pos_x = shift_x + 1 + sticker_x * 5;
                 int pos_y = shift_y + 1 + sticker_y * 5;
                 this.texture.getPixels().fillRect(pos_x, pos_y, 4, 4, color);
