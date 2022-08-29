@@ -5,7 +5,6 @@ import com.github.klima7.common.domain.MoveDirection;
 import com.github.klima7.common.domain.MoveExecutor;
 import com.github.klima7.common.domain.MoveFace;
 import com.github.klima7.core.init.BlockEntityRegistry;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -19,6 +18,7 @@ import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.easing.EasingType;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
@@ -27,6 +27,14 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
     private static final String CONTROLLER_NAME = "rubiks_cube_block_controller";
     private static final int MOVE_DURATION = 20;
+    private static final EasingType EASING_TYPE = EasingType.Linear;
+
+    private static final AnimationBuilder ANIMATION_NOTHING =
+            new AnimationBuilder().addAnimation("animation.rubiks_cube.nothing");
+    private static final AnimationBuilder ANIMATION_CLOCKWISE =
+            new AnimationBuilder().addAnimation("animation.rubiks_cube.clockwise");
+    private static final AnimationBuilder ANIMATION_COUNTERCLOCKWISE =
+            new AnimationBuilder().addAnimation("animation.rubiks_cube.counterclockwise");
 
     private final AnimationFactory factory = new AnimationFactory(this);
 
@@ -132,11 +140,14 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        AnimationController<E> controller = event.getController();
+        controller.easingType = EASING_TYPE;
+
         if(this.isMoving) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.rubiks_cube.clockwise"));
+            event.getController().setAnimation(ANIMATION_CLOCKWISE);
         }
         else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.rubiks_cube.nothing"));
+            event.getController().setAnimation(ANIMATION_NOTHING);
         }
         return PlayState.CONTINUE;
     }
