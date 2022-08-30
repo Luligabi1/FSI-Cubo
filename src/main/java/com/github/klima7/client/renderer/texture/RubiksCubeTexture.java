@@ -1,13 +1,14 @@
 package com.github.klima7.client.renderer.texture;
 
 import com.github.klima7.RubiksCubeMod;
-import com.github.klima7.common.domain.CubeState;
-import com.github.klima7.common.domain.FaceState;
+import com.github.klima7.common.domain.CubeStickers;
+import com.github.klima7.common.domain.FaceStickers;
 import com.github.klima7.common.domain.Sticker;
-import com.github.klima7.common.domain.StickerOnFacePos;
+import com.github.klima7.common.domain.StickerFaceLocation;
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 
@@ -23,7 +24,7 @@ public class RubiksCubeTexture {
 
     private final DynamicTexture texture;
     private final ResourceLocation textureResourceLocation;
-    private CubeState lastCubeState;
+    private CubeStickers lastCubeStickers;
 
     public RubiksCubeTexture(int id, TextureManager textureManager, ResourceManager resourceManager) {
         this.texture = new DynamicTexture(WIDTH, HEIGHT, true);
@@ -35,10 +36,10 @@ public class RubiksCubeTexture {
         return this.textureResourceLocation;
     }
 
-    public void updateIfNeeded(CubeState cubeState) {
-        if(isUpdateNeeded(cubeState))
-            update(cubeState);
-        lastCubeState = CubeState.fromCubeState(cubeState);
+    public void updateIfNeeded(CubeStickers cubeStickers) {
+        if(isUpdateNeeded(cubeStickers))
+            update(cubeStickers);
+        lastCubeStickers = CubeStickers.copyOf(cubeStickers);
     }
 
     private void drawTemplate(ResourceManager resourceManager) {
@@ -51,24 +52,24 @@ public class RubiksCubeTexture {
         }
     }
 
-    private boolean isUpdateNeeded(CubeState cubeState) {
-        return lastCubeState == null || !lastCubeState.equals(cubeState);
+    private boolean isUpdateNeeded(CubeStickers cubeStickers) {
+        return lastCubeStickers == null || !lastCubeStickers.equals(cubeStickers);
     }
 
-    private void update(CubeState cubeState) {
-        updateFace(cubeState.getFaceState(Sticker.WHITE), 16, 16);
-        updateFace(cubeState.getFaceState(Sticker.YELLOW), 48, 16);
-        updateFace(cubeState.getFaceState(Sticker.BLUE), 16, 0);
-        updateFace(cubeState.getFaceState(Sticker.GREEN), 16, 32);
-        updateFace(cubeState.getFaceState(Sticker.RED), 32, 16);
-        updateFace(cubeState.getFaceState(Sticker.ORANGE), 0, 16);
+    private void update(CubeStickers cubeStickers) {
+        updateFace(cubeStickers.getFaceStickers(Direction.DOWN), 16, 16);
+        updateFace(cubeStickers.getFaceStickers(Direction.UP), 48, 16);
+        updateFace(cubeStickers.getFaceStickers(Direction.NORTH), 16, 0);
+        updateFace(cubeStickers.getFaceStickers(Direction.SOUTH), 16, 32);
+        updateFace(cubeStickers.getFaceStickers(Direction.EAST), 32, 16);
+        updateFace(cubeStickers.getFaceStickers(Direction.WEST), 0, 16);
         this.texture.upload();
     }
 
-    private void updateFace(FaceState faceState, int shift_x, int shift_y) {
+    private void updateFace(FaceStickers faceStickers, int shift_x, int shift_y) {
         for(int sticker_x=0; sticker_x<3; sticker_x++) {
             for(int sticker_y=0; sticker_y<3; sticker_y++) {
-                Sticker sticker = faceState.getSticker(new StickerOnFacePos(sticker_x, sticker_y));
+                Sticker sticker = faceStickers.getSticker(new StickerFaceLocation(sticker_x, sticker_y));
                 int color = sticker.getColor();
                 int pos_x = shift_x + 1 + sticker_x * 5;
                 int pos_y = shift_y + 1 + sticker_y * 5;

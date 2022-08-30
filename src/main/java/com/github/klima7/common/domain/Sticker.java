@@ -23,7 +23,7 @@ public enum Sticker {
                 return sticker;
             }
         }
-        throw new IllegalArgumentException("Unable to find Sticker with letter '" + letter + "'");
+        throw new IllegalArgumentException(String.format("Unable to find Sticker with letter '%c'", letter));
     }
 
     public char getLetter() {

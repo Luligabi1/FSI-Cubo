@@ -10,7 +10,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -18,13 +17,12 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class RubiksCubeBlock extends DirectionalBlock implements EntityBlock {
+public class RubiksCubeBlock extends Block implements EntityBlock {
 
     public static final Properties PROPERTIES = BlockBehaviour.Properties
             .of(Material.WOOD)
@@ -47,16 +45,6 @@ public class RubiksCubeBlock extends DirectionalBlock implements EntityBlock {
         return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
-    }
-
-    @javax.annotation.Nullable
-    @Override
-    public BlockState getStateForPlacement(@NotNull BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
-    }
-
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
@@ -73,11 +61,12 @@ public class RubiksCubeBlock extends DirectionalBlock implements EntityBlock {
 
         Direction direction = hitResult.getDirection();
         boolean reverse = KeyInit.REVERSE.isDown();
+        boolean rotate = KeyInit.ROTATE.isDown();
 
         System.out.println("Moving face " + direction + " reverse " + reverse);
 
         PacketHandler.CHANNEL.sendToServer(
-                new ServerboundUpdateRubiksCubePacket(pos, direction, reverse)
+                new ServerboundUpdateRubiksCubePacket(pos, direction, reverse, rotate)
         );
 
         return InteractionResult.SUCCESS;

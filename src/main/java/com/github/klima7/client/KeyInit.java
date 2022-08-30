@@ -14,6 +14,7 @@ public final class KeyInit {
     public static final List<KeyMapping> KEY_MAPPINGS = new ArrayList<>();
 
     public static KeyMapping REVERSE = registerKey("reverse", KeyMapping.CATEGORY_GAMEPLAY, InputConstants.KEY_R);
+    public static KeyMapping ROTATE = registerKey("rotate", KeyMapping.CATEGORY_GAMEPLAY, InputConstants.KEY_T);
 
     private static KeyMapping registerKey(String name, String category, int keycode) {
         KeyMapping keyMapping = new KeyMapping("key." + RubiksCubeMod.MODID + "." + name, keycode, category);

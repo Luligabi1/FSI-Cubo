@@ -1,30 +1,33 @@
 package com.github.klima7.common.domain;
 
+import net.minecraft.core.Direction;
+
 public enum MoveFace {
 
-    F(
-            Sticker.BLUE,
-            new Face3Stickers(Sticker.YELLOW, 0, 1, 2),
-            new Face3Stickers(Sticker.RED, 0, 1, 2),
-            new Face3Stickers(Sticker.WHITE, 0, 1, 2),
-            new Face3Stickers(Sticker.ORANGE, 0, 1, 2)
+    NORTH(
+            Direction.NORTH,
+            new SideStickersLocations(Direction.UP, 0, 1, 2),
+            new SideStickersLocations(Direction.EAST, 0, 1, 2),
+            new SideStickersLocations(Direction.DOWN, 0, 1, 2),
+            new SideStickersLocations(Direction.WEST, 0, 1, 2)
     );
 
-    private Sticker mainFace;
-    private Face3Stickers[] sideFaceStickers;
+    private final Direction direction;
+    private final SideStickersLocations[] sideStickersLocations;
 
-    MoveFace(Sticker mainFace, Face3Stickers faceStickers1, Face3Stickers faceStickers2,
-             Face3Stickers faceStickers3, Face3Stickers faceStickers4) {
-        this.mainFace = mainFace;
-        this.sideFaceStickers = new Face3Stickers[] { faceStickers1, faceStickers2, faceStickers3, faceStickers4 };
+    MoveFace(Direction direction, SideStickersLocations sideStickersLocations1, SideStickersLocations sideStickersLocations2,
+             SideStickersLocations sideStickersLocations3, SideStickersLocations sideStickersLocations4) {
+        this.direction = direction;
+        this.sideStickersLocations = new SideStickersLocations[] {sideStickersLocations1, sideStickersLocations2,
+                sideStickersLocations3, sideStickersLocations4};
     }
 
-    public Sticker getMainFace() {
-        return this.mainFace;
+    public Direction getDirection() {
+        return this.direction;
     }
 
-    public Face3Stickers getSideStickers(int index) {
-        return sideFaceStickers[index];
+    public SideStickersLocations getSideStickersLocations(int index) {
+        return sideStickersLocations[index];
     }
 
 }
