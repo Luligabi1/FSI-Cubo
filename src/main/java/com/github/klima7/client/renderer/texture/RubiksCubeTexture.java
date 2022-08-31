@@ -61,8 +61,8 @@ public class RubiksCubeTexture {
         updateFace(cubeStickers.getFaceStickers(Direction.UP), 48, 16);
         updateFace(cubeStickers.getFaceStickers(Direction.NORTH), 16, 0);
         updateFace(cubeStickers.getFaceStickers(Direction.SOUTH), 16, 32);
-        updateFace(cubeStickers.getFaceStickers(Direction.EAST), 32, 16);
-        updateFace(cubeStickers.getFaceStickers(Direction.WEST), 0, 16);
+        updateFace(cubeStickers.getFaceStickers(Direction.WEST), 32, 16);
+        updateFace(cubeStickers.getFaceStickers(Direction.EAST), 0, 16);
         this.texture.upload();
     }
 

@@ -6,50 +6,50 @@ public enum MoveFace {
 
     NORTH(
             Direction.NORTH,
-            new SideStickersLocations(Direction.UP, 0, 1, 2),
-            new SideStickersLocations(Direction.EAST, 0, 1, 2),
-            new SideStickersLocations(Direction.DOWN, 0, 1, 2),
-            new SideStickersLocations(Direction.WEST, 0, 1, 2)
+            new SideStickersLocations(Direction.UP, 2, 1, 0),
+            new SideStickersLocations(Direction.WEST, 2, 1, 0),
+            new SideStickersLocations(Direction.DOWN, 2, 1, 0),
+            new SideStickersLocations(Direction.EAST, 2, 1, 0)
     ),
 
     SOUTH(
             Direction.SOUTH,
             new SideStickersLocations(Direction.UP, 6, 7, 8),
-            new SideStickersLocations(Direction.WEST, 6, 7, 8),
+            new SideStickersLocations(Direction.EAST, 6, 7, 8),
             new SideStickersLocations(Direction.DOWN, 6, 7, 8),
-            new SideStickersLocations(Direction.EAST, 6, 7, 8)
+            new SideStickersLocations(Direction.WEST, 6, 7, 8)
     ),
 
     EAST(
             Direction.EAST,
-            new SideStickersLocations(Direction.UP, 0, 3, 6),
-            new SideStickersLocations(Direction.SOUTH, 0, 3, 6),
-            new SideStickersLocations(Direction.DOWN, 8, 5, 2),
-            new SideStickersLocations(Direction.NORTH, 0, 3, 6)
-    ),
-
-    WEST(
-            Direction.WEST,
             new SideStickersLocations(Direction.UP, 8, 5, 2),
             new SideStickersLocations(Direction.NORTH, 8, 5, 2),
             new SideStickersLocations(Direction.DOWN, 0, 3, 6),
             new SideStickersLocations(Direction.SOUTH, 8, 5, 2)
     ),
 
+    WEST(
+            Direction.WEST,
+            new SideStickersLocations(Direction.UP, 0, 3, 6),
+            new SideStickersLocations(Direction.SOUTH, 0, 3, 6),
+            new SideStickersLocations(Direction.DOWN, 8, 5, 2),
+            new SideStickersLocations(Direction.NORTH, 0, 3, 6)
+    ),
+
     UP(
             Direction.UP,
             new SideStickersLocations(Direction.NORTH, 6, 7, 8),
-            new SideStickersLocations(Direction.WEST, 0, 3, 6),
+            new SideStickersLocations(Direction.EAST, 0, 3, 6),
             new SideStickersLocations(Direction.SOUTH, 2, 1, 0),
-            new SideStickersLocations(Direction.EAST, 8, 5, 2)
+            new SideStickersLocations(Direction.WEST, 8, 5, 2)
             ),
 
     DOWN(
             Direction.DOWN,
             new SideStickersLocations(Direction.NORTH, 2, 1, 0),
-            new SideStickersLocations(Direction.EAST, 0, 3, 6),
+            new SideStickersLocations(Direction.WEST, 0, 3, 6),
             new SideStickersLocations(Direction.SOUTH, 6, 7, 8),
-            new SideStickersLocations(Direction.WEST, 8, 5, 2)
+            new SideStickersLocations(Direction.EAST, 8, 5, 2)
     );
 
     private final Direction direction;
