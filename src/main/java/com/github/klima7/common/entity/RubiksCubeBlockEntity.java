@@ -115,10 +115,10 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
     public void serverTick() {
         long currentTime = level.getGameTime();
         if(this.isMoving() && currentTime - this.startTime >= MOVE_DURATION) {
+            MoveExecutor.move(this.cubeStickers, MoveFace.fromDirection(this.movingFace), MoveDirection.CLOCKWISE);
             this.startTime = 0;
             this.movingFace = null;
             this.isMovingReverse = false;
-            MoveExecutor.move(this.cubeStickers, MoveFace.NORTH, MoveDirection.CLOCKWISE);
         }
         sync();
     }

@@ -22,20 +22,20 @@ public class MoveExecutor {
     }
 
     private static void rotateMainFaceClockwise(CubeStickers cubeStickers, MoveFace moveFace) {
-        FaceStickers faceStickers = cubeStickers.getFaceStickers(moveFace.getDirection());
-        FaceStickers tmp = FaceStickers.copyOf(faceStickers);
+        FaceStickers face = cubeStickers.getFaceStickers(moveFace.getDirection());
+        FaceStickers original = FaceStickers.copyOf(face);
 
         // corners
-        copyStickerBetweenFaces(tmp, faceStickers, 0, 2);
-        copyStickerBetweenFaces(tmp, faceStickers, 2, 8);
-        copyStickerBetweenFaces(tmp, faceStickers, 8, 6);
-        copyStickerBetweenFaces(tmp, faceStickers, 6, 0);
+        copyStickerBetweenFaces(original, face, 0, 2);
+        copyStickerBetweenFaces(original, face, 2, 8);
+        copyStickerBetweenFaces(original, face, 8, 6);
+        copyStickerBetweenFaces(original, face, 6, 0);
 
-        //edges
-        copyStickerBetweenFaces(tmp, faceStickers, 1, 5);
-        copyStickerBetweenFaces(tmp, faceStickers, 5, 7);
-        copyStickerBetweenFaces(tmp, faceStickers, 7, 3);
-        copyStickerBetweenFaces(tmp, faceStickers, 3, 1);
+        // edges
+        copyStickerBetweenFaces(original, face, 1, 5);
+        copyStickerBetweenFaces(original, face, 5, 7);
+        copyStickerBetweenFaces(original, face, 7, 3);
+        copyStickerBetweenFaces(original, face, 3, 1);
     }
 
     private static void copyStickerBetweenFaces(FaceStickers srcFace, FaceStickers dstFace, int srcIndex, int dstIndex) {
