@@ -23,11 +23,13 @@ public enum RotationAxis {
     );
 
     private final Direction.Axis axis;
+    private final Direction[] mainFaces;
     private final Direction[] sideFaces;
     private final int[] sideRotations;
 
     RotationAxis(Direction.Axis axis, Direction[] sideFaces, int[] sideRotations) {
         this.axis = axis;
+        this.mainFaces = this.getDirectionsFromAxis(axis);
         this.sideFaces = sideFaces;
         this.sideRotations = sideRotations;
     }
@@ -45,12 +47,28 @@ public enum RotationAxis {
         return this.axis;
     }
 
+    public Direction getMainFace(int index) {
+        return this.mainFaces[index];
+    }
+
     public Direction getSideFace(int index) {
         return this.sideFaces[index];
     }
 
     public int getRotation(int index) {
         return this.sideRotations[index];
+    }
+
+    private static Direction[] getDirectionsFromAxis(Direction.Axis axis) {
+        Direction[] results = new Direction[2];
+        int foundCount = 0;
+
+        for(Direction direction : Direction.values()) {
+            if(direction.getAxis() == axis) {
+                results[foundCount++] = direction;
+            }
+        }
+        return results;
     }
 
 }

@@ -83,6 +83,10 @@ public class CubeStickers {
         return faces.get(direction);
     }
 
+    public FaceStickers setFaceStickers(Direction direction, FaceStickers faceStickers) {
+        return faces.put(direction, faceStickers);
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
