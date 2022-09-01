@@ -10,15 +10,15 @@ public class MoveExecutor {
         }
     }
 
+    private static void clockwiseMove(CubeStickers cubeStickers, MoveFace moveFace) {
+        rotateMainFaceClockwise(cubeStickers, moveFace);
+        rotateSideFacesClockwise(cubeStickers, moveFace);
+    }
+
     private static void counterclockwiseMove(CubeStickers cubeStickers, MoveFace moveFace) {
         for(int i=0; i<3; i++) {
             clockwiseMove(cubeStickers, moveFace);
         }
-    }
-
-    private static void clockwiseMove(CubeStickers cubeStickers, MoveFace moveFace) {
-        rotateMainFaceClockwise(cubeStickers, moveFace);
-        rotateSideFacesClockwise(cubeStickers, moveFace);
     }
 
     private static void rotateMainFaceClockwise(CubeStickers cubeStickers, MoveFace moveFace) {
