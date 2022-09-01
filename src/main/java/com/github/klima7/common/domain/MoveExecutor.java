@@ -2,8 +2,8 @@ package com.github.klima7.common.domain;
 
 public class MoveExecutor {
 
-    public static void move(CubeStickers cubeStickers, MoveFace moveFace, MoveDirection moveDirection) {
-        if(moveDirection == MoveDirection.CLOCKWISE) {
+    public static void move(CubeStickers cubeStickers, MoveFace moveFace, ClockDirection moveDirection) {
+        if(moveDirection == ClockDirection.CLOCKWISE) {
             clockwiseMove(cubeStickers, moveFace);
         } else {
             counterclockwiseMove(cubeStickers, moveFace);
@@ -22,7 +22,7 @@ public class MoveExecutor {
     }
 
     private static void rotateMainFaceClockwise(CubeStickers cubeStickers, MoveFace moveFace) {
-        int repetitions = moveFace.getMoveDirection() == MoveDirection.CLOCKWISE ? 1 : 3;
+        int repetitions = moveFace.getMoveDirection() == ClockDirection.CLOCKWISE ? 1 : 3;
         for(int i=0; i<repetitions; i++) {
           rotateMainFace(cubeStickers, moveFace);
         }

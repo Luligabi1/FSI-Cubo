@@ -6,7 +6,7 @@ public enum MoveFace {
 
     NORTH(
             Direction.NORTH,
-            MoveDirection.COUNTERCLOCKWISE,
+            ClockDirection.COUNTERCLOCKWISE,
             new SideStickersLocations(Direction.UP, 2, 1, 0),
             new SideStickersLocations(Direction.WEST, 2, 1, 0),
             new SideStickersLocations(Direction.DOWN, 2, 1, 0),
@@ -15,7 +15,7 @@ public enum MoveFace {
 
     SOUTH(
             Direction.SOUTH,
-            MoveDirection.COUNTERCLOCKWISE,
+            ClockDirection.COUNTERCLOCKWISE,
             new SideStickersLocations(Direction.UP, 6, 7, 8),
             new SideStickersLocations(Direction.EAST, 6, 7, 8),
             new SideStickersLocations(Direction.DOWN, 6, 7, 8),
@@ -24,7 +24,7 @@ public enum MoveFace {
 
     EAST(
             Direction.EAST,
-            MoveDirection.COUNTERCLOCKWISE,
+            ClockDirection.COUNTERCLOCKWISE,
             new SideStickersLocations(Direction.UP, 8, 5, 2),
             new SideStickersLocations(Direction.NORTH, 8, 5, 2),
             new SideStickersLocations(Direction.DOWN, 0, 3, 6),
@@ -33,7 +33,7 @@ public enum MoveFace {
 
     WEST(
             Direction.WEST,
-            MoveDirection.COUNTERCLOCKWISE,
+            ClockDirection.COUNTERCLOCKWISE,
             new SideStickersLocations(Direction.UP, 0, 3, 6),
             new SideStickersLocations(Direction.SOUTH, 0, 3, 6),
             new SideStickersLocations(Direction.DOWN, 8, 5, 2),
@@ -42,7 +42,7 @@ public enum MoveFace {
 
     UP(
             Direction.UP,
-            MoveDirection.COUNTERCLOCKWISE,
+            ClockDirection.COUNTERCLOCKWISE,
             new SideStickersLocations(Direction.NORTH, 6, 7, 8),
             new SideStickersLocations(Direction.EAST, 0, 3, 6),
             new SideStickersLocations(Direction.SOUTH, 2, 1, 0),
@@ -51,7 +51,7 @@ public enum MoveFace {
 
     DOWN(
             Direction.DOWN,
-            MoveDirection.COUNTERCLOCKWISE,
+            ClockDirection.COUNTERCLOCKWISE,
             new SideStickersLocations(Direction.NORTH, 2, 1, 0),
             new SideStickersLocations(Direction.WEST, 0, 3, 6),
             new SideStickersLocations(Direction.SOUTH, 6, 7, 8),
@@ -59,10 +59,10 @@ public enum MoveFace {
     );
 
     private final Direction direction;
-    private final MoveDirection moveDirection;
+    private final ClockDirection moveDirection;
     private final SideStickersLocations[] sideStickersLocations;
 
-    MoveFace(Direction direction, MoveDirection moveDirection, SideStickersLocations sideStickersLocations1,
+    MoveFace(Direction direction, ClockDirection moveDirection, SideStickersLocations sideStickersLocations1,
              SideStickersLocations sideStickersLocations2, SideStickersLocations sideStickersLocations3,
              SideStickersLocations sideStickersLocations4) {
         this.direction = direction;
@@ -84,7 +84,7 @@ public enum MoveFace {
         return this.direction;
     }
 
-    public MoveDirection getMoveDirection() {
+    public ClockDirection getMoveDirection() {
         return this.moveDirection;
     }
 
