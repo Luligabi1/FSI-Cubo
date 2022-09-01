@@ -4,31 +4,31 @@ public class MoveExecutor {
 
     public static void move(CubeStickers cubeStickers, MoveFace moveFace, ClockDirection moveDirection) {
         if(moveDirection == ClockDirection.CLOCKWISE) {
-            clockwiseMove(cubeStickers, moveFace);
+            moveClockwise(cubeStickers, moveFace);
         } else {
-            counterclockwiseMove(cubeStickers, moveFace);
+            moveCounterclockwise(cubeStickers, moveFace);
         }
     }
 
-    private static void clockwiseMove(CubeStickers cubeStickers, MoveFace moveFace) {
-        rotateMainFaceClockwise(cubeStickers, moveFace);
-        rotateSideFacesClockwise(cubeStickers, moveFace);
+    private static void moveClockwise(CubeStickers cubeStickers, MoveFace moveFace) {
+        moveMainFaceClockwise(cubeStickers, moveFace);
+        moveSideFacesClockwise(cubeStickers, moveFace);
     }
 
-    private static void counterclockwiseMove(CubeStickers cubeStickers, MoveFace moveFace) {
+    private static void moveCounterclockwise(CubeStickers cubeStickers, MoveFace moveFace) {
         for(int i=0; i<3; i++) {
-            clockwiseMove(cubeStickers, moveFace);
+            moveClockwise(cubeStickers, moveFace);
         }
     }
 
-    private static void rotateMainFaceClockwise(CubeStickers cubeStickers, MoveFace moveFace) {
+    private static void moveMainFaceClockwise(CubeStickers cubeStickers, MoveFace moveFace) {
         int repetitions = moveFace.getMoveDirection() == ClockDirection.CLOCKWISE ? 1 : 3;
         for(int i=0; i<repetitions; i++) {
-          rotateMainFace(cubeStickers, moveFace);
+          moveMainFace(cubeStickers, moveFace);
         }
     }
 
-    private static void rotateMainFace(CubeStickers cubeStickers, MoveFace moveFace) {
+    private static void moveMainFace(CubeStickers cubeStickers, MoveFace moveFace) {
         FaceStickers face = cubeStickers.getFaceStickers(moveFace.getDirection());
         FaceStickers original = FaceStickers.copyOf(face);
 
@@ -45,11 +45,7 @@ public class MoveExecutor {
         copyStickerBetweenFaces(original, face, 3, 1);
     }
 
-    private static void copyStickerBetweenFaces(FaceStickers srcFace, FaceStickers dstFace, int srcIndex, int dstIndex) {
-        dstFace.setSticker(new StickerFaceLocation(dstIndex), srcFace.getSticker(new StickerFaceLocation(srcIndex)));
-    }
-
-    private static void rotateSideFacesClockwise(CubeStickers cubeStickers, MoveFace moveFace) {
+    private static void moveSideFacesClockwise(CubeStickers cubeStickers, MoveFace moveFace) {
         CubeStickers tmp = CubeStickers.copyOf(cubeStickers);
 
         for(int face_index=0; face_index<4; face_index++) {
@@ -59,6 +55,10 @@ public class MoveExecutor {
                 cubeStickers.setSticker(changePos, sticker);
             }
         }
+    }
+
+    private static void copyStickerBetweenFaces(FaceStickers srcFace, FaceStickers dstFace, int srcIndex, int dstIndex) {
+        dstFace.setSticker(new StickerFaceLocation(dstIndex), srcFace.getSticker(new StickerFaceLocation(srcIndex)));
     }
 
 }
