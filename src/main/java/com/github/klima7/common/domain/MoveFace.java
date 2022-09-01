@@ -77,7 +77,7 @@ public enum MoveFace {
                 return moveFace;
             }
         }
-        throw new IllegalArgumentException(String.format("Unable to find MoveFace with direction '%s'", direction.toString()));
+        throw new IllegalArgumentException("Unable to find MoveFace with given direction");
     }
 
     public Direction getDirection() {
