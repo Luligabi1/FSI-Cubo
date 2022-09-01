@@ -22,6 +22,13 @@ public class MoveExecutor {
     }
 
     private static void rotateMainFaceClockwise(CubeStickers cubeStickers, MoveFace moveFace) {
+        int repetitions = moveFace.getMoveDirection() == MoveDirection.CLOCKWISE ? 1 : 3;
+        for(int i=0; i<repetitions; i++) {
+          rotateMainFace(cubeStickers, moveFace);
+        }
+    }
+
+    private static void rotateMainFace(CubeStickers cubeStickers, MoveFace moveFace) {
         FaceStickers face = cubeStickers.getFaceStickers(moveFace.getDirection());
         FaceStickers original = FaceStickers.copyOf(face);
 
