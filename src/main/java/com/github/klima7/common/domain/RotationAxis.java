@@ -2,7 +2,7 @@ package com.github.klima7.common.domain;
 
 import net.minecraft.core.Direction;
 
-public enum OrientationAxis {
+public enum RotationAxis {
 
     X(
             Direction.Axis.X,
@@ -26,16 +26,16 @@ public enum OrientationAxis {
     private final Direction[] sideFaces;
     private final int[] sideRotations;
 
-    OrientationAxis(Direction.Axis axis, Direction[] sideFaces, int[] sideRotations) {
+    RotationAxis(Direction.Axis axis, Direction[] sideFaces, int[] sideRotations) {
         this.axis = axis;
         this.sideFaces = sideFaces;
         this.sideRotations = sideRotations;
     }
 
-    public static OrientationAxis fromAxis(Direction.Axis axis) {
-        for(OrientationAxis orientationAxis : OrientationAxis.values()) {
-            if(orientationAxis.getAxis() == axis) {
-                return orientationAxis;
+    public static RotationAxis fromAxis(Direction.Axis axis) {
+        for(RotationAxis rotationAxis : RotationAxis.values()) {
+            if(rotationAxis.getAxis() == axis) {
+                return rotationAxis;
             }
         }
         throw new IllegalArgumentException("Unable to find OrientationAxis with given axis");
