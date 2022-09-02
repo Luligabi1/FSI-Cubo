@@ -1,10 +1,10 @@
 package com.github.klima7.client.renderer.texture;
 
 import com.github.klima7.RubiksCubeMod;
-import com.github.klima7.common.domain.CubeStickers;
-import com.github.klima7.common.domain.FaceStickers;
-import com.github.klima7.common.domain.Sticker;
-import com.github.klima7.common.domain.StickerFaceLocation;
+import com.github.klima7.common.domain.cube.stickers.CubeStickers;
+import com.github.klima7.common.domain.cube.stickers.FaceStickers;
+import com.github.klima7.common.domain.cube.stickers.Sticker;
+import com.github.klima7.common.domain.cube.locations.OnFaceLocation;
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -69,7 +69,7 @@ public class RubiksCubeTexture {
     private void updateFace(FaceStickers faceStickers, int shift_x, int shift_y) {
         for(int sticker_x=0; sticker_x<3; sticker_x++) {
             for(int sticker_y=0; sticker_y<3; sticker_y++) {
-                Sticker sticker = faceStickers.getSticker(new StickerFaceLocation(sticker_x, sticker_y));
+                Sticker sticker = faceStickers.getSticker(new OnFaceLocation(sticker_x, sticker_y));
                 int color = sticker.getColor();
                 int pos_x = shift_x + 1 + sticker_x * 5;
                 int pos_y = shift_y + 1 + sticker_y * 5;

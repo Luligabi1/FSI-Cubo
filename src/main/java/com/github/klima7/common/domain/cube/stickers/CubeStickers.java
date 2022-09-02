@@ -1,5 +1,6 @@
-package com.github.klima7.common.domain;
+package com.github.klima7.common.domain.cube.stickers;
 
+import com.github.klima7.common.domain.cube.locations.OnCubeLocation;
 import net.minecraft.core.Direction;
 
 import java.util.Arrays;
@@ -71,11 +72,11 @@ public class CubeStickers {
         return builder.toString();
     }
 
-    public void setSticker(StickerCubeLocation location, Sticker sticker) {
+    public void setSticker(OnCubeLocation location, Sticker sticker) {
         getFaceStickers(location.getDirection()).setSticker(location, sticker);
     }
 
-    public Sticker getSticker(StickerCubeLocation location) {
+    public Sticker getSticker(OnCubeLocation location) {
         return getFaceStickers(location.getDirection()).getSticker(location);
     }
 

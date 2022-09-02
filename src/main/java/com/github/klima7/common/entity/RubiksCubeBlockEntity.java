@@ -1,6 +1,9 @@
 package com.github.klima7.common.entity;
 
-import com.github.klima7.common.domain.*;
+import com.github.klima7.common.domain.cube.stickers.CubeStickers;
+import com.github.klima7.common.domain.operation.OperationDirection;
+import com.github.klima7.common.domain.operation.OperationExecutor;
+import com.github.klima7.common.domain.operation.move.MoveFace;
 import com.github.klima7.core.init.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -115,7 +118,7 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
     public void serverTick() {
         long currentTime = level.getGameTime();
         if(this.isMoving() && currentTime - this.startTime >= MOVE_DURATION) {
-            MoveExecutor.move(this.cubeStickers, MoveFace.fromDirection(this.movingFace), ClockDirection.CLOCKWISE);
+            OperationExecutor.move(this.cubeStickers, MoveFace.fromDirection(this.movingFace), OperationDirection.CLOCKWISE);
             this.startTime = 0;
             this.movingFace = null;
             this.isMovingReverse = false;

@@ -1,5 +1,6 @@
-package com.github.klima7.common.domain;
+package com.github.klima7.common.domain.operation.move;
 
+import com.github.klima7.common.domain.cube.locations.OnCubeLocation;
 import net.minecraft.core.Direction;
 
 public class SideStickersLocations {
@@ -12,8 +13,8 @@ public class SideStickersLocations {
         this.indexes = new int[] {index1, index2, index3};
     }
 
-    public StickerCubeLocation getStickerLocation(int index) {
-        return new StickerCubeLocation(this.direction, indexes[index]);
+    public OnCubeLocation getStickerLocation(int index) {
+        return new OnCubeLocation(this.direction, indexes[index]);
     }
 
 }

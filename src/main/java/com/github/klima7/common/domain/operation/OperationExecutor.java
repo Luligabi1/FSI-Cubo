@@ -1,19 +1,26 @@
-package com.github.klima7.common.domain;
+package com.github.klima7.common.domain.operation;
 
+import com.github.klima7.common.domain.cube.locations.OnCubeLocation;
+import com.github.klima7.common.domain.cube.locations.OnFaceLocation;
+import com.github.klima7.common.domain.cube.stickers.CubeStickers;
+import com.github.klima7.common.domain.cube.stickers.FaceStickers;
+import com.github.klima7.common.domain.cube.stickers.Sticker;
+import com.github.klima7.common.domain.operation.move.MoveFace;
+import com.github.klima7.common.domain.operation.rotation.RotationAxis;
 import net.minecraft.core.Direction;
 
-public class MoveExecutor {
+public class OperationExecutor {
 
-    public static void move(CubeStickers cubeStickers, MoveFace moveFace, ClockDirection moveDirection) {
-        if(moveDirection == ClockDirection.CLOCKWISE) {
+    public static void move(CubeStickers cubeStickers, MoveFace moveFace, OperationDirection moveDirection) {
+        if(moveDirection == OperationDirection.CLOCKWISE) {
             moveClockwise(cubeStickers, moveFace);
         } else {
             moveCounterclockwise(cubeStickers, moveFace);
         }
     }
 
-    public static void rotate(CubeStickers cubeStickers, RotationAxis rotationAxis, ClockDirection rotationDirection) {
-        if(rotationDirection == ClockDirection.CLOCKWISE) {
+    public static void rotate(CubeStickers cubeStickers, RotationAxis rotationAxis, OperationDirection rotationDirection) {
+        if(rotationDirection == OperationDirection.CLOCKWISE) {
             rotateClockwise(cubeStickers, rotationAxis);
         } else {
             rotateCounterclockwise(cubeStickers, rotationAxis);
@@ -40,7 +47,7 @@ public class MoveExecutor {
 
         for(int face_index=0; face_index<4; face_index++) {
             for(int sticker_index=0; sticker_index<3; sticker_index++) {
-                StickerCubeLocation changePos = moveFace.getSideStickersLocations((face_index + 1) % 4).getStickerLocation(sticker_index);
+                OnCubeLocation changePos = moveFace.getSideStickersLocations((face_index + 1) % 4).getStickerLocation(sticker_index);
                 Sticker sticker = tmp.getSticker(moveFace.getSideStickersLocations(face_index).getStickerLocation(sticker_index));
                 cubeStickers.setSticker(changePos, sticker);
             }
@@ -100,7 +107,7 @@ public class MoveExecutor {
     }
 
     private static void copyStickerBetweenFaces(FaceStickers srcFace, FaceStickers dstFace, int srcIndex, int dstIndex) {
-        dstFace.setSticker(new StickerFaceLocation(dstIndex), srcFace.getSticker(new StickerFaceLocation(srcIndex)));
+        dstFace.setSticker(new OnFaceLocation(dstIndex), srcFace.getSticker(new OnFaceLocation(srcIndex)));
     }
 
     private static void copyFacesBetweenCubes(CubeStickers srcCube, CubeStickers dstCube, Direction srcDirection, Direction dstDirection) {

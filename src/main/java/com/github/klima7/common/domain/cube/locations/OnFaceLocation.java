@@ -1,18 +1,20 @@
-package com.github.klima7.common.domain;
+package com.github.klima7.common.domain.cube.locations;
 
-public class StickerFaceLocation {
+import com.github.klima7.common.domain.cube.stickers.FaceStickers;
+
+public class OnFaceLocation {
 
     private final int x;
     private final int y;
 
-    public StickerFaceLocation(int index) {
+    public OnFaceLocation(int index) {
         validateIndex(index);
 
         this.x = index / 3;
         this.y = index % 3;
     }
 
-    public StickerFaceLocation(int x, int y) {
+    public OnFaceLocation(int x, int y) {
         validateCoordinate(x);
         validateCoordinate(y);
 

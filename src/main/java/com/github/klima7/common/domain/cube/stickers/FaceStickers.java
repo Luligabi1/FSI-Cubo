@@ -1,4 +1,6 @@
-package com.github.klima7.common.domain;
+package com.github.klima7.common.domain.cube.stickers;
+
+import com.github.klima7.common.domain.cube.locations.OnFaceLocation;
 
 import java.util.Arrays;
 
@@ -39,12 +41,12 @@ public class FaceStickers {
         return builder.toString();
     }
 
-    public Sticker getSticker(StickerFaceLocation stickerFaceLocation) {
-        return stickers[stickerFaceLocation.getIndex()];
+    public Sticker getSticker(OnFaceLocation location) {
+        return stickers[location.getIndex()];
     }
 
-    public void setSticker(StickerFaceLocation stickerFaceLocation, Sticker sticker) {
-        stickers[stickerFaceLocation.getIndex()] = sticker;
+    public void setSticker(OnFaceLocation location, Sticker sticker) {
+        stickers[location.getIndex()] = sticker;
     }
 
     @Override
