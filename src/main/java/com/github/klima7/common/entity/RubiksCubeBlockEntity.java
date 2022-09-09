@@ -1,12 +1,9 @@
 package com.github.klima7.common.entity;
 
 import com.github.klima7.common.domain.cube.stickers.CubeStickers;
-import com.github.klima7.common.domain.operation.OperationDirection;
-import com.github.klima7.common.domain.operation.OperationExecutor;
-import com.github.klima7.common.domain.operation.move.MoveFace;
+import com.github.klima7.common.domain.operation.Operation;
 import com.github.klima7.core.init.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -18,7 +15,6 @@ import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.easing.EasingType;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
@@ -26,22 +22,13 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
     public static final String CONTROLLER_NAME = "rubiks_cube_block_controller";
-    public static final int MOVE_DURATION = 20;
-    public static final EasingType EASING_TYPE = EasingType.Linear;
-
-    private static final AnimationBuilder ANIMATION_NOTHING =
-            new AnimationBuilder().addAnimation("animation.rubiks_cube.nothing", true);
-    private static final AnimationBuilder ANIMATION_CLOCKWISE =
-            new AnimationBuilder().addAnimation("animation.rubiks_cube.move.clockwise");
-    private static final AnimationBuilder ANIMATION_COUNTERCLOCKWISE =
-            new AnimationBuilder().addAnimation("animation.rubiks_cube.move.counterclockwise");
+    public static final String IDLE_ANIMATION_NAME = "animation.rubiks_cube.nothing";
 
     private final AnimationFactory factory = new AnimationFactory(this);
 
     private int id;
-    private Direction movingFace;
-    private boolean isMovingReverse;
     private CubeStickers cubeStickers;
+    private Operation operation;
     private long startTime;
 
     public RubiksCubeBlockEntity(BlockPos pos, BlockState state) {
@@ -72,9 +59,8 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
         tag.putInt("id", id);
         tag.putLong("startTime", startTime);
         tag.putString("cubeState", cubeStickers.toText());
-        tag.putBoolean("isMovingReverse", isMovingReverse);
-        if(movingFace != null)
-            tag.putString("movingFace", movingFace.name());
+        if(operation != null)
+            tag.put("operation", operation.save());
     }
 
     @Override
@@ -83,8 +69,7 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
         this.id = tag.getInt("id");
         this.startTime = tag.getLong("startTime");
         this.cubeStickers = CubeStickers.fromText(tag.getString("cubeState"));
-        this.isMovingReverse = tag.getBoolean("isMovingReverse");
-        this.movingFace = tag.contains("movingFace") ? Direction.valueOf(tag.getString("movingFace")) : null;
+        this.operation = tag.contains("operation") ? Operation.load(tag.getCompound("operation")) : null;
     }
 
     @NotNull
@@ -117,22 +102,21 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
     public void serverTick() {
         long currentTime = level.getGameTime();
-        if(this.isMoving() && currentTime - this.startTime >= MOVE_DURATION) {
-            OperationExecutor.move(this.cubeStickers, MoveFace.fromDirection(this.movingFace), OperationDirection.CLOCKWISE);
+        if(this.isExecutingOperation() && currentTime - this.startTime >= operation.getDuration()) {
+            this.operation.execute(this.cubeStickers);
+            this.operation = null;
             this.startTime = 0;
-            this.movingFace = null;
-            this.isMovingReverse = false;
         }
         sync();
     }
 
-    public void moveFace(Direction direction, boolean reverse) {
-        if(this.isMoving())
+    public void executeOperation(Operation operation) {
+        if(this.isExecutingOperation())
             return;
 
-        this.movingFace = direction;
-        this.isMovingReverse = reverse;
+        this.operation = operation;
         this.startTime = level.getGameTime();
+
         sync();
     }
 
@@ -144,19 +128,18 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
         return this.cubeStickers;
     }
 
-    public boolean isMoving() {
-        return this.movingFace != null;
+    public boolean isExecutingOperation() {
+        return this.operation != null;
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         AnimationController controller = event.getController();
-        controller.easingType = EASING_TYPE;
 
-        if(isMoving()) {
-            event.getController().setAnimation(ANIMATION_CLOCKWISE);
-        }
-        else {
-            event.getController().setAnimation(ANIMATION_NOTHING);
+        if(isExecutingOperation()) {
+            controller.easingType = operation.getEasing();
+            event.getController().setAnimation(new AnimationBuilder().addAnimation(operation.getAnimationName()));
+        } else {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation(IDLE_ANIMATION_NAME, true));
         }
         return PlayState.CONTINUE;
     }

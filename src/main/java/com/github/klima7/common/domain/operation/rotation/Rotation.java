@@ -12,6 +12,7 @@ public class Rotation extends Operation {
     public static final String TYPE = "rotation";
     private static final String ANIMATION_CLOCKWISE = "animation.rubiks_cube.rotate.clockwise";
     private static final String ANIMATION_COUNTERCLOCKWISE = "animation.rubiks_cube.rotate.counterclockwise";
+    public static final int DURATION_IN_TICKS = 20;
 
     private final RotationAxis rotationAxis;
     private final OperationDirection rotationDirection;
@@ -59,6 +60,11 @@ public class Rotation extends Operation {
         tag.putString("rotationAxis", rotationAxis.name());
         tag.putString("rotationDirection", rotationDirection.name());
         return tag;
+    }
+
+    @Override
+    public int getDuration() {
+        return DURATION_IN_TICKS;
     }
 
     public static Rotation load(CompoundTag tag) {

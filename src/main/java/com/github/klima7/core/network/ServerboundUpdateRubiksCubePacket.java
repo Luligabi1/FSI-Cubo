@@ -1,5 +1,11 @@
 package com.github.klima7.core.network;
 
+import com.github.klima7.common.domain.operation.Operation;
+import com.github.klima7.common.domain.operation.OperationDirection;
+import com.github.klima7.common.domain.operation.move.Move;
+import com.github.klima7.common.domain.operation.move.MoveFace;
+import com.github.klima7.common.domain.operation.rotation.Rotation;
+import com.github.klima7.common.domain.operation.rotation.RotationAxis;
 import com.github.klima7.common.entity.RubiksCubeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,13 +21,13 @@ public class ServerboundUpdateRubiksCubePacket {
     private final BlockPos pos;
     private final Direction direction;
     private final boolean reverse;
-    private final boolean isRotation;
+    private final boolean rotation;
 
-    public ServerboundUpdateRubiksCubePacket(BlockPos pos, Direction direction, boolean reverse, boolean isRotation) {
+    public ServerboundUpdateRubiksCubePacket(BlockPos pos, Direction direction, boolean reverse, boolean rotation) {
         this.pos = pos;
         this.direction = direction;
         this.reverse = reverse;
-        this.isRotation = isRotation;
+        this.rotation = rotation;
     }
 
     public ServerboundUpdateRubiksCubePacket(FriendlyByteBuf buffer) {
@@ -37,7 +43,7 @@ public class ServerboundUpdateRubiksCubePacket {
         buffer.writeBlockPos(this.pos);
         buffer.writeEnum(this.direction);
         buffer.writeBoolean(this.reverse);
-        buffer.writeBoolean(this.isRotation);
+        buffer.writeBoolean(this.rotation);
     }
 
     public boolean handle(Supplier<NetworkEvent.Context> context) {
@@ -49,22 +55,31 @@ public class ServerboundUpdateRubiksCubePacket {
     private void handleLater(NetworkEvent.Context context) {
         Level level = context.getSender().level;
         BlockEntity entity = level.getBlockEntity(this.pos);
-        if (entity instanceof final RubiksCubeBlockEntity rcEntity) {
-            if (isRotation) {
-                System.out.println("Rotation");
-                if (this.direction == Direction.NORTH || this.direction == Direction.SOUTH) {
-                    System.out.println("Rotate north-south");
-                }
-                else if (this.direction == Direction.EAST || this.direction == Direction.WEST) {
-                    System.out.println("Rotate east-west");
-                }
-                else if (this.direction == Direction.UP || this.direction == Direction.DOWN) {
-                    System.out.println("Rotate up-down");
-                }
-            } else {
-                rcEntity.moveFace(direction, reverse);
-            }
+        if(entity instanceof final RubiksCubeBlockEntity rcEntity) {
+            Operation operation = createOperation();
+            rcEntity.executeOperation(operation);
         }
+    }
+
+    private Operation createOperation() {
+        return rotation ? createRotation() : createMove();
+    }
+
+    private Move createMove() {
+        MoveFace moveFace = MoveFace.fromDirection(this.direction);
+        OperationDirection direction = this.reverse ? OperationDirection.COUNTERCLOCKWISE : OperationDirection.CLOCKWISE;
+        return new Move(moveFace, direction);
+
+    }
+
+    private Rotation createRotation() {
+        RotationAxis rotationAxis = RotationAxis.fromAxis(this.direction.getAxis());
+        OperationDirection direction = this.reverse ? OperationDirection.COUNTERCLOCKWISE : OperationDirection.CLOCKWISE;
+        boolean patchDirection = this.direction.getAxisDirection() == Direction.AxisDirection.POSITIVE;
+        if(patchDirection) {
+            direction = direction.reverse();
+        }
+        return new Rotation(rotationAxis, direction);
     }
 
 }

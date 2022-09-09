@@ -13,6 +13,7 @@ public class Move extends Operation {
     public static final String TYPE = "move";
     private static final String ANIMATION_CLOCKWISE = "animation.rubiks_cube.move.clockwise";
     private static final String ANIMATION_COUNTERCLOCKWISE = "animation.rubiks_cube.move.counterclockwise";
+    public static final int DURATION_IN_TICKS = 20;
 
     private final MoveFace moveFace;
     private final OperationDirection moveDirection;
@@ -56,6 +57,11 @@ public class Move extends Operation {
         tag.putString("moveFace", moveFace.name());
         tag.putString("moveDirection", moveDirection.name());
         return tag;
+    }
+
+    @Override
+    public int getDuration() {
+        return DURATION_IN_TICKS;
     }
 
     public static Move load(CompoundTag tag) {

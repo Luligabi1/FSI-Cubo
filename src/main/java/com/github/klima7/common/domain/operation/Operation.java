@@ -7,6 +7,7 @@ import com.github.klima7.common.domain.operation.move.Move;
 import com.github.klima7.common.domain.operation.rotation.Rotation;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import software.bernie.geckolib3.core.easing.EasingType;
 
 public abstract class Operation {
 
@@ -18,6 +19,8 @@ public abstract class Operation {
 
     public abstract CompoundTag save();
 
+    public abstract int getDuration();
+
     public static Operation load(CompoundTag tag) {
         if(tag == null) return null;
         String type = tag.getString("type");
@@ -26,6 +29,10 @@ public abstract class Operation {
             case Rotation.TYPE -> Rotation.load(tag);
             default -> throw new RuntimeException();
         };
+    }
+
+    public EasingType getEasing() {
+        return EasingType.Linear;
     }
 
     public int[] getTextureOrientation() {
