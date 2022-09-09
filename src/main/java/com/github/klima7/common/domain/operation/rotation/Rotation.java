@@ -10,8 +10,8 @@ import net.minecraft.nbt.CompoundTag;
 public class Rotation extends Operation {
 
     public static final String TYPE = "rotation";
-    private static final String ANIMATION_CLOCKWISE = "animation.rubiks_cube.clockwise";
-    private static final String ANIMATION_COUNTERCLOCKWISE = "animation.rubiks_cube.counterclockwise";
+    private static final String ANIMATION_CLOCKWISE = "animation.rubiks_cube.rotate.clockwise";
+    private static final String ANIMATION_COUNTERCLOCKWISE = "animation.rubiks_cube.rotate.counterclockwise";
 
     private final RotationAxis rotationAxis;
     private final OperationDirection rotationDirection;

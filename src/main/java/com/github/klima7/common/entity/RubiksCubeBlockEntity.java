@@ -32,9 +32,9 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
     private static final AnimationBuilder ANIMATION_NOTHING =
             new AnimationBuilder().addAnimation("animation.rubiks_cube.nothing", true);
     private static final AnimationBuilder ANIMATION_CLOCKWISE =
-            new AnimationBuilder().addAnimation("animation.rubiks_cube.clockwise");
+            new AnimationBuilder().addAnimation("animation.rubiks_cube.move.clockwise");
     private static final AnimationBuilder ANIMATION_COUNTERCLOCKWISE =
-            new AnimationBuilder().addAnimation("animation.rubiks_cube.counterclockwise");
+            new AnimationBuilder().addAnimation("animation.rubiks_cube.move.counterclockwise");
 
     private final AnimationFactory factory = new AnimationFactory(this);
 
