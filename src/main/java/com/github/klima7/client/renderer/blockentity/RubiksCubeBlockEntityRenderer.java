@@ -3,6 +3,7 @@ package com.github.klima7.client.renderer.blockentity;
 import com.github.klima7.client.model.blockentity.RubiksCubeModel;
 import com.github.klima7.client.renderer.texture.RubiksCubeTexture;
 import com.github.klima7.client.renderer.texture.RubiksCubeTextureManager;
+import com.github.klima7.common.domain.cube.stickers.CubeStickers;
 import com.github.klima7.common.entity.RubiksCubeBlockEntity;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -29,8 +30,9 @@ public class RubiksCubeBlockEntityRenderer extends GeoBlockRenderer<RubiksCubeBl
 
     @Override
     public ResourceLocation getTextureLocation(RubiksCubeBlockEntity entity) {
+//        CubeStickers rotatedStickers = CubeRotator.rotate(entity.getCubeStickers(), entity.getFacing());
         RubiksCubeTexture texture = rubiksCubeTextureManager.getTexture(entity.getId());
-        texture.updateIfNeeded(entity.getCubeState());
+        texture.updateIfNeeded(entity.getCubeStickers());
         return texture.getResourceLocation();
     }
 

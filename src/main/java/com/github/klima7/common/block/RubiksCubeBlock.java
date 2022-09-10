@@ -1,6 +1,8 @@
 package com.github.klima7.common.block;
 
 import com.github.klima7.client.KeyInit;
+import com.github.klima7.common.domain.operation.rotation.InstantRotations;
+import com.github.klima7.common.domain.operation.rotation.RotationsSet;
 import com.github.klima7.common.entity.RubiksCubeBlockEntity;
 import com.github.klima7.core.init.BlockEntityRegistry;
 import com.github.klima7.core.init.PacketHandler;
@@ -10,6 +12,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -30,6 +33,8 @@ public class RubiksCubeBlock extends Block implements EntityBlock {
             .explosionResistance(30f)
             .noOcclusion();
 
+    private Direction facing;
+
     public RubiksCubeBlock() {
         super(PROPERTIES);
     }
@@ -37,7 +42,18 @@ public class RubiksCubeBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
-        return BlockEntityRegistry.RUBIKS_CUBE.get().create(blockPos, blockState);
+        RubiksCubeBlockEntity entity = BlockEntityRegistry.RUBIKS_CUBE.get().create(blockPos, blockState);
+        if(this.facing != null) {
+            entity.executeOperation(new InstantRotations(RotationsSet.createToDirection(this.facing)));
+        }
+        return entity;
+    }
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        this.facing = context.getHorizontalDirection().getOpposite();
+        return super.getStateForPlacement(context);
     }
 
     @Override
@@ -47,8 +63,7 @@ public class RubiksCubeBlock extends Block implements EntityBlock {
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
-                                                                  BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         return level.isClientSide() ? null :(_level, _pos, _state, blockEntity) ->
                 ((RubiksCubeBlockEntity) blockEntity).serverTick();
     }

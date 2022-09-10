@@ -35,8 +35,8 @@ public abstract class Operation {
         return EasingType.Linear;
     }
 
-    public int[] getTextureOrientation() {
-        return null;
+    public boolean isInstant() {
+        return getDuration() == 0;
     }
 
     protected static void rotateFaceClockwise(FaceStickers faceStickers) {

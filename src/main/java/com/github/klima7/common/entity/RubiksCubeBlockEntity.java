@@ -115,8 +115,12 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
         if(this.isExecutingOperation())
             return;
 
-        this.operation = operation;
-        this.startTime = level.getGameTime();
+        if(operation.isInstant()) {
+            operation.execute(this.cubeStickers);
+        } else {
+            this.operation = operation;
+            this.startTime = level.getGameTime();
+        }
 
         sync();
     }
@@ -125,7 +129,7 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
         return id;
     }
 
-    public CubeStickers getCubeState() {
+    public CubeStickers getCubeStickers() {
         return this.cubeStickers;
     }
 
@@ -154,7 +158,7 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
     }
 
     private void sync() {
-        if(!level.isClientSide()) {
+        if(level != null && !level.isClientSide()) {
             setChanged();
             BlockState state = getBlockState();
             level.sendBlockUpdated(getBlockPos(), state, state, 3);
