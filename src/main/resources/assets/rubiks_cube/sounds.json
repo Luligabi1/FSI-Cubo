@@ -3,7 +3,7 @@
     "sounds": [
       {
         "name": "rubiks_cube:move",
-        "volume": 0.5
+        "volume": 0.2
       }
     ]
   }
