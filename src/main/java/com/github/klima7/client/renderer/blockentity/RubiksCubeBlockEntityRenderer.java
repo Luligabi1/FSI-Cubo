@@ -32,7 +32,6 @@ public class RubiksCubeBlockEntityRenderer extends GeoBlockRenderer<RubiksCubeBl
 
     @Override
     public ResourceLocation getTextureLocation(RubiksCubeBlockEntity entity) {
-        System.out.println(entity.getFacing());
         CubeStickers rotatedStickers = CubeStickers.copyOf(entity.getCubeStickers());
         InstantRotations instantRotations = new InstantRotations(RotationsSet.createFromDirection(entity.getFacing()));
         instantRotations.execute(rotatedStickers);

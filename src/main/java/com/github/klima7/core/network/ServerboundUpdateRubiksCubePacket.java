@@ -79,6 +79,9 @@ public class ServerboundUpdateRubiksCubePacket {
         if(patchDirection) {
             direction = direction.reverse();
         }
+        if(this.direction.getAxis() == Direction.Axis.Y) {
+            direction = direction.reverse();
+        }
         return new Rotation(rotationAxis, direction);
     }
 

@@ -55,6 +55,12 @@ public abstract class Operation {
         copyStickerBetweenFaces(original, faceStickers, 1, 3);
     }
 
+    protected static void rotateFaceClockwise(FaceStickers faceStickers, int turnsCount) {
+        for(int i=0; i<turnsCount%4; i++) {
+            rotateFaceClockwise(faceStickers);
+        }
+    }
+
     protected static void copyStickerBetweenFaces(FaceStickers srcFace, FaceStickers dstFace, int srcIndex, int dstIndex) {
         dstFace.setSticker(new OnFaceLocation(dstIndex), srcFace.getSticker(new OnFaceLocation(srcIndex)));
     }

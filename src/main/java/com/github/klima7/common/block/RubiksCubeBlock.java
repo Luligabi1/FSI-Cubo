@@ -78,8 +78,6 @@ public class RubiksCubeBlock extends Block implements EntityBlock {
         boolean reverse = KeyInit.REVERSE.isDown();
         boolean rotate = KeyInit.ROTATE.isDown();
 
-        System.out.println("Moving face " + direction + " reverse " + reverse);
-
         PacketHandler.CHANNEL.sendToServer(
                 new ServerboundUpdateRubiksCubePacket(pos, direction, reverse, rotate)
         );

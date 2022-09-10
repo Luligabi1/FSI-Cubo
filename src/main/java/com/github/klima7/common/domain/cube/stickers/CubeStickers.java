@@ -23,8 +23,8 @@ public class CubeStickers {
             Sticker.YELLOW,
             Sticker.BLUE,
             Sticker.GREEN,
-            Sticker.RED,
-            Sticker.ORANGE
+            Sticker.ORANGE,
+            Sticker.RED
     };
 
     public static final int FACES_COUNT = 6;

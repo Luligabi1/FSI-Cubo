@@ -85,11 +85,11 @@ public class Rotation extends Operation {
     }
 
     private static void rotateMainFacesClockwise(CubeStickers cubeStickers, RotationAxis rotationAxis) {
-        FaceStickers mainFace1 = cubeStickers.getFaceStickers(rotationAxis.getMainFace(0));
-        FaceStickers mainFace2 = cubeStickers.getFaceStickers(rotationAxis.getMainFace(1));
+        FaceStickers negativeFace = cubeStickers.getFaceStickers(rotationAxis.getClockwiseFace());
+        rotateFaceClockwise(negativeFace);
 
-        rotateFaceClockwise(mainFace1);
-        rotateFaceClockwise(mainFace2);
+        FaceStickers positiveFace = cubeStickers.getFaceStickers(rotationAxis.getCounterclockwiseFace());
+        rotateFaceClockwise(positiveFace, 3);
     }
 
     private static void rotateSideFacesClockwise(CubeStickers cubeStickers, RotationAxis rotationAxis) {
@@ -102,10 +102,7 @@ public class Rotation extends Operation {
             Direction dst_face = rotationAxis.getSideFace(dst_face_index);
 
             copyFacesBetweenCubes(srcCubeStickers, cubeStickers, src_face, dst_face);
-
-            for(int i=0; i<rotationAxis.getRotation(src_face_index); i++) {
-                rotateFaceClockwise(cubeStickers.getFaceStickers(src_face));
-            }
+            rotateFaceClockwise(cubeStickers.getFaceStickers(dst_face), rotationAxis.getRotation(dst_face_index));
         }
     }
 
