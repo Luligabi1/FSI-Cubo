@@ -4,8 +4,10 @@ import com.github.klima7.common.domain.cube.stickers.CubeStickers;
 import com.github.klima7.common.domain.cube.stickers.FaceStickers;
 import com.github.klima7.common.domain.operation.Operation;
 import com.github.klima7.common.domain.operation.OperationDirection;
+import com.github.klima7.core.init.SoundRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
 
 public class Rotation extends Operation {
 
@@ -51,6 +53,11 @@ public class Rotation extends Operation {
             case Y -> Direction.UP;
             case Z -> Direction.NORTH;
         };
+    }
+
+    @Override
+    public SoundEvent getSoundEvent() {
+        return SoundRegistry.ROTATE.get();
     }
 
     @Override

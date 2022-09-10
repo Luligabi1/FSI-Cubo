@@ -3,7 +3,15 @@
     "sounds": [
       {
         "name": "rubiks_cube:move",
-        "volume": 0.2
+        "volume": 0.3
+      }
+    ]
+  },
+  "rubiks_cube.rotate": {
+    "sounds": [
+      {
+        "name": "rubiks_cube:rotate",
+        "volume": 1.0
       }
     ]
   }

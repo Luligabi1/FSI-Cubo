@@ -54,7 +54,7 @@ public class Move extends Operation {
 
     @Override
     public SoundEvent getSoundEvent() {
-        return SoundRegistry.MOVE_SOUND.get();
+        return SoundRegistry.MOVE.get();
     }
 
     @Override

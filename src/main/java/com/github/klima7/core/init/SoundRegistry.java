@@ -12,7 +12,8 @@ public class SoundRegistry {
 
     private static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, RubiksCubeMod.MODID);
 
-    public static final RegistryObject<SoundEvent> MOVE_SOUND = registerSound("rubiks_cube.move");
+    public static final RegistryObject<SoundEvent> MOVE = registerSound("rubiks_cube.move");
+    public static final RegistryObject<SoundEvent> ROTATE = registerSound("rubiks_cube.rotate");
 
     public static void register(IEventBus eventBus) {
         SOUNDS.register(eventBus);
