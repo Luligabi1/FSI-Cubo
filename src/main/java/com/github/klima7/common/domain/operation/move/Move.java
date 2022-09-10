@@ -15,7 +15,7 @@ public class Move extends Operation {
     public static final String TYPE = "move";
     private static final String ANIMATION_CLOCKWISE = "animation.rubiks_cube.move.clockwise";
     private static final String ANIMATION_COUNTERCLOCKWISE = "animation.rubiks_cube.move.counterclockwise";
-    public static final int DURATION_IN_TICKS = 20;
+    public static final int DURATION_IN_TICKS = 18;
 
     private final MoveFace moveFace;
     private final OperationDirection moveDirection;

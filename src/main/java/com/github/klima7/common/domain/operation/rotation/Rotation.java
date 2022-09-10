@@ -14,7 +14,7 @@ public class Rotation extends Operation {
     public static final String TYPE = "rotation";
     private static final String ANIMATION_CLOCKWISE = "animation.rubiks_cube.rotate.clockwise";
     private static final String ANIMATION_COUNTERCLOCKWISE = "animation.rubiks_cube.rotate.counterclockwise";
-    public static final int DURATION_IN_TICKS = 20;
+    public static final int DURATION_IN_TICKS = 14;
 
     private final RotationAxis rotationAxis;
     private final OperationDirection rotationDirection;
