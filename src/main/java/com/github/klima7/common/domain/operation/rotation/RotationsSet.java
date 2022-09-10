@@ -27,12 +27,12 @@ public class RotationsSet {
 
     public static RotationsSet createFromDirection(Direction direction) {
         return switch(direction) {
-            case SOUTH -> new RotationsSet(0, 0, 0);
-            case NORTH -> new RotationsSet(0, 2, 0);
-            case WEST -> new RotationsSet(0, 1, 0);
+            case NORTH -> new RotationsSet(0, 0, 0);
+            case SOUTH -> new RotationsSet(0, 2, 0);
             case EAST -> new RotationsSet(0, 3, 0);
-            case DOWN -> new RotationsSet(1, 0, 0);
+            case WEST -> new RotationsSet(0, 1, 0);
             case UP -> new RotationsSet(3, 0, 0);
+            case DOWN -> new RotationsSet(1, 0, 0);
         };
     }
 

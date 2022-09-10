@@ -4,6 +4,8 @@ import com.github.klima7.client.model.blockentity.RubiksCubeModel;
 import com.github.klima7.client.renderer.texture.RubiksCubeTexture;
 import com.github.klima7.client.renderer.texture.RubiksCubeTextureManager;
 import com.github.klima7.common.domain.cube.stickers.CubeStickers;
+import com.github.klima7.common.domain.operation.rotation.InstantRotations;
+import com.github.klima7.common.domain.operation.rotation.RotationsSet;
 import com.github.klima7.common.entity.RubiksCubeBlockEntity;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -30,9 +32,13 @@ public class RubiksCubeBlockEntityRenderer extends GeoBlockRenderer<RubiksCubeBl
 
     @Override
     public ResourceLocation getTextureLocation(RubiksCubeBlockEntity entity) {
-//        CubeStickers rotatedStickers = CubeRotator.rotate(entity.getCubeStickers(), entity.getFacing());
+        System.out.println(entity.getFacing());
+        CubeStickers rotatedStickers = CubeStickers.copyOf(entity.getCubeStickers());
+        InstantRotations instantRotations = new InstantRotations(RotationsSet.createFromDirection(entity.getFacing()));
+        instantRotations.execute(rotatedStickers);
+
         RubiksCubeTexture texture = rubiksCubeTextureManager.getTexture(entity.getId());
-        texture.updateIfNeeded(entity.getCubeStickers());
+        texture.updateIfNeeded(rotatedStickers);
         return texture.getResourceLocation();
     }
 
