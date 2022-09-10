@@ -74,6 +74,6 @@ public class RubiksCubeBlockEntityRenderer extends GeoBlockRenderer<RubiksCubeBl
     }
 
     private Direction getFacing(RubiksCubeBlockEntity entity) {
-        return Direction.NORTH;
+        return entity.getFacing();
     }
 }

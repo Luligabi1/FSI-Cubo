@@ -47,9 +47,9 @@ public class Rotation extends Operation {
     @Override
     public Direction getFacing() {
         return switch(getRotationAxis()) {
-            case X -> Direction.NORTH;
-            case Y -> Direction.WEST;
-            case Z -> Direction.UP;
+            case X -> Direction.WEST;
+            case Y -> Direction.UP;
+            case Z -> Direction.NORTH;
         };
     }
 

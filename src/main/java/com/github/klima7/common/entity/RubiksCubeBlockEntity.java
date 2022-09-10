@@ -4,6 +4,7 @@ import com.github.klima7.common.domain.cube.stickers.CubeStickers;
 import com.github.klima7.common.domain.operation.Operation;
 import com.github.klima7.core.init.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -126,6 +127,14 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
     public CubeStickers getCubeState() {
         return this.cubeStickers;
+    }
+
+    public Direction getFacing() {
+        if(operation != null) {
+            return operation.getFacing();
+        } else {
+            return Direction.NORTH;
+        }
     }
 
     public boolean isExecutingOperation() {
