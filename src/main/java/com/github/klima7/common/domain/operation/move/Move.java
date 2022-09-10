@@ -5,8 +5,10 @@ import com.github.klima7.common.domain.cube.stickers.CubeStickers;
 import com.github.klima7.common.domain.cube.stickers.Sticker;
 import com.github.klima7.common.domain.operation.Operation;
 import com.github.klima7.common.domain.operation.OperationDirection;
+import com.github.klima7.core.init.SoundRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
 
 public class Move extends Operation {
 
@@ -48,6 +50,11 @@ public class Move extends Operation {
     @Override
     public Direction getFacing() {
         return getMoveFace().getDirection();
+    }
+
+    @Override
+    public SoundEvent getSoundEvent() {
+        return SoundRegistry.MOVE_SOUND.get();
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.github.klima7.common.domain.operation.move.Move;
 import com.github.klima7.common.domain.operation.rotation.Rotation;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
 import software.bernie.geckolib3.core.easing.EasingType;
 
 public abstract class Operation {
@@ -33,6 +34,10 @@ public abstract class Operation {
 
     public EasingType getEasing() {
         return EasingType.Linear;
+    }
+
+    public SoundEvent getSoundEvent() {
+        return null;
     }
 
     public boolean isInstant() {

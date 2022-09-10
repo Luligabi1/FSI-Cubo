@@ -8,6 +8,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -120,6 +122,12 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
         } else {
             this.operation = operation;
             this.startTime = level.getGameTime();
+        }
+
+        SoundEvent soundEvent = operation.getSoundEvent();
+        if(soundEvent != null) {
+            System.out.println("Playing sound");
+            level.playSound(null, getBlockPos(), soundEvent, SoundSource.BLOCKS, 1.0f, 1.0f);
         }
 
         sync();

@@ -75,11 +75,11 @@ public class RubiksCubeBlock extends Block implements EntityBlock {
         }
 
         Direction direction = hitResult.getDirection();
-        boolean reverse = KeyInit.REVERSE.isDown();
-        boolean rotate = KeyInit.ROTATE.isDown();
+        boolean isReversed = KeyInit.REVERSE.isDown();
+        boolean isRotation = KeyInit.ROTATE.isDown();
 
         PacketHandler.CHANNEL.sendToServer(
-                new ServerboundUpdateRubiksCubePacket(pos, direction, reverse, rotate)
+                new ServerboundUpdateRubiksCubePacket(pos, direction, isReversed, isRotation)
         );
 
         return InteractionResult.SUCCESS;

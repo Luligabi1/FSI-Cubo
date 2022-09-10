@@ -1,0 +1,10 @@
+{
+  "rubiks_cube.move": {
+    "sounds": [
+      {
+        "name": "rubiks_cube:move",
+        "volume": 0.5
+      }
+    ]
+  }
+}

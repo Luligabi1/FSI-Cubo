@@ -69,7 +69,6 @@ public class ServerboundUpdateRubiksCubePacket {
         MoveFace moveFace = MoveFace.fromDirection(this.direction);
         OperationDirection direction = this.reverse ? OperationDirection.COUNTERCLOCKWISE : OperationDirection.CLOCKWISE;
         return new Move(moveFace, direction);
-
     }
 
     private Rotation createRotation() {
