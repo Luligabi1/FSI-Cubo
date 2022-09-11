@@ -12,6 +12,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -20,10 +21,15 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class RubiksCubeBlock extends Block implements EntityBlock {
 
@@ -59,6 +65,20 @@ public class RubiksCubeBlock extends Block implements EntityBlock {
     @Override
     public RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
+    }
+
+    @Override
+    public void playerWillDestroy(Level level, BlockPos blockPos, BlockState blockState, Player player) {
+        BlockEntity blockEntity = level.getBlockEntity(blockPos);
+        dropResources(blockState, level, blockPos, blockEntity);
+        super.playerWillDestroy(level, blockPos, blockState, player);
+    }
+
+    @Override
+    public List<ItemStack> getDrops(BlockState blockState, LootContext.Builder lootContextBuilder) {
+        RubiksCubeBlockEntity entity = (RubiksCubeBlockEntity) lootContextBuilder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
+        ItemStack item = entity.asItem();
+        return List.of(item);
     }
 
     @Nullable

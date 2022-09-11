@@ -3,6 +3,7 @@ package com.github.klima7.common.entity;
 import com.github.klima7.common.domain.cube.stickers.CubeStickers;
 import com.github.klima7.common.domain.operation.Operation;
 import com.github.klima7.core.init.BlockEntityRegistry;
+import com.github.klima7.core.init.ItemRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -10,6 +11,7 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -101,6 +103,11 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
         if(tag != null) {
             load(tag);
         }
+    }
+
+    public ItemStack asItem() {
+        ItemStack itemStack = new ItemStack(ItemRegistry.RUBIKS_CUBE_ITEM.get());
+        return itemStack;
     }
 
     public void serverTick() {
