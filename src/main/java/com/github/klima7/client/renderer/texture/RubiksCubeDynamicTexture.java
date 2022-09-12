@@ -1,9 +1,9 @@
 package com.github.klima7.client.renderer.texture;
 
+import com.github.klima7.common.domain.cube.locations.OnFaceLocation;
 import com.github.klima7.common.domain.cube.stickers.CubeStickers;
 import com.github.klima7.common.domain.cube.stickers.FaceStickers;
 import com.github.klima7.common.domain.cube.stickers.Sticker;
-import com.github.klima7.common.domain.cube.locations.OnFaceLocation;
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
