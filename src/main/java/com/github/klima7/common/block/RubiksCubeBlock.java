@@ -36,9 +36,8 @@ import java.util.List;
 public class RubiksCubeBlock extends Block implements EntityBlock {
 
     public static final Properties PROPERTIES = BlockBehaviour.Properties
-            .of(Material.WOOD)
-            .strength(8)
-            .explosionResistance(30f)
+            .of(Material.CLAY)
+            .strength(0.5f)
             .noOcclusion();
 
     private Direction facing;   // Auxiliary variable to pass value between callback methods
