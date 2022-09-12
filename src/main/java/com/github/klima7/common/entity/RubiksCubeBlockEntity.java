@@ -12,7 +12,6 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -38,13 +37,25 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
     public RubiksCubeBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.RUBIKS_CUBE.get(), pos, state);
-        this.cubeStickers = new CubeStickers();
     }
 
-    @Override
-    public void setLevel(Level level) {
-        super.setLevel(level);
-        this.id = level.getFreeMapId();
+    public void initializeFromItem(ItemStack itemStack) {
+        CompoundTag tag = itemStack.getTag();
+        if(tag == null) {
+            this.id = level.getFreeMapId();
+            this.cubeStickers = new CubeStickers();
+        } else {
+            this.id = tag.getInt("id");
+            this.cubeStickers = CubeStickers.fromText(tag.getString("cubeStickers"));
+        }
+    }
+
+    public ItemStack asItem() {
+        ItemStack itemStack = new ItemStack(ItemRegistry.RUBIKS_CUBE_ITEM.get());
+        CompoundTag tag = itemStack.getOrCreateTag();
+        tag.putInt("id", id);
+        tag.putString("cubeStickers", cubeStickers.toText());
+        return itemStack;
     }
 
     @Override
@@ -103,14 +114,6 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
         if(tag != null) {
             load(tag);
         }
-    }
-
-    public ItemStack asItem() {
-        ItemStack itemStack = new ItemStack(ItemRegistry.RUBIKS_CUBE_ITEM.get());
-        CompoundTag tag = itemStack.getOrCreateTag();
-        tag.putInt("id", id);
-        tag.putString("cubeStickers", cubeStickers.toText());
-        return itemStack;
     }
 
     public void serverTick() {
@@ -181,4 +184,5 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
             level.sendBlockUpdated(getBlockPos(), state, state, 3);
         }
     }
+
 }

@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -40,7 +41,7 @@ public class RubiksCubeBlock extends Block implements EntityBlock {
             .explosionResistance(30f)
             .noOcclusion();
 
-    private Direction facing;
+    private Direction facing;   // Auxiliary variable to pass value between callback methods
 
     public RubiksCubeBlock() {
         super(PROPERTIES);
@@ -49,11 +50,7 @@ public class RubiksCubeBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
-        RubiksCubeBlockEntity entity = BlockEntityRegistry.RUBIKS_CUBE.get().create(blockPos, blockState);
-        if(this.facing != null) {
-            entity.executeOperation(new InstantRotations(RotationsSet.createToDirection(this.facing)));
-        }
-        return entity;
+        return BlockEntityRegistry.RUBIKS_CUBE.get().create(blockPos, blockState);
     }
 
     @Nullable
@@ -66,6 +63,17 @@ public class RubiksCubeBlock extends Block implements EntityBlock {
     @Override
     public RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
+    }
+
+    @Override
+    public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity,
+                            ItemStack itemStack) {
+        RubiksCubeBlockEntity entity = (RubiksCubeBlockEntity) level.getBlockEntity(blockPos);
+        entity.initializeFromItem(itemStack);
+        if(this.facing != null) {
+            entity.executeOperation(new InstantRotations(RotationsSet.createToDirection(this.facing)));
+        }
+        super.setPlacedBy(level, blockPos, blockState, livingEntity, itemStack);
     }
 
     @Override
