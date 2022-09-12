@@ -76,6 +76,15 @@ public class RubiksCubeBlock extends Block implements EntityBlock {
     }
 
     @Override
+    public void playerWillDestroy(Level level, BlockPos blockPos, BlockState blockState, Player player) {
+        if(player.isCreative()) {
+            BlockEntity blockEntity = level.getBlockEntity(blockPos);
+            dropResources(blockState, level, blockPos, blockEntity);
+        }
+        super.playerWillDestroy(level, blockPos, blockState, player);
+    }
+
+    @Override
     public List<ItemStack> getDrops(BlockState blockState, LootContext.Builder lootContextBuilder) {
         RubiksCubeBlockEntity entity = (RubiksCubeBlockEntity) lootContextBuilder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         ItemStack item = entity.asItem();
