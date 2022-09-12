@@ -12,6 +12,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -39,13 +40,17 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
         super(BlockEntityRegistry.RUBIKS_CUBE.get(), pos, state);
     }
 
+    @Override
+    public void setLevel(Level level) {
+        super.setLevel(level);
+        this.id = level.getFreeMapId();
+    }
+
     public void initializeFromItem(ItemStack itemStack) {
         CompoundTag tag = itemStack.getTag();
         if(tag == null) {
-            this.id = level.getFreeMapId();
             this.cubeStickers = new CubeStickers();
         } else {
-            this.id = tag.getInt("id");
             this.cubeStickers = CubeStickers.fromText(tag.getString("cubeStickers"));
         }
     }
