@@ -107,6 +107,9 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
     public ItemStack asItem() {
         ItemStack itemStack = new ItemStack(ItemRegistry.RUBIKS_CUBE_ITEM.get());
+        CompoundTag tag = itemStack.getOrCreateTag();
+        tag.putInt("id", id);
+        tag.putString("cubeStickers", cubeStickers.toText());
         return itemStack;
     }
 
@@ -133,7 +136,6 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
         SoundEvent soundEvent = operation.getSoundEvent();
         if(soundEvent != null) {
-            System.out.println("Playing sound");
             level.playSound(null, getBlockPos(), soundEvent, SoundSource.BLOCKS, 1.0f, 1.0f);
         }
 

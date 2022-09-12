@@ -10,14 +10,31 @@ import java.util.Objects;
 
 public class RubiksCubeTextureManager {
 
-    private final TextureManager textureManager = Minecraft.getInstance().getTextureManager();
-    private final ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
+    private static RubiksCubeTextureManager instance;
 
-    private final Int2ObjectMap<RubiksCubeTexture> rubiksCubes = new Int2ObjectOpenHashMap<>();
+    private final Int2ObjectMap<RubiksCubeDynamicTexture> rubiksCubes = new Int2ObjectOpenHashMap<>();
+
+    private RubiksCubeTextureManager() {}
+
+    public static RubiksCubeTextureManager getInstance() {
+        if(instance == null) {
+            instance = new RubiksCubeTextureManager();
+        }
+
+        return instance;
+    }
 
     public RubiksCubeTexture getTexture(int id) {
+        Minecraft minecraft = Minecraft.getInstance();
+        TextureManager textureManager = minecraft.getTextureManager();
+        ResourceManager resourceManager = minecraft.getResourceManager();
+
+        if(textureManager == null || resourceManager == null) {
+            return new RubiksCubeStaticTexture();
+        }
+
         return this.rubiksCubes.compute(id, (rc_id, existing) ->
-                Objects.requireNonNullElseGet(existing, () -> new RubiksCubeTexture(rc_id, textureManager, resourceManager)));
+                Objects.requireNonNullElseGet(existing, () -> new RubiksCubeDynamicTexture(rc_id, textureManager, resourceManager)));
     }
 
 }

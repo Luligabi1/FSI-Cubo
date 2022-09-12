@@ -23,11 +23,10 @@ import software.bernie.geckolib3.renderers.geo.GeoBlockRenderer;
 
 public class RubiksCubeBlockEntityRenderer extends GeoBlockRenderer<RubiksCubeBlockEntity> {
 
-    private final RubiksCubeTextureManager rubiksCubeTextureManager;
+    private final RubiksCubeTextureManager rubiksCubeTextureManager = RubiksCubeTextureManager.getInstance();
 
     public RubiksCubeBlockEntityRenderer(BlockEntityRendererProvider.Context rendererDispatcherIn) {
         super(rendererDispatcherIn, new RubiksCubeModel());
-        this.rubiksCubeTextureManager = new RubiksCubeTextureManager();
     }
 
     @Override
