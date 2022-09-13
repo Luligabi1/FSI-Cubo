@@ -1,5 +1,6 @@
 package com.github.klima7.client.texture;
 
+import com.github.klima7.common.domain.cube.stickers.CubeStickers;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -12,6 +13,7 @@ public class RubiksCubeTextureManager {
     private final TextureManager textureManager;
     private final ResourceManager resourceManager;
     private final Int2ObjectMap<RubiksCubeTexture> rubiksCubes;
+    private RubiksCubeTexture solvedTexture;
 
     public RubiksCubeTextureManager(TextureManager textureManager, ResourceManager resourceManager) {
         this.textureManager = textureManager;
@@ -22,6 +24,19 @@ public class RubiksCubeTextureManager {
     public RubiksCubeTexture getTexture(int id) {
         return this.rubiksCubes.compute(id, (rc_id, existing) ->
                 Objects.requireNonNullElseGet(existing, () -> new RubiksCubeTexture(rc_id, textureManager, resourceManager)));
+    }
+
+    public RubiksCubeTexture getSolvedTexture() {
+        if(solvedTexture == null) {
+            solvedTexture = createSolvedTexture();
+        }
+        return solvedTexture;
+    }
+
+    private RubiksCubeTexture createSolvedTexture() {
+        RubiksCubeTexture texture = new RubiksCubeTexture(0, textureManager, resourceManager);
+        texture.updateIfNeeded(new CubeStickers());
+        return texture;
     }
 
 }
