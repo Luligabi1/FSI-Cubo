@@ -1,6 +1,6 @@
 {
   "parent": "block/block",
   "textures": {
-    "particle": "rubiks_cube:block/rubiks_cube_particle"
+    "particle": "rubiks_cube:block/rubiks_cube/particle"
   }
 }

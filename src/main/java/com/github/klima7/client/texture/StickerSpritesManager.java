@@ -14,7 +14,7 @@ import java.util.EnumMap;
 public class StickerSpritesManager {
 
     public static final ResourceLocation STICKERS_LOCATION =
-            new ResourceLocation(RubiksCubeMod.MODID+":textures/block/rubiks_cube_stickers.png");
+            new ResourceLocation(RubiksCubeMod.MODID+":textures/block/rubiks_cube/stickers.png");
 
     public static final int STICKER_SIZE = 4;
 

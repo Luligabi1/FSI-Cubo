@@ -12,10 +12,7 @@ import java.io.IOException;
 public class FacesImageCreator {
 
     public static final ResourceLocation FACES_LOCATION =
-            new ResourceLocation(RubiksCubeMod.MODID+":textures/block/rubiks_cube_faces.png");
-
-    public static final int WIDTH = 64;
-    public static final int HEIGHT = 48;
+            new ResourceLocation(RubiksCubeMod.MODID+":textures/block/rubiks_cube/faces.png");
 
     private static NativeImage facesImage;
 
@@ -41,7 +38,7 @@ public class FacesImageCreator {
         Sprite insideFace = spritesImage.getSprite(0);
         Sprite outsideFace = spritesImage.getSprite(1);
 
-        NativeImage facesImage = new NativeImage(WIDTH, HEIGHT, true);
+        NativeImage facesImage = new NativeImage(RubiksCubeTexture.WIDTH, RubiksCubeTexture.HEIGHT, true);
 
         insideFace.blit(facesImage, 0, 0);
         outsideFace.blit(facesImage, 0, 16);
@@ -55,7 +52,7 @@ public class FacesImageCreator {
     }
 
     private static NativeImage getFacesImageCopy() {
-        NativeImage copy = new NativeImage(WIDTH, HEIGHT, true);
+        NativeImage copy = new NativeImage(RubiksCubeTexture.WIDTH, RubiksCubeTexture.HEIGHT, true);
         copy.copyFrom(facesImage);
         return copy;
     }
