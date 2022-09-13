@@ -2,19 +2,17 @@ package com.github.klima7.common.domain.cube.stickers;
 
 public enum Sticker {
 
-    WHITE('w', 0),
-    YELLOW('y', 1),
-    RED('r', 2),
-    ORANGE('o', 3),
-    BLUE('b', 4),
-    GREEN('g', 5);
+    WHITE('w'),
+    YELLOW('y'),
+    RED('r'),
+    ORANGE('o'),
+    BLUE('b'),
+    GREEN('g');
 
     private final char letter;
-    private final int textureIndex;
 
-    Sticker(char letter, int textureIndex) {
+    Sticker(char letter) {
         this.letter = letter;
-        this.textureIndex = textureIndex;
     }
 
     public static Sticker fromLetter(char letter) {
@@ -28,10 +26,6 @@ public enum Sticker {
 
     public char getLetter() {
         return letter;
-    }
-
-    public int getTextureIndex() {
-        return textureIndex;
     }
 
 }
