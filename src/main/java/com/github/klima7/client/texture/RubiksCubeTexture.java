@@ -1,6 +1,6 @@
 package com.github.klima7.client.texture;
 
-import com.github.klima7.client.ModSingleton;
+import com.github.klima7.client.ClientMod;
 import com.github.klima7.client.utils.sprite.Sprite;
 import com.github.klima7.common.domain.cube.locations.OnFaceLocation;
 import com.github.klima7.common.domain.cube.stickers.CubeStickers;
@@ -53,7 +53,7 @@ public class RubiksCubeTexture {
     }
 
     private void updateFace(FaceStickers faceStickers, int shift_x, int shift_y) {
-        StickerSpritesManager stickerSpritesManager = ModSingleton.getInstance().getStickerSpritesManager();
+        StickerSpritesManager stickerSpritesManager = ClientMod.getInstance().getStickerSpritesManager();
 
         for(int sticker_x=0; sticker_x<3; sticker_x++) {
             for(int sticker_y=0; sticker_y<3; sticker_y++) {

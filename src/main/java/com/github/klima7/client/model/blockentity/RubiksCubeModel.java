@@ -1,7 +1,7 @@
 package com.github.klima7.client.model.blockentity;
 
 import com.github.klima7.RubiksCubeMod;
-import com.github.klima7.client.ModSingleton;
+import com.github.klima7.client.ClientMod;
 import com.github.klima7.client.texture.RubiksCubeTexture;
 import com.github.klima7.client.texture.RubiksCubeTextureManager;
 import com.github.klima7.common.domain.cube.stickers.CubeStickers;
@@ -29,7 +29,7 @@ public class RubiksCubeModel extends AnimatedGeoModel<RubiksCubeBlockEntity> {
         InstantRotations instantRotations = new InstantRotations(RotationsSet.createFromDirection(entity.getFacing()));
         instantRotations.execute(rotatedStickers);
 
-        RubiksCubeTextureManager rubiksCubeTextureManager = ModSingleton.getInstance().getRubiksCubeTextureManager();
+        RubiksCubeTextureManager rubiksCubeTextureManager = ClientMod.getInstance().getRubiksCubeTextureManager();
         RubiksCubeTexture texture = rubiksCubeTextureManager.getTexture(entity.getId());
         texture.updateIfNeeded(rotatedStickers);
         return texture.getResourceLocation();

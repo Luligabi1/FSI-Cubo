@@ -1,7 +1,7 @@
 package com.github.klima7.client.model.item;
 
 import com.github.klima7.RubiksCubeMod;
-import com.github.klima7.client.ModSingleton;
+import com.github.klima7.client.ClientMod;
 import com.github.klima7.client.texture.FacesImageCreator;
 import com.github.klima7.client.texture.RubiksCubeTexture;
 import com.github.klima7.client.texture.RubiksCubeTextureManager;
@@ -40,7 +40,7 @@ public class RubiksCubeItemModel extends AnimatedGeoModel<RubiksCubeItem> {
         int id = tag.getInt("id");
         CubeStickers cubeStickers = CubeStickers.fromText(tag.getString("cubeStickers"));
 
-        RubiksCubeTextureManager rubiksCubeTextureManager = ModSingleton.getInstance().getRubiksCubeTextureManager();
+        RubiksCubeTextureManager rubiksCubeTextureManager = ClientMod.getInstance().getRubiksCubeTextureManager();
         RubiksCubeTexture texture = rubiksCubeTextureManager.getTexture(id);
         texture.updateIfNeeded(cubeStickers);
         return texture.getResourceLocation();

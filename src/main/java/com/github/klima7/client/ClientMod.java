@@ -4,16 +4,16 @@ import com.github.klima7.client.texture.RubiksCubeTextureManager;
 import com.github.klima7.client.texture.StickerSpritesManager;
 import net.minecraft.client.Minecraft;
 
-public class ModSingleton {
+public class ClientMod {
 
-    private static final ModSingleton instance = new ModSingleton();
+    private static final ClientMod instance = new ClientMod();
 
     private StickerSpritesManager stickerSpritesManager;
     private RubiksCubeTextureManager rubiksCubeTextureManager;
 
-    private ModSingleton() {}
+    private ClientMod() {}
 
-    public static ModSingleton getInstance() {
+    public static ClientMod getInstance() {
         return instance;
     }
 

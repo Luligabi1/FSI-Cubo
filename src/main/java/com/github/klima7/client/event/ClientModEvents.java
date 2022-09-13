@@ -2,11 +2,10 @@ package com.github.klima7.client.event;
 
 import com.github.klima7.RubiksCubeMod;
 import com.github.klima7.client.KeyInit;
-import com.github.klima7.client.ModSingleton;
+import com.github.klima7.client.ClientMod;
 import com.github.klima7.client.renderer.blockentity.RubiksCubeBlockEntityRenderer;
 import com.github.klima7.core.init.BlockEntityRegistry;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
@@ -23,7 +22,7 @@ public final class ClientModEvents {
     @SubscribeEvent
     public static void setupClient(FMLClientSetupEvent event) {
         try {
-            ModSingleton.getInstance().initialize();
+            ClientMod.getInstance().initialize();
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
