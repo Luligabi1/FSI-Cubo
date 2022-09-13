@@ -1,8 +1,8 @@
 package com.github.klima7.client.model.blockentity;
 
 import com.github.klima7.RubiksCubeMod;
-import com.github.klima7.client.renderer.texture.RubiksCubeTexture;
-import com.github.klima7.client.renderer.texture.RubiksCubeTextureManager;
+import com.github.klima7.client.texture.RubiksCubeTexture;
+import com.github.klima7.client.texture.RubiksCubeTextureManager;
 import com.github.klima7.common.domain.cube.stickers.CubeStickers;
 import com.github.klima7.common.domain.operation.rotation.InstantRotations;
 import com.github.klima7.common.domain.operation.rotation.RotationsSet;

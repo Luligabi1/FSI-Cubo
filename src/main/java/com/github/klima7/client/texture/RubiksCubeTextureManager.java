@@ -1,4 +1,4 @@
-package com.github.klima7.client.renderer.texture;
+package com.github.klima7.client.texture;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;

@@ -1,8 +1,8 @@
 package com.github.klima7.client.model.item;
 
 import com.github.klima7.RubiksCubeMod;
-import com.github.klima7.client.renderer.texture.RubiksCubeTexture;
-import com.github.klima7.client.renderer.texture.RubiksCubeTextureManager;
+import com.github.klima7.client.texture.RubiksCubeTexture;
+import com.github.klima7.client.texture.RubiksCubeTextureManager;
 import com.github.klima7.common.domain.cube.stickers.CubeStickers;
 import com.github.klima7.common.item.RubiksCubeItem;
 import net.minecraft.nbt.CompoundTag;
@@ -34,7 +34,7 @@ public class RubiksCubeItemModel extends AnimatedGeoModel<RubiksCubeItem> {
         CompoundTag tag = itemStack.getTag();
 
         if(tag == null) {
-            return RubiksCubeTexture.TEMPLATE_LOCATION;
+            return RubiksCubeTexture.FACES_LOCATION;
         }
 
         int id = tag.getInt("id");
