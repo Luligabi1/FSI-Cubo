@@ -1,6 +1,8 @@
 package com.github.klima7.client.model.item;
 
 import com.github.klima7.RubiksCubeMod;
+import com.github.klima7.client.ModSingleton;
+import com.github.klima7.client.texture.FacesImageCreator;
 import com.github.klima7.client.texture.RubiksCubeTexture;
 import com.github.klima7.client.texture.RubiksCubeTextureManager;
 import com.github.klima7.common.domain.cube.stickers.CubeStickers;
@@ -11,8 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class RubiksCubeItemModel extends AnimatedGeoModel<RubiksCubeItem> {
-
-    private final RubiksCubeTextureManager rubiksCubeTextureManager = RubiksCubeTextureManager.getInstance();
 
     @Override
     public ResourceLocation getAnimationResource(RubiksCubeItem animatable) {
@@ -34,12 +34,13 @@ public class RubiksCubeItemModel extends AnimatedGeoModel<RubiksCubeItem> {
         CompoundTag tag = itemStack.getTag();
 
         if(tag == null) {
-            return RubiksCubeTexture.FACES_LOCATION;
+            return FacesImageCreator.FACES_LOCATION;
         }
 
         int id = tag.getInt("id");
         CubeStickers cubeStickers = CubeStickers.fromText(tag.getString("cubeStickers"));
 
+        RubiksCubeTextureManager rubiksCubeTextureManager = ModSingleton.getInstance().getRubiksCubeTextureManager();
         RubiksCubeTexture texture = rubiksCubeTextureManager.getTexture(id);
         texture.updateIfNeeded(cubeStickers);
         return texture.getResourceLocation();

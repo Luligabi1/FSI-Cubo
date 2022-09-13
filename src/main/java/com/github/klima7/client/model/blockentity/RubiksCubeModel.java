@@ -1,6 +1,7 @@
 package com.github.klima7.client.model.blockentity;
 
 import com.github.klima7.RubiksCubeMod;
+import com.github.klima7.client.ModSingleton;
 import com.github.klima7.client.texture.RubiksCubeTexture;
 import com.github.klima7.client.texture.RubiksCubeTextureManager;
 import com.github.klima7.common.domain.cube.stickers.CubeStickers;
@@ -11,8 +12,6 @@ import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class RubiksCubeModel extends AnimatedGeoModel<RubiksCubeBlockEntity> {
-
-    private final RubiksCubeTextureManager rubiksCubeTextureManager = RubiksCubeTextureManager.getInstance();
 
     @Override
     public ResourceLocation getAnimationResource(RubiksCubeBlockEntity animatable) {
@@ -30,6 +29,7 @@ public class RubiksCubeModel extends AnimatedGeoModel<RubiksCubeBlockEntity> {
         InstantRotations instantRotations = new InstantRotations(RotationsSet.createFromDirection(entity.getFacing()));
         instantRotations.execute(rotatedStickers);
 
+        RubiksCubeTextureManager rubiksCubeTextureManager = ModSingleton.getInstance().getRubiksCubeTextureManager();
         RubiksCubeTexture texture = rubiksCubeTextureManager.getTexture(entity.getId());
         texture.updateIfNeeded(rotatedStickers);
         return texture.getResourceLocation();
