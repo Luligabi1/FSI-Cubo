@@ -1,4 +1,4 @@
-package com.github.klima7.client.texture;
+package com.github.klima7.client.texture.helpers;
 
 import com.github.klima7.RubiksCubeMod;
 import com.github.klima7.client.utils.sprite.Sprite;

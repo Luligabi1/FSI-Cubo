@@ -1,7 +1,7 @@
 package com.github.klima7.client;
 
 import com.github.klima7.client.texture.RubiksCubeTextureManager;
-import com.github.klima7.client.texture.StickerSpritesManager;
+import com.github.klima7.client.texture.helpers.StickerSpritesManager;
 import net.minecraft.client.Minecraft;
 
 public class ClientMod {

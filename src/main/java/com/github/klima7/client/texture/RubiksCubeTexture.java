@@ -1,6 +1,8 @@
 package com.github.klima7.client.texture;
 
 import com.github.klima7.client.ClientMod;
+import com.github.klima7.client.texture.helpers.FacesImageCreator;
+import com.github.klima7.client.texture.helpers.StickerSpritesManager;
 import com.github.klima7.client.utils.sprite.Sprite;
 import com.github.klima7.common.domain.cube.locations.OnFaceLocation;
 import com.github.klima7.common.domain.cube.stickers.CubeStickers;
