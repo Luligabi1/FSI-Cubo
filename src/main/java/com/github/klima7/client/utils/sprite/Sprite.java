@@ -10,10 +10,6 @@ public class Sprite {
         this.image = image;
     }
 
-    public NativeImage getNativeImage() {
-        return image;
-    }
-
     public void blit(NativeImage screen, int x, int y) {
         for(int shift_y=0; shift_y<image.getHeight(); shift_y++) {
             for(int shift_x=0; shift_x<image.getWidth(); shift_x++) {
