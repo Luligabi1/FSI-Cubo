@@ -60,14 +60,7 @@ public class RubiksCubeItem extends BlockItem implements IAnimatable, ISyncable 
     }
 
     @Override
-    public void onAnimationSync(int id, int state) {
-        final AnimationController controller = GeckoLibUtil.getControllerForID(this.factory, id, CONTROLLER_NAME);
-
-        if (controller.getAnimationState() == AnimationState.Stopped) {
-            controller.markNeedsReload();
-            controller.setAnimation(new AnimationBuilder().addAnimation("animation.rubiks_cube.clockwise", false));
-        }
-    }
+    public void onAnimationSync(int id, int state) { }
 
     private <P extends Item & IAnimatable> PlayState predicate(AnimationEvent<P> event) {
         return PlayState.CONTINUE;
