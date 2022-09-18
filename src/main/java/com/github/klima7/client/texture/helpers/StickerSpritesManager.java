@@ -38,6 +38,7 @@ public class StickerSpritesManager {
         sprites.put(Sticker.ORANGE, spritesImage.getSprite(3));
         sprites.put(Sticker.BLUE, spritesImage.getSprite(4));
         sprites.put(Sticker.GREEN, spritesImage.getSprite(5));
+        sprites.put(Sticker.NONE, spritesImage.getSprite(6));
 
         return sprites;
     }

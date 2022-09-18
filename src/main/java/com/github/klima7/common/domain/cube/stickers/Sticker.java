@@ -7,7 +7,8 @@ public enum Sticker {
     RED('r'),
     ORANGE('o'),
     BLUE('b'),
-    GREEN('g');
+    GREEN('g'),
+    NONE('x');
 
     private final char letter;
 
