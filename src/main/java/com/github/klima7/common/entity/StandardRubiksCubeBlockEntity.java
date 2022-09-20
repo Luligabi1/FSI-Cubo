@@ -32,19 +32,14 @@ public class StandardRubiksCubeBlockEntity extends BaseRubiksCubeBlockEntity {
     protected void saveAdditional(@NotNull CompoundTag tag) {
         super.saveAdditional(tag);
         tag.putInt("id", id);
-        tag.putLong("startTime", startTime);
         tag.putString("cubeState", cubeStickers.toText());
-        if(operation != null)
-            tag.put("operation", operation.save());
     }
 
     @Override
     public void load(@NotNull CompoundTag tag) {
         super.load(tag);
         this.id = tag.getInt("id");
-        this.startTime = tag.getLong("startTime");
         this.cubeStickers = CubeStickers.fromText(tag.getString("cubeState"));
-        this.operation = tag.contains("operation") ? Operation.load(tag.getCompound("operation")) : null;
     }
 
     public void initializeFromItem(ItemStack itemStack) {
@@ -64,17 +59,17 @@ public class StandardRubiksCubeBlockEntity extends BaseRubiksCubeBlockEntity {
         return itemStack;
     }
 
-    @Override
-    protected void applyOperation(Operation operation) {
-        operation.execute(this.cubeStickers);
-    }
-
     public int getId() {
         return id;
     }
 
     public CubeStickers getCubeStickers() {
         return this.cubeStickers;
+    }
+
+    @Override
+    protected void applyOperationToStickers(Operation operation) {
+        operation.execute(this.cubeStickers);
     }
 
 }

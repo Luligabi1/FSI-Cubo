@@ -14,6 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.network.NetworkEvent;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class ServerboundUpdateRubiksCubePacket {
@@ -46,14 +47,14 @@ public class ServerboundUpdateRubiksCubePacket {
         buffer.writeBoolean(this.rotation);
     }
 
-    public boolean handle(Supplier<NetworkEvent.Context> context) {
-        context.get().enqueueWork(() -> handleLater(context.get()));
-        context.get().setPacketHandled(true);
-        return true;
+    public void handle(Supplier<NetworkEvent.Context> contextSupplier) {
+        NetworkEvent.Context context = contextSupplier.get();;
+        context.enqueueWork(() -> handleLater(context));
+        context.setPacketHandled(true);
     }
 
     private void handleLater(NetworkEvent.Context context) {
-        Level level = context.getSender().level;
+        Level level = Objects.requireNonNull(context.getSender()).level;
         BlockEntity entity = level.getBlockEntity(this.pos);
         if(entity instanceof final BaseRubiksCubeBlockEntity rcEntity) {
             Operation operation = createOperation();
@@ -73,15 +74,18 @@ public class ServerboundUpdateRubiksCubePacket {
 
     private Rotation createRotation() {
         RotationAxis rotationAxis = RotationAxis.fromAxis(this.direction.getAxis());
-        OperationDirection direction = this.reverse ? OperationDirection.COUNTERCLOCKWISE : OperationDirection.CLOCKWISE;
-        boolean patchDirection = this.direction.getAxisDirection() == Direction.AxisDirection.POSITIVE;
-        if(patchDirection) {
-            direction = direction.reverse();
-        }
-        if(this.direction.getAxis() == Direction.Axis.Y) {
-            direction = direction.reverse();
-        }
+        OperationDirection direction = getRotationDirection();
         return new Rotation(rotationAxis, direction);
+    }
+
+    private OperationDirection getRotationDirection() {
+        OperationDirection direction = this.reverse ? OperationDirection.COUNTERCLOCKWISE : OperationDirection.CLOCKWISE;
+        boolean shouldReverseDirection = this.direction.getAxis() != Direction.Axis.Y &&
+                this.direction.getAxisDirection() == Direction.AxisDirection.POSITIVE;
+        if(shouldReverseDirection) {
+            direction = direction.reverse();
+        }
+        return direction;
     }
 
 }

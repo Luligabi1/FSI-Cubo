@@ -13,13 +13,21 @@ public class StandardRubiksCubeModel extends BaseRubiksCubeModel<StandardRubiksC
 
     @Override
     public ResourceLocation getTextureResource(StandardRubiksCubeBlockEntity entity) {
+        CubeStickers stickers = getStickers(entity);
+        return getTextureLocation(entity, stickers);
+    }
+
+    private CubeStickers getStickers(StandardRubiksCubeBlockEntity entity) {
         CubeStickers rotatedStickers = CubeStickers.copyOf(entity.getCubeStickers());
         InstantRotations instantRotations = new InstantRotations(RotationsSet.createFromDirection(entity.getFacing()));
         instantRotations.execute(rotatedStickers);
+        return rotatedStickers;
+    }
 
+    private ResourceLocation getTextureLocation(StandardRubiksCubeBlockEntity entity, CubeStickers stickers) {
         RubiksCubeTextureManager rubiksCubeTextureManager = ClientMod.getInstance().getRubiksCubeTextureManager();
         RubiksCubeTexture texture = rubiksCubeTextureManager.getTexture(entity.getId());
-        texture.updateIfNeeded(rotatedStickers);
+        texture.updateIfNeeded(stickers);
         return texture.getResourceLocation();
     }
 

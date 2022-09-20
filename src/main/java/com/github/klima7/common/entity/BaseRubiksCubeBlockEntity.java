@@ -25,17 +25,15 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
     public static final String IDLE_ANIMATION_NAME = "animation.rubiks_cube.nothing";
 
     private final String controllerName;
-    private final AnimationFactory factory = new AnimationFactory(this);
-
-    protected Operation operation;
-    protected long startTime;
+    private final AnimationFactory factory;
+    private Operation operation;
+    private long startTime;
 
     public BaseRubiksCubeBlockEntity(BlockPos pos, BlockState state, BlockEntityType blockEntity, String controllerName) {
         super(blockEntity, pos, state);
         this.controllerName = controllerName;
+        this.factory = new AnimationFactory(this);
     }
-
-    protected abstract void applyOperation(Operation operation);
 
     @Override
     public void registerControllers(AnimationData data) {
@@ -45,7 +43,23 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
 
     @Override
     public AnimationFactory getFactory() {
-        return this.factory;
+        return factory;
+    }
+
+    @Override
+    protected void saveAdditional(@NotNull CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.putLong("startTime", startTime);
+        if(operation != null) {
+            tag.put("operation", operation.save());
+        }
+    }
+
+    @Override
+    public void load(@NotNull CompoundTag tag) {
+        super.load(tag);
+        this.startTime = tag.getLong("startTime");
+        this.operation = tag.contains("operation") ? Operation.load(tag.getCompound("operation")) : null;
     }
 
     @NotNull
@@ -77,36 +91,27 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
     }
 
     public void serverTick() {
-        long currentTime = level.getGameTime();
-        if(this.isExecutingOperation() && currentTime - this.startTime >= operation.getDuration()) {
-            applyOperation(this.operation);
-            this.operation = null;
-            this.startTime = 0;
+        if(shouldFinishOperation()) {
+            finishOperation(operation);
         }
-        sync();
     }
 
     public void executeOperation(Operation operation) {
-        if(this.isExecutingOperation())
+        if(isExecutingOperation()) {
             return;
+        }
 
         if(operation.isInstant()) {
-            applyOperation(operation);
+            finishOperation(operation);
         } else {
-            this.operation = operation;
-            this.startTime = level.getGameTime();
+            startOperation(operation);
         }
 
-        SoundEvent soundEvent = operation.getSoundEvent();
-        if(soundEvent != null) {
-            level.playSound(null, getBlockPos(), soundEvent, SoundSource.BLOCKS, 1.0f, 1.0f);
-        }
-
-        sync();
+        playOperationSound(operation);
     }
 
     public Direction getFacing() {
-        if(operation != null) {
+        if(isExecutingOperation()) {
             return operation.getFacing();
         } else {
             return Direction.NORTH;
@@ -114,11 +119,45 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
     }
 
     public boolean isExecutingOperation() {
-        return this.operation != null;
+        return operation != null;
+    }
+
+    protected void applyOperationToStickers(Operation operation) { }
+
+    private void startOperation(Operation operation) {
+        assert level != null;
+        this.operation = operation;
+        this.startTime = level.getGameTime();
+        sync();
+    }
+
+    private void finishOperation(Operation operation) {
+        this.operation = null;
+        this.startTime = 0;
+        applyOperationToStickers(operation);
+        sync();
+    }
+
+    private void playOperationSound(Operation operation) {
+        assert level != null;
+        SoundEvent soundEvent = operation.getSoundEvent();
+        if(soundEvent != null) {
+            level.playSound(null, getBlockPos(), soundEvent, SoundSource.BLOCKS, 1.0f, 1.0f);
+        }
+    }
+
+    private boolean shouldFinishOperation() {
+        return isExecutingOperation() && currentOperationTimeElapsed();
+    }
+
+    private boolean currentOperationTimeElapsed() {
+        assert level != null;
+        long currentTime = level.getGameTime();
+        return currentTime - startTime >= operation.getDuration();
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        AnimationController controller = event.getController();
+        AnimationController<?> controller = event.getController();
 
         if(isExecutingOperation()) {
             controller.easingType = operation.getEasing();

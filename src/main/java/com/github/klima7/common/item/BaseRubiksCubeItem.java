@@ -1,10 +1,10 @@
 package com.github.klima7.common.item;
 
+import com.github.klima7.common.block.BaseRubiksCubeBlock;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -24,15 +24,14 @@ public abstract class BaseRubiksCubeItem extends BlockItem implements IAnimatabl
             .stacksTo(1);
 
     private final String controllerName;
-    private final AnimationFactory factory = new AnimationFactory(this);
+    private final AnimationFactory factory;
 
-    public BaseRubiksCubeItem(Block block, String controllerName) {
+    public BaseRubiksCubeItem(BaseRubiksCubeBlock block, String controllerName) {
         super(block, PROPERTIES);
         this.controllerName = controllerName;
+        this.factory = new AnimationFactory(this);
         GeckoLibNetwork.registerSyncable(this);
     }
-
-    protected abstract BlockEntityWithoutLevelRenderer getRenderer();
 
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
@@ -49,7 +48,7 @@ public abstract class BaseRubiksCubeItem extends BlockItem implements IAnimatabl
 
     @Override
     public void registerControllers(AnimationData data) {
-        AnimationController controller = new AnimationController(this, controllerName, 20, this::predicate);
+        AnimationController<?> controller = new AnimationController<>(this, controllerName, 0, this::predicate);
         data.addAnimationController(controller);
     }
 
@@ -60,6 +59,8 @@ public abstract class BaseRubiksCubeItem extends BlockItem implements IAnimatabl
 
     @Override
     public void onAnimationSync(int id, int state) { }
+
+    protected abstract BlockEntityWithoutLevelRenderer getRenderer();
 
     private <P extends Item & IAnimatable> PlayState predicate(AnimationEvent<P> event) {
         return PlayState.CONTINUE;

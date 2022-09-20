@@ -12,12 +12,22 @@ import net.minecraft.world.item.ItemStack;
 public class StandardRubiksCubeItemModel extends BaseRubiksCubeItemModel<StandardRubiksCubeItem> {
 
     public ResourceLocation getTextureResource(ItemStack itemStack) {
-        RubiksCubeTextureManager rubiksCubeTextureManager = ClientMod.getInstance().getRubiksCubeTextureManager();
         CompoundTag tag = itemStack.getTag();
 
         if(tag == null) {
-            return rubiksCubeTextureManager.getSolvedTexture().getResourceLocation();
+            return getTextureLocationWithoutTag();
+        } else {
+            return getTextureLocationWithTag(tag);
         }
+    }
+
+    private ResourceLocation getTextureLocationWithoutTag() {
+        RubiksCubeTextureManager rubiksCubeTextureManager = ClientMod.getInstance().getRubiksCubeTextureManager();
+        return rubiksCubeTextureManager.getSolvedTexture().getResourceLocation();
+    }
+
+    private ResourceLocation getTextureLocationWithTag(CompoundTag tag) {
+        RubiksCubeTextureManager rubiksCubeTextureManager = ClientMod.getInstance().getRubiksCubeTextureManager();
 
         int id = tag.getInt("id");
         CubeStickers cubeStickers = CubeStickers.fromText(tag.getString("cubeStickers"));

@@ -14,7 +14,7 @@ public abstract class BaseRubiksCubeItemRenderer<T extends BaseRubiksCubeItem> e
 
     @Override
     public ResourceLocation getTextureLocation(T instance) {
-        BaseRubiksCubeItemModel rubiksCubeItemModel = (BaseRubiksCubeItemModel) modelProvider;
+        BaseRubiksCubeItemModel<T> rubiksCubeItemModel = (BaseRubiksCubeItemModel<T>) modelProvider;
         return rubiksCubeItemModel.getTextureResource(currentItemStack);
     }
 
