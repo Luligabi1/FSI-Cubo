@@ -14,6 +14,7 @@ public class RubiksCubeTextureManager {
     private final ResourceManager resourceManager;
     private final Int2ObjectMap<RubiksCubeTexture> rubiksCubes;
     private RubiksCubeTexture solvedTexture;
+    private RubiksCubeTexture stickerlessTexture;
 
     public RubiksCubeTextureManager(TextureManager textureManager, ResourceManager resourceManager) {
         this.textureManager = textureManager;
@@ -33,9 +34,22 @@ public class RubiksCubeTextureManager {
         return solvedTexture;
     }
 
+    public RubiksCubeTexture getStickerlessTexture() {
+        if(stickerlessTexture == null) {
+            stickerlessTexture = createStickerlessTexture();
+        }
+        return stickerlessTexture;
+    }
+
     private RubiksCubeTexture createSolvedTexture() {
         RubiksCubeTexture texture = new RubiksCubeTexture(0, textureManager, resourceManager);
-        texture.updateIfNeeded(new CubeStickers());
+        texture.updateIfNeeded(CubeStickers.getSolved());
+        return texture;
+    }
+
+    private RubiksCubeTexture createStickerlessTexture() {
+        RubiksCubeTexture texture = new RubiksCubeTexture(0, textureManager, resourceManager);
+        texture.updateIfNeeded(CubeStickers.getStickerless());
         return texture;
     }
 

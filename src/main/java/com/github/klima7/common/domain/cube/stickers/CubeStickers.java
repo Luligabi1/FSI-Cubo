@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class CubeStickers {
 
-    public static final Direction[] DIRECTIONS_ORDER = {
+    private static final Direction[] DIRECTIONS_ORDER = {
             Direction.DOWN,
             Direction.UP,
             Direction.NORTH,
@@ -18,7 +18,7 @@ public class CubeStickers {
             Direction.WEST
     };
 
-    public static final Sticker[] FACES_STICKERS = {
+    private static final Sticker[] FACES_STICKERS = {
             Sticker.WHITE,
             Sticker.YELLOW,
             Sticker.BLUE,
@@ -27,17 +27,13 @@ public class CubeStickers {
             Sticker.RED
     };
 
+    private static final CubeStickers solved = createSolved();
+    private static final CubeStickers stickerless = createStickerless();
+
     public static final int FACES_COUNT = 6;
     public static final int STICKERS_COUNT = FACES_COUNT * FaceStickers.STICKERS_COUNT;
 
     private final EnumMap<Direction, FaceStickers> faces = new EnumMap<>(Direction.class);
-
-    public CubeStickers() {
-        for(int i=0; i<FACES_COUNT; i++) {
-            FaceStickers faceStickers = new FaceStickers(FACES_STICKERS[i]);
-            faces.put(DIRECTIONS_ORDER[i], faceStickers);
-        }
-    }
 
     public CubeStickers(Sticker[] stickers) {
         if(stickers.length != STICKERS_COUNT)
@@ -61,6 +57,14 @@ public class CubeStickers {
 
     public static CubeStickers copyOf(CubeStickers cubeStickers) {
         return CubeStickers.fromText(cubeStickers.toText());
+    }
+
+    public static CubeStickers getSolved() {
+        return CubeStickers.copyOf(solved);
+    }
+
+    public static CubeStickers getStickerless() {
+        return CubeStickers.copyOf(stickerless);
     }
 
     public String toText() {
@@ -114,6 +118,23 @@ public class CubeStickers {
     @Override
     public int hashCode() {
         return Objects.hash(faces);
+    }
+
+    private static CubeStickers createSolved() {
+        Sticker[] stickers = new Sticker[FACES_COUNT * FaceStickers.STICKERS_COUNT];
+        for(int faceIndex=0; faceIndex < FACES_COUNT; faceIndex++) {
+            Sticker sticker = FACES_STICKERS[faceIndex];
+            for(int stickerIndex=0; stickerIndex < FaceStickers.STICKERS_COUNT; stickerIndex++) {
+                stickers[faceIndex * FaceStickers.STICKERS_COUNT + stickerIndex] = sticker;
+            }
+        }
+        return new CubeStickers(stickers);
+    }
+
+    private static CubeStickers createStickerless() {
+        Sticker[] stickers = new Sticker[FACES_COUNT * FaceStickers.STICKERS_COUNT];
+        Arrays.fill(stickers, Sticker.NONE);
+        return new CubeStickers(stickers);
     }
 
 }

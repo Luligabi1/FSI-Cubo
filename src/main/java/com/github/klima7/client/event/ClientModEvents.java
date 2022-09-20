@@ -4,6 +4,7 @@ import com.github.klima7.RubiksCubeMod;
 import com.github.klima7.client.ClientMod;
 import com.github.klima7.client.KeyInit;
 import com.github.klima7.client.renderer.blockentity.RubiksCubeRenderer;
+import com.github.klima7.client.renderer.blockentity.StickerlessRubiksCubeRenderer;
 import com.github.klima7.core.init.BlockEntityRegistry;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.api.distmarker.Dist;
@@ -32,6 +33,7 @@ public final class ClientModEvents {
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(BlockEntityRegistry.RUBIKS_CUBE.get(), RubiksCubeRenderer::new);
+        event.registerBlockEntityRenderer(BlockEntityRegistry.STICKERLESS_RUBIKS_CUBE.get(), StickerlessRubiksCubeRenderer::new);
     }
 
     @SubscribeEvent

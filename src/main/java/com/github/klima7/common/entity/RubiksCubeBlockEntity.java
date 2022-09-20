@@ -5,73 +5,27 @@ import com.github.klima7.common.domain.operation.Operation;
 import com.github.klima7.core.init.BlockEntityRegistry;
 import com.github.klima7.core.init.ItemRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
+public class RubiksCubeBlockEntity extends AbstractRubiksCubeBlockEntity {
 
     public static final String CONTROLLER_NAME = "rubiks_cube_block_controller";
-    public static final String IDLE_ANIMATION_NAME = "animation.rubiks_cube.nothing";
-
-    private final AnimationFactory factory = new AnimationFactory(this);
 
     private int id;
     private CubeStickers cubeStickers;
-    private Operation operation;
-    private long startTime;
 
     public RubiksCubeBlockEntity(BlockPos pos, BlockState state) {
-        super(BlockEntityRegistry.RUBIKS_CUBE.get(), pos, state);
+        super(pos, state, BlockEntityRegistry.RUBIKS_CUBE.get(), CONTROLLER_NAME);
     }
 
     @Override
     public void setLevel(Level level) {
         super.setLevel(level);
         this.id = level.getFreeMapId();
-    }
-
-    public void initializeFromItem(ItemStack itemStack) {
-        CompoundTag tag = itemStack.getTag();
-        if(tag == null) {
-            this.cubeStickers = new CubeStickers();
-        } else {
-            this.cubeStickers = CubeStickers.fromText(tag.getString("cubeStickers"));
-        }
-    }
-
-    public ItemStack asItem() {
-        ItemStack itemStack = new ItemStack(ItemRegistry.RUBIKS_CUBE_ITEM.get());
-        CompoundTag tag = itemStack.getOrCreateTag();
-        tag.putInt("id", id);
-        tag.putString("cubeStickers", cubeStickers.toText());
-        return itemStack;
-    }
-
-    @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, CONTROLLER_NAME, 0, this::predicate));
-        data.setResetSpeedInTicks(0);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
     }
 
     @Override
@@ -93,61 +47,26 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
         this.operation = tag.contains("operation") ? Operation.load(tag.getCompound("operation")) : null;
     }
 
-    @NotNull
-    @Override
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-        saveAdditional(tag);
-        return tag;
-    }
-
-    @Override
-    public void handleUpdateTag(CompoundTag tag) {
-        if (tag != null) {
-            load(tag);
-        }
-    }
-
-    @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
-        CompoundTag tag = packet.getTag();
-        if(tag != null) {
-            load(tag);
-        }
-    }
-
-    public void serverTick() {
-        long currentTime = level.getGameTime();
-        if(this.isExecutingOperation() && currentTime - this.startTime >= operation.getDuration()) {
-            this.operation.execute(this.cubeStickers);
-            this.operation = null;
-            this.startTime = 0;
-        }
-        sync();
-    }
-
-    public void executeOperation(Operation operation) {
-        if(this.isExecutingOperation())
-            return;
-
-        if(operation.isInstant()) {
-            operation.execute(this.cubeStickers);
+    public void initializeFromItem(ItemStack itemStack) {
+        CompoundTag tag = itemStack.getTag();
+        if(tag == null) {
+            this.cubeStickers = CubeStickers.getSolved();
         } else {
-            this.operation = operation;
-            this.startTime = level.getGameTime();
+            this.cubeStickers = CubeStickers.fromText(tag.getString("cubeStickers"));
         }
+    }
 
-        SoundEvent soundEvent = operation.getSoundEvent();
-        if(soundEvent != null) {
-            level.playSound(null, getBlockPos(), soundEvent, SoundSource.BLOCKS, 1.0f, 1.0f);
-        }
+    public ItemStack asItem() {
+        ItemStack itemStack = new ItemStack(ItemRegistry.RUBIKS_CUBE_ITEM.get());
+        CompoundTag tag = itemStack.getOrCreateTag();
+        tag.putInt("id", id);
+        tag.putString("cubeStickers", cubeStickers.toText());
+        return itemStack;
+    }
 
-        sync();
+    @Override
+    protected void applyOperation(Operation operation) {
+        operation.execute(this.cubeStickers);
     }
 
     public int getId() {
@@ -156,38 +75,6 @@ public class RubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
     public CubeStickers getCubeStickers() {
         return this.cubeStickers;
-    }
-
-    public Direction getFacing() {
-        if(operation != null) {
-            return operation.getFacing();
-        } else {
-            return Direction.NORTH;
-        }
-    }
-
-    public boolean isExecutingOperation() {
-        return this.operation != null;
-    }
-
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        AnimationController controller = event.getController();
-
-        if(isExecutingOperation()) {
-            controller.easingType = operation.getEasing();
-            event.getController().setAnimation(new AnimationBuilder().addAnimation(operation.getAnimationName()));
-        } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation(IDLE_ANIMATION_NAME, true));
-        }
-        return PlayState.CONTINUE;
-    }
-
-    private void sync() {
-        if(level != null && !level.isClientSide()) {
-            setChanged();
-            BlockState state = getBlockState();
-            level.sendBlockUpdated(getBlockPos(), state, state, 3);
-        }
     }
 
 }
