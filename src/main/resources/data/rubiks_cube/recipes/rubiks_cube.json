@@ -1,0 +1,30 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:white_carpet"
+        },
+        {
+            "item": "minecraft:yellow_carpet"
+        },
+        {
+            "item": "minecraft:red_carpet"
+        },
+        {
+            "item": "minecraft:green_carpet"
+        },
+        {
+            "item": "rubiks_cube:stickerless_rubiks_cube"
+        },
+        {
+            "item": "minecraft:orange_carpet"
+        },
+        {
+            "item": "minecraft:blue_carpet"
+        }
+    ],
+    "result": {
+        "item": "rubiks_cube:rubiks_cube",
+        "count": 1
+    }
+}
