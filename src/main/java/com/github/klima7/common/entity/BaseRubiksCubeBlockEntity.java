@@ -20,7 +20,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public abstract class AbstractRubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
+public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
     public static final String IDLE_ANIMATION_NAME = "animation.rubiks_cube.nothing";
 
@@ -30,7 +30,7 @@ public abstract class AbstractRubiksCubeBlockEntity extends BlockEntity implemen
     protected Operation operation;
     protected long startTime;
 
-    public AbstractRubiksCubeBlockEntity(BlockPos pos, BlockState state, BlockEntityType blockEntity, String controllerName) {
+    public BaseRubiksCubeBlockEntity(BlockPos pos, BlockState state, BlockEntityType blockEntity, String controllerName) {
         super(blockEntity, pos, state);
         this.controllerName = controllerName;
     }

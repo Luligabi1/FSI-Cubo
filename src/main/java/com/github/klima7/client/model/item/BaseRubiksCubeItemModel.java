@@ -1,12 +1,12 @@
 package com.github.klima7.client.model.item;
 
 import com.github.klima7.RubiksCubeMod;
-import com.github.klima7.common.item.AbstractRubiksCubeItem;
+import com.github.klima7.common.item.BaseRubiksCubeItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public abstract class AbstractRubiksCubeItemModel<T extends AbstractRubiksCubeItem> extends AnimatedGeoModel<T> {
+public abstract class BaseRubiksCubeItemModel<T extends BaseRubiksCubeItem> extends AnimatedGeoModel<T> {
 
     public abstract ResourceLocation getTextureResource(ItemStack itemStack);
 

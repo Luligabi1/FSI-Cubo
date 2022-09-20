@@ -1,7 +1,7 @@
 package com.github.klima7.common.block;
 
 import com.github.klima7.client.KeyInit;
-import com.github.klima7.common.entity.AbstractRubiksCubeBlockEntity;
+import com.github.klima7.common.entity.BaseRubiksCubeBlockEntity;
 import com.github.klima7.core.init.PacketHandler;
 import com.github.klima7.core.init.SoundRegistry;
 import com.github.klima7.core.network.ServerboundUpdateRubiksCubePacket;
@@ -25,7 +25,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class AbstractRubiksCubeBlock extends Block implements EntityBlock {
+public abstract class BaseRubiksCubeBlock extends Block implements EntityBlock {
 
     public static final SoundType SOUND = new SoundType(1.0F, 1.0F,
             SoundRegistry.HIT.get(),            // break
@@ -42,7 +42,7 @@ public abstract class AbstractRubiksCubeBlock extends Block implements EntityBlo
             .noOcclusion()
             .sound(SOUND);
 
-    public AbstractRubiksCubeBlock() {
+    public BaseRubiksCubeBlock() {
         super(PROPERTIES);
     }
 
@@ -55,7 +55,7 @@ public abstract class AbstractRubiksCubeBlock extends Block implements EntityBlo
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         return level.isClientSide() ? null :(_level, _pos, _state, blockEntity) ->
-                ((AbstractRubiksCubeBlockEntity) blockEntity).serverTick();
+                ((BaseRubiksCubeBlockEntity) blockEntity).serverTick();
     }
 
     @Override

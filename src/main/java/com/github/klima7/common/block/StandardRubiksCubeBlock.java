@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class StandardRubiksCubeBlock extends AbstractRubiksCubeBlock {
+public class StandardRubiksCubeBlock extends BaseRubiksCubeBlock {
 
     private Direction facing;   // Auxiliary variable to pass value between callback methods
 

@@ -1,6 +1,6 @@
 package com.github.klima7.client.renderer.blockentity;
 
-import com.github.klima7.common.entity.AbstractRubiksCubeBlockEntity;
+import com.github.klima7.common.entity.BaseRubiksCubeBlockEntity;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
@@ -14,9 +14,9 @@ import software.bernie.geckolib3.geo.render.built.GeoModel;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoBlockRenderer;
 
-public abstract class AbstractRubiksCubeRenderer<T extends AbstractRubiksCubeBlockEntity> extends GeoBlockRenderer<T> {
+public abstract class BaseRubiksCubeRenderer<T extends BaseRubiksCubeBlockEntity> extends GeoBlockRenderer<T> {
 
-    public AbstractRubiksCubeRenderer(BlockEntityRendererProvider.Context context, AnimatedGeoModel<T> model) {
+    public BaseRubiksCubeRenderer(BlockEntityRendererProvider.Context context, AnimatedGeoModel<T> model) {
         super(context, model);
     }
 
@@ -59,7 +59,7 @@ public abstract class AbstractRubiksCubeRenderer<T extends AbstractRubiksCubeBlo
         }
     }
 
-    private Direction getFacing(AbstractRubiksCubeBlockEntity entity) {
+    private Direction getFacing(BaseRubiksCubeBlockEntity entity) {
         return entity.getFacing();
     }
 

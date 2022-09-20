@@ -17,7 +17,7 @@ import software.bernie.geckolib3.network.ISyncable;
 
 import java.util.function.Consumer;
 
-public abstract class AbstractRubiksCubeItem extends BlockItem implements IAnimatable, ISyncable {
+public abstract class BaseRubiksCubeItem extends BlockItem implements IAnimatable, ISyncable {
 
     private static final Properties PROPERTIES = new Properties()
             .tab(CreativeModeTab.TAB_MISC)
@@ -26,7 +26,7 @@ public abstract class AbstractRubiksCubeItem extends BlockItem implements IAnima
     private final String controllerName;
     private final AnimationFactory factory = new AnimationFactory(this);
 
-    public AbstractRubiksCubeItem(Block block, String controllerName) {
+    public BaseRubiksCubeItem(Block block, String controllerName) {
         super(block, PROPERTIES);
         this.controllerName = controllerName;
         GeckoLibNetwork.registerSyncable(this);

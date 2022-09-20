@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class StickerlessRubiksCubeBlock extends AbstractRubiksCubeBlock {
+public class StickerlessRubiksCubeBlock extends BaseRubiksCubeBlock {
 
     @Nullable
     @Override

@@ -4,7 +4,7 @@ import com.github.klima7.client.renderer.item.StandardRubiksCubeItemRenderer;
 import com.github.klima7.core.init.BlockRegistry;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 
-public class StandardRubiksCubeItem extends AbstractRubiksCubeItem {
+public class StandardRubiksCubeItem extends BaseRubiksCubeItem {
 
     private static final String CONTROLLER_NAME = "rubiks_cube_item_controller";
 

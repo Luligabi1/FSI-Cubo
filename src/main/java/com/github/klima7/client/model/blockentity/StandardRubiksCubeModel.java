@@ -9,7 +9,7 @@ import com.github.klima7.common.domain.operation.rotation.RotationsSet;
 import com.github.klima7.common.entity.RubiksCubeBlockEntity;
 import net.minecraft.resources.ResourceLocation;
 
-public class StandardRubiksCubeModel extends AbstractRubiksCubeModel<RubiksCubeBlockEntity> {
+public class StandardRubiksCubeModel extends BaseRubiksCubeModel<RubiksCubeBlockEntity> {
 
     @Override
     public ResourceLocation getTextureResource(RubiksCubeBlockEntity entity) {

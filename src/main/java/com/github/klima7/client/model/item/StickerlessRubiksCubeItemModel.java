@@ -7,7 +7,7 @@ import com.github.klima7.common.item.StickerlessRubiksCubeItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-public class StickerlessRubiksCubeItemModel extends AbstractRubiksCubeItemModel<StickerlessRubiksCubeItem> {
+public class StickerlessRubiksCubeItemModel extends BaseRubiksCubeItemModel<StickerlessRubiksCubeItem> {
 
     public ResourceLocation getTextureResource(ItemStack itemStack) {
         RubiksCubeTextureManager rubiksCubeTextureManager = ClientMod.getInstance().getRubiksCubeTextureManager();

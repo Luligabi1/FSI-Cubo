@@ -6,7 +6,7 @@ import com.github.klima7.common.domain.operation.move.Move;
 import com.github.klima7.common.domain.operation.move.MoveFace;
 import com.github.klima7.common.domain.operation.rotation.Rotation;
 import com.github.klima7.common.domain.operation.rotation.RotationAxis;
-import com.github.klima7.common.entity.AbstractRubiksCubeBlockEntity;
+import com.github.klima7.common.entity.BaseRubiksCubeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
@@ -55,7 +55,7 @@ public class ServerboundUpdateRubiksCubePacket {
     private void handleLater(NetworkEvent.Context context) {
         Level level = context.getSender().level;
         BlockEntity entity = level.getBlockEntity(this.pos);
-        if(entity instanceof final AbstractRubiksCubeBlockEntity rcEntity) {
+        if(entity instanceof final BaseRubiksCubeBlockEntity rcEntity) {
             Operation operation = createOperation();
             rcEntity.executeOperation(operation);
         }

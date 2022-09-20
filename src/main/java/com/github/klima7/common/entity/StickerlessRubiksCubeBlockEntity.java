@@ -7,7 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-public class StickerlessRubiksCubeBlockEntity extends AbstractRubiksCubeBlockEntity {
+public class StickerlessRubiksCubeBlockEntity extends BaseRubiksCubeBlockEntity {
 
     public static final String CONTROLLER_NAME = "stickerless_rubiks_cube_block_controller";
 

@@ -6,7 +6,7 @@ import com.github.klima7.client.texture.RubiksCubeTextureManager;
 import com.github.klima7.common.entity.StickerlessRubiksCubeBlockEntity;
 import net.minecraft.resources.ResourceLocation;
 
-public class StickerlessRubiksCubeModel extends AbstractRubiksCubeModel<StickerlessRubiksCubeBlockEntity> {
+public class StickerlessRubiksCubeModel extends BaseRubiksCubeModel<StickerlessRubiksCubeBlockEntity> {
 
     @Override
     public ResourceLocation getTextureResource(StickerlessRubiksCubeBlockEntity entity) {

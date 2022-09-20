@@ -9,7 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-public class StandardRubiksCubeItemModel extends AbstractRubiksCubeItemModel<StandardRubiksCubeItem> {
+public class StandardRubiksCubeItemModel extends BaseRubiksCubeItemModel<StandardRubiksCubeItem> {
 
     public ResourceLocation getTextureResource(ItemStack itemStack) {
         RubiksCubeTextureManager rubiksCubeTextureManager = ClientMod.getInstance().getRubiksCubeTextureManager();
