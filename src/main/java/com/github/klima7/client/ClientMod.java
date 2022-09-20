@@ -1,6 +1,6 @@
 package com.github.klima7.client;
 
-import com.github.klima7.client.texture.RubiksCubeTextureManager;
+import com.github.klima7.client.texture.core.RubiksCubeTextureManager;
 import com.github.klima7.client.texture.helpers.StickerSpritesManager;
 import net.minecraft.client.Minecraft;
 

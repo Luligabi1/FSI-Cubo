@@ -1,4 +1,4 @@
-package com.github.klima7.client.texture;
+package com.github.klima7.client.texture.core;
 
 import com.github.klima7.common.domain.cube.stickers.CubeStickers;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;

@@ -1,7 +1,7 @@
 package com.github.klima7.client.texture.helpers;
 
 import com.github.klima7.RubiksCubeMod;
-import com.github.klima7.client.texture.RubiksCubeTexture;
+import com.github.klima7.client.texture.core.RubiksCubeTexture;
 import com.github.klima7.client.utils.sprite.Sprite;
 import com.github.klima7.client.utils.sprite.SpritesImage;
 import com.mojang.blaze3d.platform.NativeImage;

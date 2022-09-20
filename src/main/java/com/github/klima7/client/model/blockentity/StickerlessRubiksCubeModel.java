@@ -1,8 +1,8 @@
 package com.github.klima7.client.model.blockentity;
 
 import com.github.klima7.client.ClientMod;
-import com.github.klima7.client.texture.RubiksCubeTexture;
-import com.github.klima7.client.texture.RubiksCubeTextureManager;
+import com.github.klima7.client.texture.core.RubiksCubeTexture;
+import com.github.klima7.client.texture.core.RubiksCubeTextureManager;
 import com.github.klima7.common.entity.StickerlessRubiksCubeBlockEntity;
 import net.minecraft.resources.ResourceLocation;
 

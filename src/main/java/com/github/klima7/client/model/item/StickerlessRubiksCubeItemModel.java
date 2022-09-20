@@ -1,8 +1,8 @@
 package com.github.klima7.client.model.item;
 
 import com.github.klima7.client.ClientMod;
-import com.github.klima7.client.texture.RubiksCubeTexture;
-import com.github.klima7.client.texture.RubiksCubeTextureManager;
+import com.github.klima7.client.texture.core.RubiksCubeTexture;
+import com.github.klima7.client.texture.core.RubiksCubeTextureManager;
 import com.github.klima7.common.item.StickerlessRubiksCubeItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
