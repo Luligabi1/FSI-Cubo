@@ -6,13 +6,13 @@ import com.github.klima7.client.texture.RubiksCubeTextureManager;
 import com.github.klima7.common.domain.cube.stickers.CubeStickers;
 import com.github.klima7.common.domain.operation.rotation.InstantRotations;
 import com.github.klima7.common.domain.operation.rotation.RotationsSet;
-import com.github.klima7.common.entity.RubiksCubeBlockEntity;
+import com.github.klima7.common.entity.StandardRubiksCubeBlockEntity;
 import net.minecraft.resources.ResourceLocation;
 
-public class StandardRubiksCubeModel extends BaseRubiksCubeModel<RubiksCubeBlockEntity> {
+public class StandardRubiksCubeModel extends BaseRubiksCubeModel<StandardRubiksCubeBlockEntity> {
 
     @Override
-    public ResourceLocation getTextureResource(RubiksCubeBlockEntity entity) {
+    public ResourceLocation getTextureResource(StandardRubiksCubeBlockEntity entity) {
         CubeStickers rotatedStickers = CubeStickers.copyOf(entity.getCubeStickers());
         InstantRotations instantRotations = new InstantRotations(RotationsSet.createFromDirection(entity.getFacing()));
         instantRotations.execute(rotatedStickers);

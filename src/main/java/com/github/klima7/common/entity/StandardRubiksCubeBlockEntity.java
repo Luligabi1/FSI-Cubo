@@ -11,14 +11,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-public class RubiksCubeBlockEntity extends BaseRubiksCubeBlockEntity {
+public class StandardRubiksCubeBlockEntity extends BaseRubiksCubeBlockEntity {
 
     public static final String CONTROLLER_NAME = "rubiks_cube_block_controller";
 
     private int id;
     private CubeStickers cubeStickers;
 
-    public RubiksCubeBlockEntity(BlockPos pos, BlockState state) {
+    public StandardRubiksCubeBlockEntity(BlockPos pos, BlockState state) {
         super(pos, state, BlockEntityRegistry.STANDARD_RUBIKS_CUBE.get(), CONTROLLER_NAME);
     }
 

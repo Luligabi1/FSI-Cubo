@@ -2,7 +2,7 @@ package com.github.klima7.common.block;
 
 import com.github.klima7.common.domain.operation.rotation.InstantRotations;
 import com.github.klima7.common.domain.operation.rotation.RotationsSet;
-import com.github.klima7.common.entity.RubiksCubeBlockEntity;
+import com.github.klima7.common.entity.StandardRubiksCubeBlockEntity;
 import com.github.klima7.core.init.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -40,7 +40,7 @@ public class StandardRubiksCubeBlock extends BaseRubiksCubeBlock {
     @Override
     public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity,
                             ItemStack itemStack) {
-        RubiksCubeBlockEntity entity = (RubiksCubeBlockEntity) level.getBlockEntity(blockPos);
+        StandardRubiksCubeBlockEntity entity = (StandardRubiksCubeBlockEntity) level.getBlockEntity(blockPos);
         entity.initializeFromItem(itemStack);
         if(this.facing != null) {
             entity.executeOperation(new InstantRotations(RotationsSet.createToDirection(this.facing)));
@@ -59,7 +59,7 @@ public class StandardRubiksCubeBlock extends BaseRubiksCubeBlock {
 
     @Override
     public List<ItemStack> getDrops(BlockState blockState, LootContext.Builder lootContextBuilder) {
-        RubiksCubeBlockEntity entity = (RubiksCubeBlockEntity) lootContextBuilder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
+        StandardRubiksCubeBlockEntity entity = (StandardRubiksCubeBlockEntity) lootContextBuilder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         ItemStack item = entity.asItem();
         return List.of(item);
     }
