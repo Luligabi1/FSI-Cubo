@@ -20,14 +20,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class RubiksCubeBlock extends AbstractRubiksCubeBlock {
+public class StandardRubiksCubeBlock extends AbstractRubiksCubeBlock {
 
     private Direction facing;   // Auxiliary variable to pass value between callback methods
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
-        return BlockEntityRegistry.RUBIKS_CUBE.get().create(blockPos, blockState);
+        return BlockEntityRegistry.STANDARD_RUBIKS_CUBE.get().create(blockPos, blockState);
     }
 
     @Nullable

@@ -13,9 +13,9 @@ public class BlockEntityRegistry {
 
     private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, RubiksCubeMod.MODID);
 
-    public static final RegistryObject<BlockEntityType<RubiksCubeBlockEntity>> RUBIKS_CUBE = BLOCK_ENTITIES
-            .register("rubiks_cube_block_entity", () -> BlockEntityType.Builder
-                    .of(RubiksCubeBlockEntity::new, BlockRegistry.RUBIKS_CUBE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<RubiksCubeBlockEntity>> STANDARD_RUBIKS_CUBE = BLOCK_ENTITIES
+            .register("standard_rubiks_cube_block_entity", () -> BlockEntityType.Builder
+                    .of(RubiksCubeBlockEntity::new, BlockRegistry.STANDARD_RUBIKS_CUBE.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<StickerlessRubiksCubeBlockEntity>> STICKERLESS_RUBIKS_CUBE = BLOCK_ENTITIES
             .register("stickerless_rubiks_cube_block_entity", () -> BlockEntityType.Builder

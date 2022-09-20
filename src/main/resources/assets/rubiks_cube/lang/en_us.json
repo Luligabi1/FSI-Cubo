@@ -1,7 +1,7 @@
 {
-  "block.rubiks_cube.rubiks_cube": "Rubik's Cube",
+  "block.rubiks_cube.standard_rubiks_cube": "Rubik's Cube",
   "block.rubiks_cube.stickerless_rubiks_cube": "Stickerless Rubik's Cube",
-  "item.rubiks_cube.rubiks_cube": "Rubik's Cube",
+  "item.rubiks_cube.standard_rubiks_cube": "Rubik's Cube",
   "item.rubiks_cube.stickerless_rubiks_cube": "Stickerless Rubik's Cube",
   "key.rubiks_cube.reverse": "Rubik's Cube Reverse",
   "key.rubiks_cube.rotate": "Rubik's Cube Rotate"

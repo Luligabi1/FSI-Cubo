@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "rubiks_cube:block/rubiks_cube"
+      "model": "rubiks_cube:block/stickerless_rubiks_cube"
     }
   }
 }

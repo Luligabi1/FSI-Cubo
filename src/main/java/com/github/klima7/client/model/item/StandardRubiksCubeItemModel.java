@@ -4,12 +4,12 @@ import com.github.klima7.client.ClientMod;
 import com.github.klima7.client.texture.RubiksCubeTexture;
 import com.github.klima7.client.texture.RubiksCubeTextureManager;
 import com.github.klima7.common.domain.cube.stickers.CubeStickers;
-import com.github.klima7.common.item.RubiksCubeItem;
+import com.github.klima7.common.item.StandardRubiksCubeItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-public class RubiksCubeItemModel extends AbstractRubiksCubeItemModel<RubiksCubeItem> {
+public class StandardRubiksCubeItemModel extends AbstractRubiksCubeItemModel<StandardRubiksCubeItem> {
 
     public ResourceLocation getTextureResource(ItemStack itemStack) {
         RubiksCubeTextureManager rubiksCubeTextureManager = ClientMod.getInstance().getRubiksCubeTextureManager();

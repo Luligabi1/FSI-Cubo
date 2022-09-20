@@ -19,7 +19,7 @@ public class RubiksCubeBlockEntity extends AbstractRubiksCubeBlockEntity {
     private CubeStickers cubeStickers;
 
     public RubiksCubeBlockEntity(BlockPos pos, BlockState state) {
-        super(pos, state, BlockEntityRegistry.RUBIKS_CUBE.get(), CONTROLLER_NAME);
+        super(pos, state, BlockEntityRegistry.STANDARD_RUBIKS_CUBE.get(), CONTROLLER_NAME);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class RubiksCubeBlockEntity extends AbstractRubiksCubeBlockEntity {
     }
 
     public ItemStack asItem() {
-        ItemStack itemStack = new ItemStack(ItemRegistry.RUBIKS_CUBE_ITEM.get());
+        ItemStack itemStack = new ItemStack(ItemRegistry.STANDARD_RUBIKS_CUBE.get());
         CompoundTag tag = itemStack.getOrCreateTag();
         tag.putInt("id", id);
         tag.putString("cubeStickers", cubeStickers.toText());

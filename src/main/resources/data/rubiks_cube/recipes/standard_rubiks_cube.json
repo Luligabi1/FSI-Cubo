@@ -24,7 +24,7 @@
         }
     ],
     "result": {
-        "item": "rubiks_cube:rubiks_cube",
+        "item": "rubiks_cube:standard_rubiks_cube",
         "count": 1
     }
 }
