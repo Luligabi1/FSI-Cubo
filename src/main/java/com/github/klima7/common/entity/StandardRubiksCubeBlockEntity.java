@@ -2,6 +2,7 @@ package com.github.klima7.common.entity;
 
 import com.github.klima7.common.domain.cube.stickers.CubeStickers;
 import com.github.klima7.common.domain.operation.Operation;
+import com.github.klima7.common.item.StandardRubiksCubeItem;
 import com.github.klima7.core.init.BlockEntityRegistry;
 import com.github.klima7.core.init.ItemRegistry;
 import net.minecraft.core.BlockPos;
@@ -53,9 +54,8 @@ public class StandardRubiksCubeBlockEntity extends BaseRubiksCubeBlockEntity {
 
     public ItemStack asItem() {
         ItemStack itemStack = new ItemStack(ItemRegistry.STANDARD_RUBIKS_CUBE.get());
-        CompoundTag tag = itemStack.getOrCreateTag();
-        tag.putInt("id", id);
-        tag.putString("cubeStickers", cubeStickers.toText());
+        CompoundTag tag = StandardRubiksCubeItem.createTag(id, cubeStickers);
+        itemStack.setTag(tag);
         return itemStack;
     }
 
