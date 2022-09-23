@@ -1,17 +1,25 @@
 package com.github.klima7.common.entity;
 
+import com.github.klima7.RubiksCubeMod;
 import com.github.klima7.common.item.helpers.StandardRubiksCubeItemWrapper;
 import com.github.klima7.domain.cube.stickers.CubeStickers;
 import com.github.klima7.domain.operation.Operation;
 import com.github.klima7.domain.scramble.ScrambleState;
 import com.github.klima7.core.init.BlockEntityRegistry;
 import com.github.klima7.core.init.ItemRegistry;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.ServerAdvancementManager;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.UUID;
 
 public class StandardRubiksCubeBlockEntity extends BaseRubiksCubeBlockEntity {
 
@@ -69,12 +77,22 @@ public class StandardRubiksCubeBlockEntity extends BaseRubiksCubeBlockEntity {
     }
 
     @Override
-    protected void applyOperationToStickers(Operation operation) {
+    protected void applyOperation(Operation operation) {
+        ScrambleState oldScrambleState = scrambleState;
         operation.execute(this.cubeStickers);
-        if(this.cubeStickers.isSolved()) {
-            this.scrambleState = ScrambleState.SOLVED;
-        } else {
-            this.scrambleState = ScrambleState.MANUALLY_SCRAMBLED;
+        scrambleState = cubeStickers.isSolved() ? ScrambleState.SOLVED : ScrambleState.MANUALLY_SCRAMBLED;
+
+        if(oldScrambleState == ScrambleState.AUTO_SCRAMBLED && scrambleState == ScrambleState.SOLVED) {
+            grantAdvancement(playerUUID, "rubiks_cube_solved");
+        }
+    }
+
+    private void grantAdvancement(UUID playerUUID, String advancementName) {
+        if(level instanceof final ServerLevel serverLevel) {
+            ServerAdvancementManager advancementManager = serverLevel.getServer().getAdvancements();
+            Advancement advancement = advancementManager.getAdvancement(new ResourceLocation(RubiksCubeMod.MODID, advancementName));
+            ServerPlayer player = (ServerPlayer) level.getPlayerByUUID(playerUUID);
+            player.getAdvancements().award(advancement, "set_programmatically");
         }
     }
 

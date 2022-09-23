@@ -25,6 +25,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.UUID;
+
 public abstract class BaseRubiksCubeBlock extends Block implements EntityBlock {
 
     public static final SoundType SOUND = new SoundType(1.0F, 1.0F,
@@ -67,9 +69,10 @@ public abstract class BaseRubiksCubeBlock extends Block implements EntityBlock {
         Direction direction = hitResult.getDirection();
         boolean isReversed = KeyInit.REVERSE.isDown();
         boolean isRotation = KeyInit.ROTATE.isDown();
+        UUID playerUUID = player.getUUID();
 
         PacketHandler.CHANNEL.sendToServer(
-                new ServerboundUpdateRubiksCubePacket(pos, direction, isReversed, isRotation)
+                new ServerboundUpdateRubiksCubePacket(pos, playerUUID, direction, isReversed, isRotation)
         );
 
         return InteractionResult.SUCCESS;

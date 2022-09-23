@@ -1,12 +1,12 @@
 package com.github.klima7.core.network;
 
+import com.github.klima7.common.entity.BaseRubiksCubeBlockEntity;
 import com.github.klima7.domain.operation.Operation;
 import com.github.klima7.domain.operation.OperationDirection;
 import com.github.klima7.domain.operation.move.Move;
 import com.github.klima7.domain.operation.move.MoveFace;
 import com.github.klima7.domain.operation.rotation.Rotation;
 import com.github.klima7.domain.operation.rotation.RotationAxis;
-import com.github.klima7.common.entity.BaseRubiksCubeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
@@ -15,17 +15,20 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.Objects;
+import java.util.UUID;
 import java.util.function.Supplier;
 
 public class ServerboundUpdateRubiksCubePacket {
 
     private final BlockPos pos;
+    private final UUID playerUUID;
     private final Direction direction;
     private final boolean reverse;
     private final boolean rotation;
 
-    public ServerboundUpdateRubiksCubePacket(BlockPos pos, Direction direction, boolean reverse, boolean rotation) {
+    public ServerboundUpdateRubiksCubePacket(BlockPos pos, UUID playerUUID, Direction direction, boolean reverse, boolean rotation) {
         this.pos = pos;
+        this.playerUUID = playerUUID;
         this.direction = direction;
         this.reverse = reverse;
         this.rotation = rotation;
@@ -34,6 +37,7 @@ public class ServerboundUpdateRubiksCubePacket {
     public ServerboundUpdateRubiksCubePacket(FriendlyByteBuf buffer) {
         this(
                 buffer.readBlockPos(),
+                buffer.readUUID(),
                 buffer.readEnum(Direction.class),
                 buffer.readBoolean(),
                 buffer.readBoolean()
@@ -42,6 +46,7 @@ public class ServerboundUpdateRubiksCubePacket {
 
     public void encode(FriendlyByteBuf buffer) {
         buffer.writeBlockPos(this.pos);
+        buffer.writeUUID(this.playerUUID);
         buffer.writeEnum(this.direction);
         buffer.writeBoolean(this.reverse);
         buffer.writeBoolean(this.rotation);
@@ -58,7 +63,7 @@ public class ServerboundUpdateRubiksCubePacket {
         BlockEntity entity = level.getBlockEntity(this.pos);
         if(entity instanceof final BaseRubiksCubeBlockEntity rcEntity) {
             Operation operation = createOperation();
-            rcEntity.executeOperation(operation);
+            rcEntity.executeOperation(operation, playerUUID);
         }
     }
 

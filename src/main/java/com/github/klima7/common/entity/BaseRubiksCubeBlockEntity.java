@@ -20,6 +20,8 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
+import java.util.UUID;
+
 public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
     public static final String IDLE_ANIMATION_NAME = "animation.rubiks_cube.nothing";
@@ -28,6 +30,7 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
     private final AnimationFactory factory;
     private Operation operation;
     private long startTime;
+    protected UUID playerUUID;
 
     public BaseRubiksCubeBlockEntity(BlockPos pos, BlockState state, BlockEntityType blockEntity, String controllerName) {
         super(blockEntity, pos, state);
@@ -50,6 +53,9 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
     protected void saveAdditional(@NotNull CompoundTag tag) {
         super.saveAdditional(tag);
         tag.putLong("startTime", startTime);
+        if(playerUUID != null) {
+            tag.putUUID("playerUUID", playerUUID);
+        }
         if(operation != null) {
             tag.put("operation", operation.save());
         }
@@ -59,6 +65,7 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
     public void load(@NotNull CompoundTag tag) {
         super.load(tag);
         this.startTime = tag.getLong("startTime");
+        this.playerUUID = tag.contains("playerUUID") ? tag.getUUID("playerUUID") : null;
         this.operation = tag.contains("operation") ? Operation.load(tag.getCompound("operation")) : null;
     }
 
@@ -96,7 +103,7 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
         }
     }
 
-    public void executeOperation(Operation operation) {
+    public void executeOperation(Operation operation, UUID playerUUID) {
         if(isExecutingOperation()) {
             return;
         }
@@ -104,7 +111,7 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
         if(operation.isInstant()) {
             finishOperation(operation);
         } else {
-            startOperation(operation);
+            startOperation(operation, playerUUID);
         }
 
         playOperationSound(operation);
@@ -122,19 +129,21 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
         return operation != null;
     }
 
-    protected void applyOperationToStickers(Operation operation) { }
+    protected void applyOperation(Operation operation) { }
 
-    private void startOperation(Operation operation) {
+    private void startOperation(Operation operation, UUID playerUUID) {
         assert level != null;
         this.operation = operation;
         this.startTime = level.getGameTime();
+        this.playerUUID = playerUUID;
         sync();
     }
 
     private void finishOperation(Operation operation) {
+        applyOperation(operation);
         this.operation = null;
         this.startTime = 0;
-        applyOperationToStickers(operation);
+        this.playerUUID = null;
         sync();
     }
 

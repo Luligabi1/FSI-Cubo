@@ -3,6 +3,9 @@ package com.github.klima7.common.item;
 import com.github.klima7.client.renderer.item.StickerlessRubiksCubeItemRenderer;
 import com.github.klima7.core.init.BlockRegistry;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+
+import java.util.function.Consumer;
 
 public class StickerlessRubiksCubeItem extends BaseRubiksCubeItem {
 
@@ -13,8 +16,16 @@ public class StickerlessRubiksCubeItem extends BaseRubiksCubeItem {
     }
 
     @Override
-    protected BlockEntityWithoutLevelRenderer getRenderer() {
-        return new StickerlessRubiksCubeItemRenderer();
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        super.initializeClient(consumer);
+        consumer.accept(new IClientItemExtensions() {
+            private final BlockEntityWithoutLevelRenderer renderer = new StickerlessRubiksCubeItemRenderer();
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                return renderer;
+            }
+        });
     }
 
 }
