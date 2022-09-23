@@ -3,9 +3,9 @@
   "block.rubiks_cube.stickerless_rubiks_cube": "Stickerless Rubik's Cube",
   "item.rubiks_cube.standard_rubiks_cube": "Rubik's Cube",
   "item.rubiks_cube.stickerless_rubiks_cube": "Stickerless Rubik's Cube",
-  "item.rubiks_cube.scramble_state.solved": "Solved!",
-  "item.rubiks_cube.scramble_state.auto_scrambled": "Scrambled",
-  "item.rubiks_cube.scramble_state.manually_scrambled": "Manually Scrambled",
+  "item.rubiks_cube.scramble_state.solved": "§7Solved",
+  "item.rubiks_cube.scramble_state.auto_scrambled": "§7Scrambled",
+  "item.rubiks_cube.scramble_state.manually_scrambled": "§7Manually Scrambled",
   "key.rubiks_cube.reverse": "Rubik's Cube Reverse",
   "key.rubiks_cube.rotate": "Rubik's Cube Rotate"
 }
