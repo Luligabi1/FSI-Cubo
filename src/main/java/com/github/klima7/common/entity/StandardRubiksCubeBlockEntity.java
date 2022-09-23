@@ -1,8 +1,9 @@
 package com.github.klima7.common.entity;
 
-import com.github.klima7.common.domain.cube.stickers.CubeStickers;
-import com.github.klima7.common.domain.operation.Operation;
-import com.github.klima7.common.item.StandardRubiksCubeItem;
+import com.github.klima7.common.item.helpers.StandardRubiksCubeItemWrapper;
+import com.github.klima7.domain.cube.stickers.CubeStickers;
+import com.github.klima7.domain.operation.Operation;
+import com.github.klima7.domain.scramble.ScrambleState;
 import com.github.klima7.core.init.BlockEntityRegistry;
 import com.github.klima7.core.init.ItemRegistry;
 import net.minecraft.core.BlockPos;
@@ -18,9 +19,11 @@ public class StandardRubiksCubeBlockEntity extends BaseRubiksCubeBlockEntity {
 
     private int id;
     private CubeStickers cubeStickers;
+    private ScrambleState scrambleState;
 
     public StandardRubiksCubeBlockEntity(BlockPos pos, BlockState state) {
         super(pos, state, BlockEntityRegistry.STANDARD_RUBIKS_CUBE.get(), CONTROLLER_NAME);
+        this.scrambleState = ScrambleState.SOLVED;
     }
 
     @Override
@@ -34,6 +37,7 @@ public class StandardRubiksCubeBlockEntity extends BaseRubiksCubeBlockEntity {
         super.saveAdditional(tag);
         tag.putInt("id", id);
         tag.putString("cubeState", cubeStickers.toText());
+        tag.putString("scrambleState", scrambleState.name());
     }
 
     @Override
@@ -41,21 +45,18 @@ public class StandardRubiksCubeBlockEntity extends BaseRubiksCubeBlockEntity {
         super.load(tag);
         this.id = tag.getInt("id");
         this.cubeStickers = CubeStickers.fromText(tag.getString("cubeState"));
+        this.scrambleState = ScrambleState.valueOf(tag.getString("scrambleState"));
     }
 
     public void initializeFromItem(ItemStack itemStack) {
-        CompoundTag tag = itemStack.getTag();
-        if(tag == null) {
-            this.cubeStickers = CubeStickers.getSolved();
-        } else {
-            this.cubeStickers = CubeStickers.fromText(tag.getString("cubeStickers"));
-        }
+        StandardRubiksCubeItemWrapper itemWrapper = new StandardRubiksCubeItemWrapper(itemStack);
+        this.cubeStickers = itemWrapper.getCubeStickersOrDefault();
+        this.scrambleState = itemWrapper.getScrambleStateOrDefault();
     }
 
     public ItemStack asItem() {
         ItemStack itemStack = new ItemStack(ItemRegistry.STANDARD_RUBIKS_CUBE.get());
-        CompoundTag tag = StandardRubiksCubeItem.createTag(id, cubeStickers);
-        itemStack.setTag(tag);
+        new StandardRubiksCubeItemWrapper(itemStack).createTag(id, cubeStickers, scrambleState);
         return itemStack;
     }
 
@@ -70,6 +71,11 @@ public class StandardRubiksCubeBlockEntity extends BaseRubiksCubeBlockEntity {
     @Override
     protected void applyOperationToStickers(Operation operation) {
         operation.execute(this.cubeStickers);
+        if(this.cubeStickers.isSolved()) {
+            this.scrambleState = ScrambleState.SOLVED;
+        } else {
+            this.scrambleState = ScrambleState.MANUALLY_SCRAMBLED;
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-package com.github.klima7.common.domain.operation;
+package com.github.klima7.domain.operation;
 
 public enum OperationDirection {
     CLOCKWISE,

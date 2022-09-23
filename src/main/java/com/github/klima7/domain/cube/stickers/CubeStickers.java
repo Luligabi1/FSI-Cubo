@@ -1,6 +1,6 @@
-package com.github.klima7.common.domain.cube.stickers;
+package com.github.klima7.domain.cube.stickers;
 
-import com.github.klima7.common.domain.cube.locations.OnCubeLocation;
+import com.github.klima7.domain.cube.locations.OnCubeLocation;
 import net.minecraft.core.Direction;
 
 import java.util.Arrays;
@@ -90,6 +90,15 @@ public class CubeStickers {
 
     public FaceStickers setFaceStickers(Direction direction, FaceStickers faceStickers) {
         return faces.put(direction, faceStickers);
+    }
+
+    public boolean isSolved() {
+        for(FaceStickers faceStickers : faces.values()) {
+            if(!faceStickers.isSolved()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

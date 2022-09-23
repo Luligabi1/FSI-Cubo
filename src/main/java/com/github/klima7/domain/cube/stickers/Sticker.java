@@ -1,4 +1,4 @@
-package com.github.klima7.common.domain.cube.stickers;
+package com.github.klima7.domain.cube.stickers;
 
 public enum Sticker {
 

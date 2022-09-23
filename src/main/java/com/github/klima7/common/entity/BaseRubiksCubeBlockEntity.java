@@ -1,6 +1,6 @@
 package com.github.klima7.common.entity;
 
-import com.github.klima7.common.domain.operation.Operation;
+import com.github.klima7.domain.operation.Operation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

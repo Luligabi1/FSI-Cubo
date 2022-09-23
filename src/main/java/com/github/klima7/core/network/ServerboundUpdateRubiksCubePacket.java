@@ -1,11 +1,11 @@
 package com.github.klima7.core.network;
 
-import com.github.klima7.common.domain.operation.Operation;
-import com.github.klima7.common.domain.operation.OperationDirection;
-import com.github.klima7.common.domain.operation.move.Move;
-import com.github.klima7.common.domain.operation.move.MoveFace;
-import com.github.klima7.common.domain.operation.rotation.Rotation;
-import com.github.klima7.common.domain.operation.rotation.RotationAxis;
+import com.github.klima7.domain.operation.Operation;
+import com.github.klima7.domain.operation.OperationDirection;
+import com.github.klima7.domain.operation.move.Move;
+import com.github.klima7.domain.operation.move.MoveFace;
+import com.github.klima7.domain.operation.rotation.Rotation;
+import com.github.klima7.domain.operation.rotation.RotationAxis;
 import com.github.klima7.common.entity.BaseRubiksCubeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

@@ -1,6 +1,6 @@
-package com.github.klima7.common.domain.operation.move;
+package com.github.klima7.domain.operation.move;
 
-import com.github.klima7.common.domain.cube.locations.OnCubeLocation;
+import com.github.klima7.domain.cube.locations.OnCubeLocation;
 import net.minecraft.core.Direction;
 
 public class SideStickersLocations {

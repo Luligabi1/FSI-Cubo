@@ -1,9 +1,9 @@
-package com.github.klima7.common.domain.scramble;
+package com.github.klima7.domain.scramble;
 
-import com.github.klima7.common.domain.cube.stickers.CubeStickers;
-import com.github.klima7.common.domain.operation.OperationDirection;
-import com.github.klima7.common.domain.operation.move.Move;
-import com.github.klima7.common.domain.operation.move.MoveFace;
+import com.github.klima7.domain.cube.stickers.CubeStickers;
+import com.github.klima7.domain.operation.OperationDirection;
+import com.github.klima7.domain.operation.move.Move;
+import com.github.klima7.domain.operation.move.MoveFace;
 
 import java.util.ArrayList;
 import java.util.List;

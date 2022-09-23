@@ -1,4 +1,4 @@
-package com.github.klima7.common.domain.operation.rotation;
+package com.github.klima7.domain.operation.rotation;
 
 import net.minecraft.core.Direction;
 

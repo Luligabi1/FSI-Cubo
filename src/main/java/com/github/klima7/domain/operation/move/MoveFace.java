@@ -1,4 +1,4 @@
-package com.github.klima7.common.domain.operation.move;
+package com.github.klima7.domain.operation.move;
 
 import net.minecraft.core.Direction;
 

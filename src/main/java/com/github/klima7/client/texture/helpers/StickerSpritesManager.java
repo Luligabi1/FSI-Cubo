@@ -3,7 +3,7 @@ package com.github.klima7.client.texture.helpers;
 import com.github.klima7.RubiksCubeMod;
 import com.github.klima7.client.utils.sprite.Sprite;
 import com.github.klima7.client.utils.sprite.SpritesImage;
-import com.github.klima7.common.domain.cube.stickers.Sticker;
+import com.github.klima7.domain.cube.stickers.Sticker;
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;

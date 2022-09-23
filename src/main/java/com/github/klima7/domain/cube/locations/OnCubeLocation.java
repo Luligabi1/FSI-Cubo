@@ -1,4 +1,4 @@
-package com.github.klima7.common.domain.cube.locations;
+package com.github.klima7.domain.cube.locations;
 
 import net.minecraft.core.Direction;
 

@@ -1,6 +1,6 @@
 package com.github.klima7.client.texture.core;
 
-import com.github.klima7.common.domain.cube.stickers.CubeStickers;
+import com.github.klima7.domain.cube.stickers.CubeStickers;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.renderer.texture.TextureManager;

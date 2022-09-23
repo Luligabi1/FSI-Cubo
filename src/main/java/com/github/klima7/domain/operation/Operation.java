@@ -1,10 +1,10 @@
-package com.github.klima7.common.domain.operation;
+package com.github.klima7.domain.operation;
 
-import com.github.klima7.common.domain.cube.locations.OnFaceLocation;
-import com.github.klima7.common.domain.cube.stickers.CubeStickers;
-import com.github.klima7.common.domain.cube.stickers.FaceStickers;
-import com.github.klima7.common.domain.operation.move.Move;
-import com.github.klima7.common.domain.operation.rotation.Rotation;
+import com.github.klima7.domain.cube.locations.OnFaceLocation;
+import com.github.klima7.domain.cube.stickers.CubeStickers;
+import com.github.klima7.domain.cube.stickers.FaceStickers;
+import com.github.klima7.domain.operation.move.Move;
+import com.github.klima7.domain.operation.rotation.Rotation;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;

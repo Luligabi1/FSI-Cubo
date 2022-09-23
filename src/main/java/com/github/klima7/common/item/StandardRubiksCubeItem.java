@@ -1,16 +1,23 @@
 package com.github.klima7.common.item;
 
 import com.github.klima7.client.renderer.item.StandardRubiksCubeItemRenderer;
-import com.github.klima7.common.domain.cube.stickers.CubeStickers;
-import com.github.klima7.common.domain.scramble.Scrambler;
+import com.github.klima7.common.item.helpers.StandardRubiksCubeItemWrapper;
+import com.github.klima7.domain.cube.stickers.CubeStickers;
+import com.github.klima7.domain.scramble.ScrambleState;
+import com.github.klima7.domain.scramble.Scrambler;
 import com.github.klima7.core.init.BlockRegistry;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class StandardRubiksCubeItem extends BaseRubiksCubeItem {
 
@@ -28,33 +35,30 @@ public class StandardRubiksCubeItem extends BaseRubiksCubeItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if (!level.isClientSide) {
-            final ItemStack stack = player.getItemInHand(hand);
-            addTagIfNotPresent(stack, level);
-            scramble(stack);
+            final ItemStack itemStack = player.getItemInHand(hand);
+            StandardRubiksCubeItemWrapper itemWrapper = new StandardRubiksCubeItemWrapper(itemStack);
+            itemWrapper.createTag(level);
+            itemWrapper.scramble();
         }
         return super.use(level, player, hand);
     }
 
-    public static CompoundTag createTag(int id, CubeStickers stickers) {
-        CompoundTag tag = new CompoundTag();
-        tag.putInt("id", id);
-        tag.putString("cubeStickers", stickers.toText());
-        return tag;
+    @Override
+    public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
+        super.appendHoverText(itemStack, level, components, tooltipFlag);
+        appendScrambleState(itemStack, components);
     }
 
-    private void addTagIfNotPresent(ItemStack itemStack, Level level) {
-        CompoundTag presentTag = itemStack.getTag();
-        if(presentTag == null) {
-            CompoundTag newTag = createTag(level.getFreeMapId(), CubeStickers.getSolved());
-            itemStack.setTag(newTag);
-        }
-    }
+    private void appendScrambleState(ItemStack itemStack, List<Component> components) {
+        StandardRubiksCubeItemWrapper itemWrapper = new StandardRubiksCubeItemWrapper(itemStack);
 
-    private void scramble(ItemStack stack) {
-        CompoundTag tag = stack.getTag();
-        CubeStickers cubeStickers = CubeStickers.fromText(tag.getString("cubeStickers"));
-        Scrambler.scramble(cubeStickers);
-        tag.putString("cubeStickers", cubeStickers.toText());
+        String tooltipId = switch (itemWrapper.getScrambleStateOrDefault()) {
+            case SOLVED -> "item.rubiks_cube.scramble_state.solved";
+            case AUTO_SCRAMBLED -> "item.rubiks_cube.scramble_state.auto_scrambled";
+            case MANUALLY_SCRAMBLED -> "item.rubiks_cube.scramble_state.manually_scrambled";
+        };
+
+        components.add(Component.translatable(tooltipId));
     }
 
 }
