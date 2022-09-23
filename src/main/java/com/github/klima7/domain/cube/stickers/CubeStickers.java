@@ -92,13 +92,18 @@ public class CubeStickers {
         return faces.put(direction, faceStickers);
     }
 
-    public boolean isSolved() {
+    public int getSolvedFacesCount() {
+        int solvedFacesCount = 0;
         for(FaceStickers faceStickers : faces.values()) {
-            if(!faceStickers.isSolved()) {
-                return false;
+            if(faceStickers.isSolved()) {
+                solvedFacesCount++;
             }
         }
-        return true;
+        return solvedFacesCount;
+    }
+
+    public boolean isSolved() {
+        return getSolvedFacesCount() == FACES_COUNT;
     }
 
     @Override

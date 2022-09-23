@@ -80,10 +80,21 @@ public class StandardRubiksCubeBlockEntity extends BaseRubiksCubeBlockEntity {
     protected void applyOperation(Operation operation) {
         ScrambleState oldScrambleState = scrambleState;
         operation.execute(this.cubeStickers);
-        scrambleState = cubeStickers.isSolved() ? ScrambleState.SOLVED : ScrambleState.MANUALLY_SCRAMBLED;
 
+        // update scrambleState
+        if(cubeStickers.isSolved()) {
+            scrambleState = ScrambleState.SOLVED;
+        } else if(oldScrambleState != ScrambleState.AUTO_SCRAMBLED) {
+            scrambleState = ScrambleState.MANUALLY_SCRAMBLED;
+        }
+
+        // grant advancements
         if(oldScrambleState == ScrambleState.AUTO_SCRAMBLED && scrambleState == ScrambleState.SOLVED) {
             grantAdvancement(playerUUID, "rubiks_cube_solved");
+        }
+
+        if(oldScrambleState == ScrambleState.AUTO_SCRAMBLED && cubeStickers.getSolvedFacesCount() >= 1) {
+            grantAdvancement(playerUUID, "face_solved");
         }
     }
 
