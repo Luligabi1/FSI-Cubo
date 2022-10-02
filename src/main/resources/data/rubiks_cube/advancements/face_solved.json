@@ -1,7 +1,8 @@
 {
   "display": {
     "icon": {
-      "item": "rubiks_cube:stickerless_rubiks_cube"
+      "item": "rubiks_cube:standard_rubiks_cube",
+      "nbt": "{id:-1,cubeStickers:\"xxxxxxxxxxxxxxxxxxbbbbbbbbbxxxxxxxxxxxxxxxxxxxxxxxxxxx\"}"
     },
     "title": {
       "translate": "advancements.face_solved.title"
