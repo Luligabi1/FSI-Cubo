@@ -1,14 +1,21 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:fishing_rod"
+      "item": "rubiks_cube:stickerless_rubiks_cube"
     },
-    "title": "Single Face Solved",
-    "description": "Yes, it's possible!",
+    "title": {
+      "translate": "advancements.face_solved.title"
+    },
+    "description": {
+      "translate": "advancements.face_solved.description"
+    },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png"
+  },
+  "rewards": {
+    "experience": 100
   },
   "criteria": {
     "set_programmatically": {

@@ -1,14 +1,22 @@
 {
+  "parent": "rubiks_cube:face_solved",
   "display": {
     "icon": {
-      "item": "minecraft:fishing_rod"
+      "item": "rubiks_cube:standard_rubiks_cube"
     },
-    "title": "Rubiks Cube Solved",
-    "description": "Yes, it's possible!",
+    "title": {
+      "translate": "advancements.cube_solved.title"
+    },
+    "description": {
+      "translate": "advancements.cube_solved.description"
+    },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png"
+  },
+  "rewards": {
+    "experience": 300
   },
   "criteria": {
     "set_programmatically": {
