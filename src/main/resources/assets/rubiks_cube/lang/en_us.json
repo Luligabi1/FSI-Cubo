@@ -11,5 +11,7 @@
   "advancements.cube_solved.title": "Rubiks Cube Solved",
   "advancements.cube_solved.description": "Solve whole Rubik's Cube",
   "advancements.face_solved.title": "Single Face Solved",
-  "advancements.face_solved.description": "Solve one face of Rubik's Cube"
+  "advancements.face_solved.description": "Solve one face of Rubik's Cube",
+  "advancements.cube_scrambled.title": "Rubik's Cube Scrambled",
+  "advancements.cube_scrambled.description": "Scramble Rubik's Cube"
 }

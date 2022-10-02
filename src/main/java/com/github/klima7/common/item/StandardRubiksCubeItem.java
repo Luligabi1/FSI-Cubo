@@ -40,13 +40,19 @@ public class StandardRubiksCubeItem extends BaseRubiksCubeItem {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack itemStack = player.getItemInHand(hand);
         if (!level.isClientSide) {
-            final ItemStack itemStack = player.getItemInHand(hand);
             StandardRubiksCubeItemWrapper itemWrapper = new StandardRubiksCubeItemWrapper(itemStack);
             itemWrapper.createTag(level);
             itemWrapper.scramble();
         }
-        return super.use(level, player, hand);
+        player.startUsingItem(hand);
+        return InteractionResultHolder.pass(itemStack);
+    }
+
+    @Override
+    public int getUseDuration(ItemStack itemStack) {
+        return 16;
     }
 
     @Override

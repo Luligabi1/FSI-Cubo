@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "item": "rubiks_cube:standard_rubiks_cube",
+      "nbt": "{id:-1,cubeStickers:\"ggwrwoybowrbgyoywobrywrboyyroygobwwbgwwybbgyorggbgybob\"}"
+    },
+    "title": {
+      "translate": "advancements.cube_scrambled.title"
+    },
+    "description": {
+      "translate": "advancements.cube_scrambled.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png"
+  },
+  "criteria": {
+    "scramble": {
+      "trigger": "minecraft:using_item",
+      "conditions": {
+        "item": {
+          "items": [
+            "rubiks_cube:standard_rubiks_cube"
+          ]
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "scramble"
+    ]
+  ]
+}
