@@ -33,8 +33,11 @@ Minecraft Forge mod adding fully functional Rubik's Cubes with smooth animations
 - Minecraft 1.19.1
 - Minecraft 1.19.2
 
+## Dependencies
+- Geckolib mod - [link](https://www.curseforge.com/minecraft/mc-mods/geckolib)
+
 ## Installation
 1. Make sure Minecraft Forge is installed
 2. Go to mods folder inside minecraft directory
-3. Put mod jar file there
+3. Put Rubik's Cube mod and Geckolib mod jar files there
 4. Launch Minecraft
