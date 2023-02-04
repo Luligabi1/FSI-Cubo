@@ -4,9 +4,9 @@ plugins {
     id 'net.minecraftforge.gradle' version '5.1.+'
 }
 
-version = '1.0.0'
+version = '1.0.1'
 group = 'com.github.klima7'
-archivesBaseName = 'modid'
+archivesBaseName = 'rubiks_cube'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
