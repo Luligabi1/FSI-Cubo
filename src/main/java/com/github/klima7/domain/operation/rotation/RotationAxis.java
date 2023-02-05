@@ -5,36 +5,29 @@ import net.minecraft.core.Direction;
 public enum RotationAxis {
 
     X(
-            Direction.Axis.X,
-            Direction.WEST, Direction.EAST,
+            Direction.WEST,
             new Direction[] { Direction.NORTH, Direction.UP, Direction.SOUTH, Direction.DOWN},
             new int[] { 2, 0, 0, 2 }
     ),
 
     Y(
-            Direction.Axis.Y,
-            Direction.UP, Direction.DOWN,
+            Direction.UP,
             new Direction[] { Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST },
             new int[] { 1, 1, 1, 1 }
     ),
 
     Z(
-            Direction.Axis.Z,
-            Direction.NORTH, Direction.SOUTH,
+            Direction.NORTH,
             new Direction[] { Direction.EAST, Direction.UP, Direction.WEST, Direction.DOWN },
             new int[] { 0, 0, 0, 0 }
     );
 
-    private final Direction.Axis axis;
     private final Direction clockwiseFace;
-    private final Direction counterclockwiseFace;
     private final Direction[] sideFaces;
     private final int[] sideRotations;
 
-    RotationAxis(Direction.Axis axis, Direction clockwiseFace, Direction counterclockwiseFace, Direction[] sideFaces, int[] sideRotations) {
-        this.axis = axis;
+    RotationAxis(Direction clockwiseFace, Direction[] sideFaces, int[] sideRotations) {
         this.clockwiseFace = clockwiseFace;
-        this.counterclockwiseFace = counterclockwiseFace;
         this.sideFaces = sideFaces;
         this.sideRotations = sideRotations;
     }
@@ -49,7 +42,7 @@ public enum RotationAxis {
     }
 
     public Direction.Axis getAxis() {
-        return this.axis;
+        return clockwiseFace.getAxis();
     }
 
     public Direction getClockwiseFace() {
@@ -57,7 +50,7 @@ public enum RotationAxis {
     }
 
     public Direction getCounterclockwiseFace() {
-        return counterclockwiseFace;
+        return clockwiseFace.getOpposite();
     }
 
     public Direction getSideFace(int index) {
