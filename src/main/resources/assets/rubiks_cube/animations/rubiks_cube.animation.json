@@ -3,7 +3,7 @@
 	"animations": {
 		"animation.rubiks_cube.move.clockwise": {
 			"loop": "hold_on_last_frame",
-			"animation_length": 0.9,
+			"animation_length": 10,
 			"bones": {
 				"face": {
 					"rotation": {
@@ -12,6 +12,9 @@
 						},
 						"0.9": {
 							"vector": [0, 0, 90]
+						},
+						"10": {
+							"vector": [0, 0, 90]
 						}
 					}
 				}
@@ -19,7 +22,7 @@
 		},
 		"animation.rubiks_cube.move.counterclockwise": {
 			"loop": "hold_on_last_frame",
-			"animation_length": 1,
+			"animation_length": 10,
 			"bones": {
 				"face": {
 					"rotation": {
@@ -27,6 +30,9 @@
 							"vector": [0, 0, 0]
 						},
 						"0.9": {
+							"vector": [0, 0, -90]
+						},
+						"10": {
 							"vector": [0, 0, -90]
 						}
 					}
@@ -50,7 +56,8 @@
 			}
 		},
 		"animation.rubiks_cube.rotate.clockwise": {
-			"animation_length": 0.7,
+			"loop": "hold_on_last_frame",
+			"animation_length": 10,
 			"bones": {
 				"rest": {
 					"rotation": {
@@ -58,6 +65,9 @@
 							"vector": [0, 0, 0]
 						},
 						"0.7": {
+							"vector": [0, 0, 90]
+						},
+						"10": {
 							"vector": [0, 0, 90]
 						}
 					}
@@ -69,6 +79,9 @@
 						},
 						"0.7": {
 							"vector": [0, 0, 90]
+						},
+						"10": {
+							"vector": [0, 0, 90]
 						}
 					}
 				}
@@ -76,7 +89,7 @@
 		},
 		"animation.rubiks_cube.rotate.counterclockwise": {
 			"loop": "hold_on_last_frame",
-			"animation_length": 0.7,
+			"animation_length": 10,
 			"bones": {
 				"rest": {
 					"rotation": {
@@ -84,6 +97,9 @@
 							"vector": [0, 0, 0]
 						},
 						"0.7": {
+							"vector": [0, 0, -90]
+						},
+						"10": {
 							"vector": [0, 0, -90]
 						}
 					}
@@ -94,6 +110,9 @@
 							"vector": [0, 0, 0]
 						},
 						"0.7": {
+							"vector": [0, 0, -90]
+						},
+						"10": {
 							"vector": [0, 0, -90]
 						}
 					}
