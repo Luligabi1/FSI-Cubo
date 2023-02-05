@@ -25,11 +25,13 @@ import java.util.UUID;
 public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements IAnimatable {
 
     public static final String IDLE_ANIMATION_NAME = "animation.rubiks_cube.nothing";
+    public static final long COOLDOWN_TICKS = 1;
 
     private final String controllerName;
     private final AnimationFactory factory;
     private Operation operation;
     private long startTime;
+    private long finishTime;
     protected UUID playerUUID;
 
     public BaseRubiksCubeBlockEntity(BlockPos pos, BlockState state, BlockEntityType blockEntity, String controllerName) {
@@ -104,7 +106,7 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
     }
 
     public void executeOperation(Operation operation, UUID playerUUID) {
-        if(isExecutingOperation()) {
+        if(isCubeBusy()) {
             return;
         }
 
@@ -131,6 +133,10 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
 
     protected void applyOperation(Operation operation) { }
 
+    private boolean isCubeBusy() {
+        return isExecutingOperation() || level.getGameTime() - finishTime < COOLDOWN_TICKS;
+    }
+
     private void startOperation(Operation operation, UUID playerUUID) {
         assert level != null;
         this.operation = operation;
@@ -140,10 +146,12 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
     }
 
     private void finishOperation(Operation operation) {
+        assert level != null;
         applyOperation(operation);
         this.operation = null;
         this.startTime = 0;
         this.playerUUID = null;
+        this.finishTime = level.getGameTime();
         sync();
     }
 
