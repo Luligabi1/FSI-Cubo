@@ -110,12 +110,7 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
             return;
         }
 
-        if(operation.isInstant()) {
-            finishOperation(operation);
-        } else {
-            startOperation(operation, playerUUID);
-        }
-
+        startOperation(operation, playerUUID);
         playOperationSound(operation);
     }
 

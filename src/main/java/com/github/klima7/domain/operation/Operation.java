@@ -40,10 +40,6 @@ public abstract class Operation {
         return null;
     }
 
-    public boolean isInstant() {
-        return getDuration() == 0;
-    }
-
     protected static void rotateFaceClockwise(FaceStickers faceStickers) {
         FaceStickers original = FaceStickers.copyOf(faceStickers);
 

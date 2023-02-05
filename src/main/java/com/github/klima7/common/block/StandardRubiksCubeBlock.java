@@ -43,7 +43,7 @@ public class StandardRubiksCubeBlock extends BaseRubiksCubeBlock {
         StandardRubiksCubeBlockEntity entity = (StandardRubiksCubeBlockEntity) level.getBlockEntity(blockPos);
         entity.initializeFromItem(itemStack);
         if(this.facing != null) {
-            entity.executeOperation(new InstantRotations(RotationsSet.createToDirection(this.facing)), null);
+            entity.setFacing(facing);
         }
         super.setPlacedBy(level, blockPos, blockState, livingEntity, itemStack);
     }
