@@ -1,6 +1,7 @@
 package com.github.klima7.core.init;
 
 import com.github.klima7.RubiksCubeMod;
+import com.github.klima7.common.item.CubeStandItem;
 import com.github.klima7.common.item.StandardRubiksCubeItem;
 import com.github.klima7.common.item.StickerlessRubiksCubeItem;
 import net.minecraft.world.item.Item;
@@ -18,6 +19,9 @@ public class ItemRegistry {
 
     public static final RegistryObject<StickerlessRubiksCubeItem> STICKERLESS_RUBIKS_CUBE =
             ITEMS.register("stickerless_rubiks_cube", StickerlessRubiksCubeItem::new);
+
+    public static final RegistryObject<CubeStandItem> CUBE_STAND =
+            ITEMS.register("cube_stand", CubeStandItem::new);
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

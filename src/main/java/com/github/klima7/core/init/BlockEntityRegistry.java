@@ -1,6 +1,7 @@
 package com.github.klima7.core.init;
 
 import com.github.klima7.RubiksCubeMod;
+import com.github.klima7.common.entity.CubeStandBlockEntity;
 import com.github.klima7.common.entity.StandardRubiksCubeBlockEntity;
 import com.github.klima7.common.entity.StickerlessRubiksCubeBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -20,6 +21,10 @@ public class BlockEntityRegistry {
     public static final RegistryObject<BlockEntityType<StickerlessRubiksCubeBlockEntity>> STICKERLESS_RUBIKS_CUBE = BLOCK_ENTITIES
             .register("stickerless_rubiks_cube_block_entity", () -> BlockEntityType.Builder
                     .of(StickerlessRubiksCubeBlockEntity::new, BlockRegistry.STICKERLESS_RUBIKS_CUBE.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<CubeStandBlockEntity>> CUBE_STAND = BLOCK_ENTITIES
+            .register("cube_stand_block_entity", () -> BlockEntityType.Builder
+                    .of(CubeStandBlockEntity::new, BlockRegistry.CUBE_STAND.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
