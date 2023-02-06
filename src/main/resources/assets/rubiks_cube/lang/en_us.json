@@ -1,6 +1,7 @@
 {
   "block.rubiks_cube.standard_rubiks_cube": "Rubik's Cube",
   "block.rubiks_cube.stickerless_rubiks_cube": "Stickerless Rubik's Cube",
+  "block.rubiks_cube.blocking": "Something blocks cube",
   "item.rubiks_cube.standard_rubiks_cube": "Rubik's Cube",
   "item.rubiks_cube.stickerless_rubiks_cube": "Stickerless Rubik's Cube",
   "item.rubiks_cube.scramble_state.solved": "§7Solved",

@@ -1,10 +1,13 @@
 package com.github.klima7.common.entity;
 
+import com.github.klima7.core.init.SoundRegistry;
+import com.github.klima7.domain.operation.BlockedCheckStrategy;
 import com.github.klima7.domain.operation.Operation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -26,6 +29,7 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
 
     public static final String IDLE_ANIMATION_NAME = "animation.rubiks_cube.nothing";
     public static final long COOLDOWN_TICKS = 1;
+    public static final BlockedCheckStrategy BLOCKED_CHECK_STRATEGY = new BlockedCheckStrategy();
 
     private final String controllerName;
     private final AnimationFactory factory;
@@ -107,6 +111,12 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
 
     public void executeOperation(Operation operation, UUID playerUUID) {
         if(isCubeBusy()) {
+            return;
+        }
+
+        if(BLOCKED_CHECK_STRATEGY.isBlocked(operation, getBlockPos(), level)) {
+            level.playSound(null, getBlockPos(), SoundRegistry.BLOCKED.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
+            level.getPlayerByUUID(playerUUID).displayClientMessage(Component.translatable("block.rubiks_cube.blocking"), true);
             return;
         }
 

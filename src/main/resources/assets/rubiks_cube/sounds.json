@@ -30,5 +30,13 @@
         "volume": 0.7
       }
     ]
+  },
+  "rubiks_cube.blocked": {
+    "sounds": [
+      {
+        "name": "rubiks_cube:blocked",
+        "volume": 1
+      }
+    ]
   }
 }
