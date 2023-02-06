@@ -1,7 +1,6 @@
 package com.github.klima7.common.entity;
 
 import com.github.klima7.core.init.SoundRegistry;
-import com.github.klima7.domain.operation.BlockedCheckStrategy;
 import com.github.klima7.domain.operation.Operation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,6 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -29,7 +29,6 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
 
     public static final String IDLE_ANIMATION_NAME = "animation.rubiks_cube.nothing";
     public static final long COOLDOWN_TICKS = 1;
-    public static final BlockedCheckStrategy BLOCKED_CHECK_STRATEGY = new BlockedCheckStrategy();
 
     private final String controllerName;
     private final AnimationFactory factory;
@@ -114,7 +113,7 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
             return;
         }
 
-        if(BLOCKED_CHECK_STRATEGY.isBlocked(operation, getBlockPos(), level)) {
+        if(isSomethingBlocking(operation, level)) {
             level.playSound(null, getBlockPos(), SoundRegistry.BLOCKED.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
             level.getPlayerByUUID(playerUUID).displayClientMessage(Component.translatable("block.rubiks_cube.blocking"), true);
             return;
@@ -140,6 +139,16 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
 
     private boolean isCubeBusy() {
         return isExecutingOperation() || level.getGameTime() - finishTime < COOLDOWN_TICKS;
+    }
+
+    private boolean isSomethingBlocking(Operation operation, Level level) {
+        BlockPos position = getBlockPos();
+        return operation
+                .getRequiredFreeDirections()
+                .stream()
+                .map(position::relative)
+                .map(level::getBlockState)
+                .anyMatch(block -> block.getMaterial().blocksMotion());
     }
 
     private void startOperation(Operation operation, UUID playerUUID) {
