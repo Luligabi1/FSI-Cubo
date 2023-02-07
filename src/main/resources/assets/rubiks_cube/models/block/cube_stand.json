@@ -1,6 +1,7 @@
 {
 	"textures": {
-		"0": "rubiks_cube:block/cube_stand"
+		"0": "rubiks_cube:block/cube_stand",
+		"particle": "rubiks_cube:block/cube_stand"
 	},
 	"elements": [
 		{

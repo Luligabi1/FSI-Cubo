@@ -35,8 +35,8 @@ import java.util.stream.Stream;
 public class CubeStandBlock extends Block implements EntityBlock {
 
     public static final Properties PROPERTIES = BlockBehaviour.Properties.of(Material.DECORATION)
-            .sound(SoundType.GLASS)
-            .instabreak()
+            .sound(SoundType.CANDLE)
+            .strength(0.25f)
             .noOcclusion();
 
     private static final VoxelShape EMPTY_SHAPE = Stream.of(
