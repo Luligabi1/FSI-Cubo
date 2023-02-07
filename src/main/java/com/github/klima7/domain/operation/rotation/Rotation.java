@@ -1,13 +1,15 @@
 package com.github.klima7.domain.operation.rotation;
 
+import com.github.klima7.core.init.SoundRegistry;
 import com.github.klima7.domain.cube.stickers.CubeStickers;
 import com.github.klima7.domain.cube.stickers.FaceStickers;
 import com.github.klima7.domain.operation.Operation;
 import com.github.klima7.domain.operation.OperationDirection;
-import com.github.klima7.core.init.SoundRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
+
+import java.util.List;
 
 public class Rotation extends Operation {
 
@@ -78,6 +80,13 @@ public class Rotation extends Operation {
         RotationAxis rotationAxis = RotationAxis.valueOf(tag.getString("rotationAxis"));
         OperationDirection rotationDirection = OperationDirection.valueOf(tag.getString("rotationDirection"));
         return new Rotation(rotationAxis, rotationDirection);
+    }
+
+    @Override
+    public List<Direction> getRequiredFreeDirections() {
+        return Direction.stream()
+                .filter(direction -> direction.getAxis() != rotationAxis.getAxis() && direction != Direction.DOWN)
+                .toList();
     }
 
     private static void rotateClockwise(CubeStickers cubeStickers, RotationAxis rotationAxis) {

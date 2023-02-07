@@ -2,13 +2,16 @@ package com.github.klima7.common.entity;
 
 import com.github.klima7.RubiksCubeMod;
 import com.github.klima7.common.item.helpers.StandardRubiksCubeItemWrapper;
-import com.github.klima7.domain.cube.stickers.CubeStickers;
-import com.github.klima7.domain.operation.Operation;
-import com.github.klima7.domain.scramble.ScrambleState;
 import com.github.klima7.core.init.BlockEntityRegistry;
 import com.github.klima7.core.init.ItemRegistry;
+import com.github.klima7.domain.cube.stickers.CubeStickers;
+import com.github.klima7.domain.operation.Operation;
+import com.github.klima7.domain.operation.rotation.InstantRotations;
+import com.github.klima7.domain.operation.rotation.RotationsSet;
+import com.github.klima7.domain.scramble.ScrambleState;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.ServerAdvancementManager;
@@ -38,6 +41,11 @@ public class StandardRubiksCubeBlockEntity extends BaseRubiksCubeBlockEntity {
     public void setLevel(Level level) {
         super.setLevel(level);
         this.id = level.getFreeMapId();
+    }
+
+    public void setFacing(Direction facing) {
+        Operation op = new InstantRotations(RotationsSet.createToDirection(facing));
+        op.execute(cubeStickers);
     }
 
     @Override

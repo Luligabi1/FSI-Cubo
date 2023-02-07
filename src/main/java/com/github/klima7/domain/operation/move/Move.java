@@ -1,14 +1,16 @@
 package com.github.klima7.domain.operation.move;
 
+import com.github.klima7.core.init.SoundRegistry;
 import com.github.klima7.domain.cube.locations.OnCubeLocation;
 import com.github.klima7.domain.cube.stickers.CubeStickers;
 import com.github.klima7.domain.cube.stickers.Sticker;
 import com.github.klima7.domain.operation.Operation;
 import com.github.klima7.domain.operation.OperationDirection;
-import com.github.klima7.core.init.SoundRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
+
+import java.util.List;
 
 public class Move extends Operation {
 
@@ -75,6 +77,13 @@ public class Move extends Operation {
         MoveFace moveFace = MoveFace.valueOf(tag.getString("moveFace"));
         OperationDirection moveDirection = OperationDirection.valueOf(tag.getString("moveDirection"));
         return new Move(moveFace, moveDirection);
+    }
+
+    @Override
+    public List<Direction> getRequiredFreeDirections() {
+        return Direction.stream()
+                .filter(direction -> direction.getAxis() != moveFace.getDirection().getAxis() && direction != Direction.DOWN)
+                .toList();
     }
 
     private static void moveClockwise(CubeStickers cubeStickers, MoveFace moveFace) {

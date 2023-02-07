@@ -10,6 +10,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 import software.bernie.geckolib3.core.easing.EasingType;
 
+import java.util.List;
+
 public abstract class Operation {
 
     public abstract void execute(CubeStickers cubeStickers);
@@ -40,8 +42,8 @@ public abstract class Operation {
         return null;
     }
 
-    public boolean isInstant() {
-        return getDuration() == 0;
+    public List<Direction> getRequiredFreeDirections() {
+        return Direction.stream().toList();
     }
 
     protected static void rotateFaceClockwise(FaceStickers faceStickers) {

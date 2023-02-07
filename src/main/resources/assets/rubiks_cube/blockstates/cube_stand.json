@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "rubiks_cube:block/cube_stand"
+    }
+  }
+}

@@ -1,7 +1,5 @@
 package com.github.klima7.common.block;
 
-import com.github.klima7.domain.operation.rotation.InstantRotations;
-import com.github.klima7.domain.operation.rotation.RotationsSet;
 import com.github.klima7.common.entity.StandardRubiksCubeBlockEntity;
 import com.github.klima7.core.init.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
@@ -43,7 +41,7 @@ public class StandardRubiksCubeBlock extends BaseRubiksCubeBlock {
         StandardRubiksCubeBlockEntity entity = (StandardRubiksCubeBlockEntity) level.getBlockEntity(blockPos);
         entity.initializeFromItem(itemStack);
         if(this.facing != null) {
-            entity.executeOperation(new InstantRotations(RotationsSet.createToDirection(this.facing)), null);
+            entity.setFacing(facing);
         }
         super.setPlacedBy(level, blockPos, blockState, livingEntity, itemStack);
     }
