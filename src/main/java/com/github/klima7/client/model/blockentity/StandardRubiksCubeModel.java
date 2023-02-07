@@ -3,10 +3,10 @@ package com.github.klima7.client.model.blockentity;
 import com.github.klima7.client.ClientMod;
 import com.github.klima7.client.texture.core.RubiksCubeTexture;
 import com.github.klima7.client.texture.core.RubiksCubeTextureManager;
+import com.github.klima7.common.entity.StandardRubiksCubeBlockEntity;
 import com.github.klima7.domain.cube.stickers.CubeStickers;
 import com.github.klima7.domain.operation.rotation.InstantRotations;
 import com.github.klima7.domain.operation.rotation.RotationsSet;
-import com.github.klima7.common.entity.StandardRubiksCubeBlockEntity;
 import net.minecraft.resources.ResourceLocation;
 
 public class StandardRubiksCubeModel extends BaseRubiksCubeModel<StandardRubiksCubeBlockEntity> {

@@ -2,13 +2,13 @@ package com.github.klima7.common.entity;
 
 import com.github.klima7.RubiksCubeMod;
 import com.github.klima7.common.item.helpers.StandardRubiksCubeItemWrapper;
+import com.github.klima7.core.init.BlockEntityRegistry;
+import com.github.klima7.core.init.ItemRegistry;
 import com.github.klima7.domain.cube.stickers.CubeStickers;
 import com.github.klima7.domain.operation.Operation;
 import com.github.klima7.domain.operation.rotation.InstantRotations;
 import com.github.klima7.domain.operation.rotation.RotationsSet;
 import com.github.klima7.domain.scramble.ScrambleState;
-import com.github.klima7.core.init.BlockEntityRegistry;
-import com.github.klima7.core.init.ItemRegistry;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

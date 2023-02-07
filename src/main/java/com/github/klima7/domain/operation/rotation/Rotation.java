@@ -1,10 +1,10 @@
 package com.github.klima7.domain.operation.rotation;
 
+import com.github.klima7.core.init.SoundRegistry;
 import com.github.klima7.domain.cube.stickers.CubeStickers;
 import com.github.klima7.domain.cube.stickers.FaceStickers;
 import com.github.klima7.domain.operation.Operation;
 import com.github.klima7.domain.operation.OperationDirection;
-import com.github.klima7.core.init.SoundRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;

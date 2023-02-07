@@ -31,7 +31,7 @@ public class CubeStandRenderer implements BlockEntityRenderer<CubeStandBlockEnti
     private void renderCube(ItemStack item, PoseStack stack, MultiBufferSource buffer, int combinedOverlay,
                             int packedLight) {
         final ItemRenderer itemRenderer = context.getItemRenderer();
-        float scale = 0.3f;
+        final float scale = 0.3f;
 
         stack.pushPose();
         stack.scale(scale, scale, scale);
