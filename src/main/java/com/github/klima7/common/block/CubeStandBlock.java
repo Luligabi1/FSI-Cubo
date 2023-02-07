@@ -109,11 +109,12 @@ public class CubeStandBlock extends Block implements EntityBlock {
 
     @Override
     public List<ItemStack> getDrops(BlockState blockState, LootContext.Builder lootContextBuilder) {
+        List<ItemStack> drops = super.getDrops(blockState, lootContextBuilder);
         CubeStandBlockEntity entity = (CubeStandBlockEntity) lootContextBuilder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         if(entity != null && !entity.isEmpty()) {
-            return List.of(entity.getCube());
+            drops.add(entity.getCube());
         }
-        return new ArrayList<>();
+        return drops;
     }
 
     @Nullable
