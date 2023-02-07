@@ -1,5 +1,6 @@
 package com.github.klima7.common.block;
 
+import com.github.klima7.common.entity.CubeStandBlockEntity;
 import com.github.klima7.common.item.BaseRubiksCubeItem;
 import com.github.klima7.core.init.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
@@ -14,6 +15,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
@@ -55,6 +58,7 @@ public class CubeStandBlock extends Block implements EntityBlock {
         return canSupportRigidBlock(levelReader, pos.below());
     }
 
+    @Override
     public void neighborChanged(BlockState blockState, Level level, BlockPos pos1, Block block, BlockPos pos2, boolean param) {
         if (!blockState.canSurvive(level, pos1)) {
             BlockEntity blockentity = blockState.hasBlockEntity() ? level.getBlockEntity(pos1) : null;
@@ -70,12 +74,27 @@ public class CubeStandBlock extends Block implements EntityBlock {
 
     @Override
     public InteractionResult use(BlockState block, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-        ItemStack item = player.getMainHandItem();
 
-        if(!(item.getItem() instanceof BaseRubiksCubeItem)) {
-            return InteractionResult.CONSUME;
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof final CubeStandBlockEntity entity) {
+            if(entity.isEmpty()) {
+                ItemStack item = player.getMainHandItem();
+                if(item.getItem() instanceof BaseRubiksCubeItem) {
+                    entity.placeCube(item);
+                    return InteractionResult.SUCCESS;
+                }
+            } else {
+                entity.takeCube(player);
+                return InteractionResult.SUCCESS;
+            }
         }
 
-        return InteractionResult.SUCCESS;
+        return InteractionResult.CONSUME;
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return level.isClientSide() ? null :(_level, _pos, _state, blockEntity) ->
+                ((CubeStandBlockEntity) blockEntity).tick();
     }
 }
