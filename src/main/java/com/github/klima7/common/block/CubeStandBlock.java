@@ -3,6 +3,7 @@ package com.github.klima7.common.block;
 import com.github.klima7.common.entity.CubeStandBlockEntity;
 import com.github.klima7.common.item.BaseRubiksCubeItem;
 import com.github.klima7.core.init.BlockEntityRegistry;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -36,10 +37,14 @@ public class CubeStandBlock extends Block implements EntityBlock {
             .instabreak()
             .noOcclusion();
 
-    private static final VoxelShape SHAPE = Stream.of(
+    private static final VoxelShape EMPTY_SHAPE = Stream.of(
             Block.box(5, 0, 5, 11, 1, 11),
             Block.box(6, 1, 6, 10, 2, 10),
-            Block.box(7, 2, 7, 9, 3, 9),
+            Block.box(7, 2, 7, 9, 3, 9)
+    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
+
+    private static final VoxelShape FULL_SHAPE = Stream.of(
+            EMPTY_SHAPE,
             Block.box(5.6, 3, 5.6, 10.4, 7.8, 10.4)
     ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
@@ -69,7 +74,11 @@ public class CubeStandBlock extends Block implements EntityBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        Level level = Minecraft.getInstance().level;
+        if(level != null && level.getBlockEntity(pos) instanceof final CubeStandBlockEntity entity) {
+            return entity.isEmpty() ? EMPTY_SHAPE : FULL_SHAPE;
+        }
+        return EMPTY_SHAPE;
     }
 
     @Override
