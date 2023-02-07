@@ -23,6 +23,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -30,6 +32,8 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class CubeStandBlock extends Block implements EntityBlock {
@@ -101,6 +105,15 @@ public class CubeStandBlock extends Block implements EntityBlock {
         }
 
         return InteractionResult.CONSUME;
+    }
+
+    @Override
+    public List<ItemStack> getDrops(BlockState blockState, LootContext.Builder lootContextBuilder) {
+        CubeStandBlockEntity entity = (CubeStandBlockEntity) lootContextBuilder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
+        if(entity != null && !entity.isEmpty()) {
+            return List.of(entity.getCube());
+        }
+        return new ArrayList<>();
     }
 
     @Nullable

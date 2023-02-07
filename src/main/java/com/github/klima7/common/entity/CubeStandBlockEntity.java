@@ -9,6 +9,8 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class CubeStandBlockEntity extends InventoryBlockEntity {
 
+    private ItemStack invalidatedCube = null;
+
     public CubeStandBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.CUBE_STAND.get(), pos, state, 1);
     }
@@ -32,11 +34,21 @@ public class CubeStandBlockEntity extends InventoryBlockEntity {
     }
 
     public ItemStack getCube() {
-        return getItemInSlot(0);
+        if(invalidatedCube != null) {
+            return invalidatedCube;
+        } else {
+            return getItemInSlot(0);
+        }
     }
 
     public boolean isEmpty() {
-        return getItemInSlot(0).getCount() == 0;
+        return getCube() == null || getCube().isEmpty();
+    }
+
+    @Override
+    public void invalidateCaps() {
+        this.invalidatedCube = getCube();
+        super.invalidateCaps();
     }
 
 }
