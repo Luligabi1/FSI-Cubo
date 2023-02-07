@@ -38,5 +38,21 @@
         "volume": 1
       }
     ]
+  },
+  "rubiks_cube.stand_place": {
+    "sounds": [
+      {
+        "name": "rubiks_cube:stand_place",
+        "volume": 0.7
+      }
+    ]
+  },
+  "rubiks_cube.stand_take": {
+    "sounds": [
+      {
+        "name": "rubiks_cube:stand_take",
+        "volume": 0.5
+      }
+    ]
   }
 }

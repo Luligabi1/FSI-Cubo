@@ -17,6 +17,8 @@ public class SoundRegistry {
     public static final RegistryObject<SoundEvent> HIT = registerSound("rubiks_cube.hit");
     public static final RegistryObject<SoundEvent> PLACE = registerSound("rubiks_cube.place");
     public static final RegistryObject<SoundEvent> BLOCKED = registerSound("rubiks_cube.blocked");
+    public static final RegistryObject<SoundEvent> STAND_PLACE = registerSound("rubiks_cube.stand_place");
+    public static final RegistryObject<SoundEvent> STAND_TAKE = registerSound("rubiks_cube.stand_take");
 
     public static void register(IEventBus eventBus) {
         SOUNDS.register(eventBus);

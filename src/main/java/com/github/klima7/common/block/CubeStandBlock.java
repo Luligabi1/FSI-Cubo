@@ -3,8 +3,10 @@ package com.github.klima7.common.block;
 import com.github.klima7.common.entity.CubeStandBlockEntity;
 import com.github.klima7.common.item.BaseRubiksCubeItem;
 import com.github.klima7.core.init.BlockEntityRegistry;
+import com.github.klima7.core.init.SoundRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -83,16 +85,17 @@ public class CubeStandBlock extends Block implements EntityBlock {
 
     @Override
     public InteractionResult use(BlockState block, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof final CubeStandBlockEntity entity) {
             if(entity.isEmpty()) {
                 ItemStack item = player.getMainHandItem();
                 if(item.getItem() instanceof BaseRubiksCubeItem) {
                     entity.placeCube(item);
+                    level.playSound(null, pos, SoundRegistry.STAND_PLACE.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
                     return InteractionResult.SUCCESS;
                 }
             } else {
                 entity.takeCube(player);
+                level.playSound(null, pos, SoundRegistry.STAND_TAKE.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
                 return InteractionResult.SUCCESS;
             }
         }
