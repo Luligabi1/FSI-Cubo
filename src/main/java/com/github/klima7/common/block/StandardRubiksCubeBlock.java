@@ -1,7 +1,5 @@
 package com.github.klima7.common.block;
 
-import com.github.klima7.domain.operation.rotation.InstantRotations;
-import com.github.klima7.domain.operation.rotation.RotationsSet;
 import com.github.klima7.common.entity.StandardRubiksCubeBlockEntity;
 import com.github.klima7.core.init.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;

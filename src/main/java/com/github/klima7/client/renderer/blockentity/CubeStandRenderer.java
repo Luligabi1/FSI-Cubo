@@ -1,13 +1,14 @@
 package com.github.klima7.client.renderer.blockentity;
 
 import com.github.klima7.common.entity.CubeStandBlockEntity;
-import com.github.klima7.core.init.BlockRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.world.item.ItemStack;
 
 public class CubeStandRenderer implements BlockEntityRenderer<CubeStandBlockEntity> {
@@ -29,17 +30,16 @@ public class CubeStandRenderer implements BlockEntityRenderer<CubeStandBlockEnti
 
     private void renderCube(ItemStack item, PoseStack stack, MultiBufferSource buffer, int combinedOverlay,
                             int packedLight) {
-        final BlockRenderDispatcher dispatcher = this.context.getBlockRenderDispatcher();
+        final ItemRenderer itemRenderer = context.getItemRenderer();
         float scale = 0.3f;
-        float horizontalOffset = 1 / (2 * scale) - 0.5f;
-        float verticalOffset = 0.1f;
 
         stack.pushPose();
         stack.scale(scale, scale, scale);
-        stack.translate(horizontalOffset, verticalOffset, horizontalOffset);
+        stack.translate(1.65, 1.1, 1.4);
 
-        dispatcher.renderSingleBlock(BlockRegistry.STANDARD_RUBIKS_CUBE.get().defaultBlockState(), stack, buffer, combinedOverlay, packedLight,
-                net.minecraftforge.client.model.data.ModelData.EMPTY, RenderType.solid());
+        final LocalPlayer player = Minecraft.getInstance().player;
+        itemRenderer.renderStatic(player, item, ItemTransforms.TransformType.FIXED, false, stack, buffer,
+                Minecraft.getInstance().level, combinedOverlay, packedLight, 0);
 
         stack.popPose();
     }

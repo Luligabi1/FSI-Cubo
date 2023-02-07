@@ -32,7 +32,7 @@ public class CubeStandBlockEntity extends InventoryBlockEntity {
     }
 
     public ItemStack getCube() {
-        return null;
+        return getItemInSlot(0);
     }
 
     public boolean isEmpty() {
