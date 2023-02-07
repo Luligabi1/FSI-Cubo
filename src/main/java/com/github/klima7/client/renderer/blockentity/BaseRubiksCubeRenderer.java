@@ -26,7 +26,7 @@ public abstract class BaseRubiksCubeRenderer<T extends BaseRubiksCubeBlockEntity
         GeoModel model = modelProvider.getModel(modelProvider.getModelResource(tile));
         modelProvider.setLivingAnimations(tile, this.getUniqueID(tile));
         stack.pushPose();
-        stack.translate(0, 0.01f, 0);
+        stack.translate(0, 0, 0);
         stack.translate(0.5, 0, 0.5);
 
         rotateBlock(getFacing(tile), stack);
