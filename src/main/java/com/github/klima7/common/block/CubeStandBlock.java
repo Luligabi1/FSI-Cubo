@@ -2,6 +2,7 @@ package com.github.klima7.common.block;
 
 import com.github.klima7.core.init.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -11,7 +12,13 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.stream.Stream;
 
 public class CubeStandBlock extends Block implements EntityBlock {
 
@@ -19,6 +26,13 @@ public class CubeStandBlock extends Block implements EntityBlock {
             .sound(SoundType.GLASS)
             .instabreak()
             .noOcclusion();
+
+    private static final VoxelShape SHAPE = Stream.of(
+            Block.box(5, 0, 5, 11, 1, 11),
+            Block.box(6, 1, 6, 10, 2, 10),
+            Block.box(7, 2, 7, 9, 3, 9),
+            Block.box(5.6, 3, 5.6, 10.4, 7.8, 10.4)
+    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
     public CubeStandBlock() {
         super(PROPERTIES);
@@ -41,6 +55,11 @@ public class CubeStandBlock extends Block implements EntityBlock {
             dropResources(blockState, level, pos1, blockentity);
             level.removeBlock(pos1, false);
         }
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
+        return SHAPE;
     }
 
 }
