@@ -35,6 +35,11 @@ public class Rotation extends Operation {
     }
 
     @Override
+    public boolean hasAnimation() {
+        return true;
+    }
+
+    @Override
     public void execute(CubeStickers cubeStickers) {
         if(rotationDirection == OperationDirection.CLOCKWISE) {
             rotateClockwise(cubeStickers, rotationAxis);

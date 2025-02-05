@@ -15,6 +15,11 @@ public class InstantRotations extends Operation {
     }
 
     @Override
+    public boolean hasAnimation() {
+        return true;
+    }
+
+    @Override
     public void execute(CubeStickers cubeStickers) {
         rotateOnAxis(cubeStickers, RotationAxis.X, rotationsSet.getTurnsX());
         rotateOnAxis(cubeStickers, RotationAxis.Y, rotationsSet.getTurnsY());

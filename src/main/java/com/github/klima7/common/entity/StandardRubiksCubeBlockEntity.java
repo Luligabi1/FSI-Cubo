@@ -85,9 +85,10 @@ public class StandardRubiksCubeBlockEntity extends BaseRubiksCubeBlockEntity {
     }
 
     @Override
-    protected void applyOperation(Operation operation) {
+    public void applyOperation(Operation operation) {
         ScrambleState oldScrambleState = scrambleState;
         operation.execute(this.cubeStickers);
+        sync();
 
         // update scrambleState
         if(cubeStickers.isSolved()) {
@@ -96,23 +97,15 @@ public class StandardRubiksCubeBlockEntity extends BaseRubiksCubeBlockEntity {
             scrambleState = ScrambleState.MANUALLY_SCRAMBLED;
         }
 
-        // grant advancements
-        if(oldScrambleState == ScrambleState.AUTO_SCRAMBLED && scrambleState == ScrambleState.SOLVED) {
-            grantAdvancement(playerUUID, "rubiks_cube_solved");
-        }
-
-        if(oldScrambleState == ScrambleState.AUTO_SCRAMBLED && cubeStickers.getSolvedFacesCount() >= 1) {
-            grantAdvancement(playerUUID, "face_solved");
-        }
     }
 
-    private void grantAdvancement(UUID playerUUID, String advancementName) {
-        if(level instanceof final ServerLevel serverLevel) {
-            ServerAdvancementManager advancementManager = serverLevel.getServer().getAdvancements();
-            Advancement advancement = advancementManager.getAdvancement(new ResourceLocation(RubiksCubeMod.MODID, advancementName));
-            ServerPlayer player = (ServerPlayer) level.getPlayerByUUID(playerUUID);
-            player.getAdvancements().award(advancement, "set_programmatically");
-        }
+    @Override
+    public StandardRubiksCubeBlockEntity clone() {
+        StandardRubiksCubeBlockEntity cloned = new StandardRubiksCubeBlockEntity(getBlockPos(), getBlockState());
+        cloned.level = this.level;
+        cloned.cubeStickers = this.cubeStickers;
+        cloned.scrambleState = this.scrambleState;
+        return cloned;
     }
 
 }

@@ -22,6 +22,8 @@ public class Move extends Operation {
     private final MoveFace moveFace;
     private final OperationDirection moveDirection;
 
+    public boolean hasAnimation = true;
+
     public Move(MoveFace moveFace, OperationDirection moveDirection) {
         this.moveFace = moveFace;
         this.moveDirection = moveDirection;
@@ -33,6 +35,11 @@ public class Move extends Operation {
 
     public OperationDirection getMoveDirection() {
         return moveDirection;
+    }
+
+    @Override
+    public boolean hasAnimation() {
+        return hasAnimation;
     }
 
     @Override
@@ -113,4 +120,8 @@ public class Move extends Operation {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Move[" + moveFace + ", " + moveDirection + "]";
+    }
 }

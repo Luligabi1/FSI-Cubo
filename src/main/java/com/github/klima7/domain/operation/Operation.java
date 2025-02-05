@@ -14,6 +14,9 @@ import java.util.List;
 
 public abstract class Operation {
 
+    public abstract boolean hasAnimation();
+
+
     public abstract void execute(CubeStickers cubeStickers);
 
     public abstract String getAnimationName();

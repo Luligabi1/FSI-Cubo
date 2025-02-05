@@ -25,13 +25,15 @@ public class ServerboundUpdateRubiksCubePacket {
     private final Direction direction;
     private final boolean reverse;
     private final boolean rotation;
+    private final boolean hasAnimation;
 
-    public ServerboundUpdateRubiksCubePacket(BlockPos pos, UUID playerUUID, Direction direction, boolean reverse, boolean rotation) {
+    public ServerboundUpdateRubiksCubePacket(BlockPos pos, UUID playerUUID, Direction direction, boolean reverse, boolean rotation, boolean hasAnimation) {
         this.pos = pos;
         this.playerUUID = playerUUID;
         this.direction = direction;
         this.reverse = reverse;
         this.rotation = rotation;
+        this.hasAnimation = hasAnimation;
     }
 
     public ServerboundUpdateRubiksCubePacket(FriendlyByteBuf buffer) {
@@ -39,6 +41,7 @@ public class ServerboundUpdateRubiksCubePacket {
                 buffer.readBlockPos(),
                 buffer.readUUID(),
                 buffer.readEnum(Direction.class),
+                buffer.readBoolean(),
                 buffer.readBoolean(),
                 buffer.readBoolean()
         );
@@ -50,6 +53,7 @@ public class ServerboundUpdateRubiksCubePacket {
         buffer.writeEnum(this.direction);
         buffer.writeBoolean(this.reverse);
         buffer.writeBoolean(this.rotation);
+        buffer.writeBoolean(this.hasAnimation);
     }
 
     public void handle(Supplier<NetworkEvent.Context> contextSupplier) {
@@ -63,7 +67,14 @@ public class ServerboundUpdateRubiksCubePacket {
         BlockEntity entity = level.getBlockEntity(this.pos);
         if(entity instanceof final BaseRubiksCubeBlockEntity rcEntity) {
             Operation operation = createOperation();
-            rcEntity.executeOperation(operation, playerUUID);
+
+            if (hasAnimation) {
+                rcEntity.executeOperation(operation, playerUUID);
+            } else {
+                rcEntity.executeAnimationlessOperation(operation, playerUUID);
+            }
+
+
         }
     }
 

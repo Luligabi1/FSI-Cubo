@@ -72,7 +72,7 @@ public abstract class BaseRubiksCubeBlock extends Block implements EntityBlock {
         UUID playerUUID = player.getUUID();
 
         PacketHandler.CHANNEL.sendToServer(
-                new ServerboundUpdateRubiksCubePacket(pos, playerUUID, direction, isReversed, isRotation)
+                new ServerboundUpdateRubiksCubePacket(pos, playerUUID, direction, isReversed, isRotation, true)
         );
 
         return InteractionResult.SUCCESS;

@@ -4,6 +4,7 @@ import com.github.klima7.domain.cube.stickers.CubeStickers;
 import com.github.klima7.domain.scramble.ScrambleState;
 import com.github.klima7.domain.scramble.Scrambler;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
@@ -78,9 +79,9 @@ public class StandardRubiksCubeItemWrapper {
         itemStack.getTag().putString("scrambleState", scrambleState.name());
     }
 
-    public void scramble() {
+    public void scramble(MinecraftServer server) {
         CubeStickers cubeStickers = getCubeStickersOrDefault();
-        Scrambler.scramble(cubeStickers);
+        Scrambler.scramble(cubeStickers, server);
         setCubeStickers(cubeStickers);
         setScrambleState(ScrambleState.AUTO_SCRAMBLED);
     }

@@ -44,7 +44,7 @@ public class StandardRubiksCubeItem extends BaseRubiksCubeItem {
         if (!level.isClientSide) {
             StandardRubiksCubeItemWrapper itemWrapper = new StandardRubiksCubeItemWrapper(itemStack);
             itemWrapper.createTag(level);
-            itemWrapper.scramble();
+            itemWrapper.scramble(level.getServer());
         }
         player.startUsingItem(hand);
         return InteractionResultHolder.pass(itemStack);

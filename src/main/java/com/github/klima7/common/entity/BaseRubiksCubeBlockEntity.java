@@ -1,7 +1,7 @@
 package com.github.klima7.common.entity;
 
-import com.github.klima7.core.init.SoundRegistry;
 import com.github.klima7.domain.operation.Operation;
+import com.github.klima7.domain.operation.move.Move;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -9,8 +9,6 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -104,6 +102,11 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
     }
 
     public void serverTick() {
+
+        if(shouldFinishAnimationlessOperation()) {
+            finishAnimationlessOperation(operation);
+        }
+
         if(shouldFinishOperation()) {
             finishOperation(operation);
         }
@@ -115,14 +118,24 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
         }
 
         if(isSomethingBlocking(operation, level)) {
-            level.playSound(null, getBlockPos(), SoundRegistry.BLOCKED.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
+            //level.playSound(null, getBlockPos(), SoundRegistry.BLOCKED.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
             MutableComponent message = Component.translatable("message.rubiks_cube.blocking");
             level.getPlayerByUUID(playerUUID).displayClientMessage(message, true);
             return;
         }
 
         startOperation(operation, playerUUID);
-        playOperationSound(operation);
+        //playOperationSound(operation);
+    }
+
+    public void executeAnimationlessOperation(Operation operation, UUID playerUUID) {
+
+        if (operation instanceof Move move) {
+            move.hasAnimation = false;
+            operation = move;
+        }
+
+        startAnimationlessOperation(operation, playerUUID);
     }
 
     public Direction getFacing() {
@@ -161,6 +174,13 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
         sync();
     }
 
+    private void startAnimationlessOperation(Operation operation, UUID playerUUID) {
+        this.operation = operation;
+        this.startTime = -1;
+        this.playerUUID = playerUUID;
+        sync();
+    }
+
     private void finishOperation(Operation operation) {
         assert level != null;
         applyOperation(operation);
@@ -171,16 +191,21 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
         sync();
     }
 
-    private void playOperationSound(Operation operation) {
-        assert level != null;
-        SoundEvent soundEvent = operation.getSoundEvent();
-        if(soundEvent != null) {
-            level.playSound(null, getBlockPos(), soundEvent, SoundSource.BLOCKS, 1.0f, 1.0f);
-        }
+    private void finishAnimationlessOperation(Operation operation) {
+        applyOperation(operation);
+        this.operation = null;
+        this.startTime = 0;
+        this.playerUUID = null;
+        this.finishTime = -1;
+        sync();
     }
 
     private boolean shouldFinishOperation() {
         return isExecutingOperation() && currentOperationTimeElapsed();
+    }
+
+    private boolean shouldFinishAnimationlessOperation() {
+        return isExecutingOperation() && startTime == -1;
     }
 
     private boolean currentOperationTimeElapsed() {
@@ -192,7 +217,7 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         AnimationController<?> controller = event.getController();
 
-        if(isExecutingOperation()) {
+        if(isExecutingOperation() && operation.hasAnimation()) {
             controller.easingType = operation.getEasing();
             event.getController().setAnimation(new AnimationBuilder().addAnimation(operation.getAnimationName()));
         } else {
@@ -201,7 +226,7 @@ public abstract class BaseRubiksCubeBlockEntity extends BlockEntity implements I
         return PlayState.CONTINUE;
     }
 
-    private void sync() {
+    void sync() {
         if(level != null && !level.isClientSide()) {
             setChanged();
             BlockState state = getBlockState();
